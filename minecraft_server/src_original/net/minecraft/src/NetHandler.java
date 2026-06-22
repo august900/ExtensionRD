@@ -89,4 +89,24 @@ public class NetHandler {
 	public void handleHandshake(Packet2Handshake var1) {
 		this.registerPacket(var1);
 	}
+
+	public void handleMobSpawn(Packet24MobSpawn var1) {
+		this.registerPacket(var1);
+	}
+
+	public void handleUpdateTime(Packet4UpdateTime var1) {
+		this.registerPacket(var1);
+	}
+
+	public void handlePlayerInventory(Packet5PlayerInventory var1) {
+		this.registerPacket(var1);
+	}
+
+	public void handleComplexEntity(Packet59ComplexEntity var1) {
+		this.registerPacket(var1);
+	}
+
+	public void handleSpawnPosition(Packet6SpawnPosition var1) {
+		this.registerPacket(var1);
+	}
 }

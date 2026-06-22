@@ -3,7 +3,7 @@ package net.minecraft.src;
 import java.util.Random;
 
 public class BlockChest extends BlockContainer {
-	private Random rand = new Random();
+	private Random random = new Random();
 
 	protected BlockChest(int var1) {
 		super(var1, Material.wood);
@@ -45,12 +45,12 @@ public class BlockChest extends BlockContainer {
 		for(int var6 = 0; var6 < var5.getSizeInventory(); ++var6) {
 			ItemStack var7 = var5.getStackInSlot(var6);
 			if(var7 != null) {
-				float var8 = this.rand.nextFloat() * 0.8F + 0.1F;
-				float var9 = this.rand.nextFloat() * 0.8F + 0.1F;
-				float var10 = this.rand.nextFloat() * 0.8F + 0.1F;
+				float var8 = this.random.nextFloat() * 0.8F + 0.1F;
+				float var9 = this.random.nextFloat() * 0.8F + 0.1F;
+				float var10 = this.random.nextFloat() * 0.8F + 0.1F;
 
 				while(var7.stackSize > 0) {
-					int var11 = this.rand.nextInt(21) + 10;
+					int var11 = this.random.nextInt(21) + 10;
 					if(var11 > var7.stackSize) {
 						var11 = var7.stackSize;
 					}
@@ -58,9 +58,9 @@ public class BlockChest extends BlockContainer {
 					var7.stackSize -= var11;
 					EntityItem var12 = new EntityItem(var1, (double)((float)var2 + var8), (double)((float)var3 + var9), (double)((float)var4 + var10), new ItemStack(var7.itemID, var11, var7.itemDmg));
 					float var13 = 0.05F;
-					var12.motionX = (double)((float)this.rand.nextGaussian() * var13);
-					var12.motionY = (double)((float)this.rand.nextGaussian() * var13 + 0.2F);
-					var12.motionZ = (double)((float)this.rand.nextGaussian() * var13);
+					var12.motionX = (double)((float)this.random.nextGaussian() * var13);
+					var12.motionY = (double)((float)this.random.nextGaussian() * var13 + 0.2F);
+					var12.motionZ = (double)((float)this.random.nextGaussian() * var13);
 					var1.spawnEntityInWorld(var12);
 				}
 			}

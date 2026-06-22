@@ -39,7 +39,7 @@ public class Explosion {
 							int var34 = MathHelper.floor_double(var29);
 							int var35 = var1.getBlockId(var32, var33, var34);
 							if(var35 > 0) {
-								var24 -= (Block.canBlockGrass[var35].getExplosionResistance(var2) + 0.3F) * var31;
+								var24 -= (Block.blocksList[var35].getExplosionResistance(var2) + 0.3F) * var31;
 							}
 
 							if(var24 > 0.0F) {
@@ -120,9 +120,9 @@ public class Explosion {
 			}
 
 			if(var54 > 0) {
-				Block.canBlockGrass[var54].dropBlockAsItemWithChance(var1, var52, var53, var26, var1.getBlockMetadata(var52, var53, var26), 0.3F);
+				Block.blocksList[var54].dropBlockAsItemWithChance(var1, var52, var53, var26, var1.getBlockMetadata(var52, var53, var26), 0.3F);
 				var1.setBlockWithNotify(var52, var53, var26, 0);
-				Block.canBlockGrass[var54].onBlockDestroyedByExplosion(var1, var52, var53, var26);
+				Block.blocksList[var54].onBlockDestroyedByExplosion(var1, var52, var53, var26);
 			}
 		}
 

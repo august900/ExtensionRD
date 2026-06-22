@@ -122,24 +122,49 @@ class PlayerInstance {
 
 	public void onUpdate() throws IOException {
 		if(this.numBlocksToUpdate != 0) {
-			Object var1 = null;
+			int var1;
+			int var2;
+			int var3;
 			if(this.numBlocksToUpdate == 1) {
-				var1 = new Packet53BlockChange(this.chunkX * 16 + this.minX, this.minY, this.chunkZ * 16 + this.minZ, PlayerManager.getMinecraftServer(this.playerManager).worldMngr);
-			} else if(this.numBlocksToUpdate == 10) {
-				this.minY = this.minY / 2 * 2;
-				this.maxY = (this.maxY / 2 + 1) * 2;
-				int var2 = this.minX + this.chunkX * 16;
-				int var3 = this.minY;
-				int var4 = this.minZ + this.chunkZ * 16;
-				int var5 = this.maxX - this.minX + 1;
-				int var6 = this.maxY - this.minY + 2;
-				int var7 = this.maxZ - this.minZ + 1;
-				var1 = new Packet51MapChunk(var2, var3, var4, var5, var6, var7, PlayerManager.getMinecraftServer(this.playerManager).worldMngr);
+				var1 = this.chunkX * 16 + this.minX;
+				var2 = this.minY;
+				var3 = this.chunkZ * 16 + this.minZ;
+				this.sendTileEntity(new Packet53BlockChange(var1, var2, var3, PlayerManager.getMinecraftServer(this.playerManager).worldMngr));
+				if(Block.isBlockContainer[PlayerManager.getMinecraftServer(this.playerManager).worldMngr.getBlockId(var1, var2, var3)]) {
+					this.sendTileEntity(new Packet59ComplexEntity(var1, var2, var3, PlayerManager.getMinecraftServer(this.playerManager).worldMngr.getBlockTileEntity(var1, var2, var3)));
+				}
 			} else {
-				var1 = new Packet52MultiBlockChange(this.chunkX, this.chunkZ, this.blocksToUpdate, this.numBlocksToUpdate, PlayerManager.getMinecraftServer(this.playerManager).worldMngr);
+				int var4;
+				if(this.numBlocksToUpdate == 10) {
+					this.minY = this.minY / 2 * 2;
+					this.maxY = (this.maxY / 2 + 1) * 2;
+					var1 = this.minX + this.chunkX * 16;
+					var2 = this.minY;
+					var3 = this.minZ + this.chunkZ * 16;
+					var4 = this.maxX - this.minX + 1;
+					int var5 = this.maxY - this.minY + 2;
+					int var6 = this.maxZ - this.minZ + 1;
+					this.sendTileEntity(new Packet51MapChunk(var1, var2, var3, var4, var5, var6, PlayerManager.getMinecraftServer(this.playerManager).worldMngr));
+					List var7 = PlayerManager.getMinecraftServer(this.playerManager).worldMngr.getTileEntityList(var1, var2, var3, var1 + var4, var2 + var5, var3 + var6);
+
+					for(int var8 = 0; var8 < var7.size(); ++var8) {
+						TileEntity var9 = (TileEntity)var7.get(var8);
+						this.sendTileEntity(new Packet59ComplexEntity(var9.xCoord, var9.yCoord, var9.zCoord, var9));
+					}
+				} else {
+					this.sendTileEntity(new Packet52MultiBlockChange(this.chunkX, this.chunkZ, this.blocksToUpdate, this.numBlocksToUpdate, PlayerManager.getMinecraftServer(this.playerManager).worldMngr));
+
+					for(var1 = 0; var1 < this.numBlocksToUpdate; ++var1) {
+						var2 = this.chunkX * 16 + (this.numBlocksToUpdate >> 12 & 15);
+						var3 = this.numBlocksToUpdate & 255;
+						var4 = this.chunkZ * 16 + (this.numBlocksToUpdate >> 8 & 15);
+						if(Block.isBlockContainer[PlayerManager.getMinecraftServer(this.playerManager).worldMngr.getBlockId(var2, var3, var4)]) {
+							this.sendTileEntity(new Packet59ComplexEntity(var2, var3, var4, PlayerManager.getMinecraftServer(this.playerManager).worldMngr.getBlockTileEntity(var2, var3, var4)));
+						}
+					}
+				}
 			}
 
-			this.sendTileEntity((Packet)var1);
 			this.numBlocksToUpdate = 0;
 		}
 	}

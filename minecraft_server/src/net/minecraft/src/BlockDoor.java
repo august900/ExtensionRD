@@ -29,10 +29,10 @@ public class BlockDoor extends Block {
 	}
 
 	public void setBlockBoundsBasedOnState(IBlockAccess var1, int var2, int var3, int var4) {
-		this.setBlockBoundsFromState(this.getState(var1.getBlockMetadata(var2, var3, var4)));
+		this.setDoorRotation(this.getState(var1.getBlockMetadata(var2, var3, var4)));
 	}
 
-	public void setBlockBoundsFromState(int var1) {
+	public void setDoorRotation(int var1) {
 		float var2 = 3.0F / 16.0F;
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 2.0F, 1.0F);
 		if(var1 == 0) {
@@ -119,7 +119,7 @@ public class BlockDoor extends Block {
 				var1.setBlockWithNotify(var2, var3, var4, 0);
 			}
 
-			if(var5 > 0 && Block.canBlockGrass[var5].canProvidePower()) {
+			if(var5 > 0 && Block.blocksList[var5].canProvidePower()) {
 				this.onNeighborBlockChange(var1, var2, var3 - 1, var4, var5);
 			}
 		} else {
@@ -139,7 +139,7 @@ public class BlockDoor extends Block {
 
 			if(var7) {
 				this.dropBlockAsItem(var1, var2, var3, var4, var6);
-			} else if(var5 > 0 && Block.canBlockGrass[var5].canProvidePower()) {
+			} else if(var5 > 0 && Block.blocksList[var5].canProvidePower()) {
 				boolean var8 = var1.isBlockIndirectlyGettingPowered(var2, var3, var4) || var1.isBlockIndirectlyGettingPowered(var2, var3 + 1, var4);
 				this.onPoweredBlockChange(var1, var2, var3, var4, var8);
 			}

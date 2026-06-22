@@ -160,6 +160,8 @@ public class EntityTrackerEntry {
 
 			if(this.trackedEntity instanceof EntityBoat) {
 				return new Packet23VehicleSpawn(this.trackedEntity, 1);
+			} else if(this.trackedEntity instanceof IAnimals) {
+				return new Packet24MobSpawn((EntityLiving)this.trackedEntity);
 			} else {
 				throw new IllegalArgumentException("Don\'t know how to add " + this.trackedEntity.getClass() + "!");
 			}

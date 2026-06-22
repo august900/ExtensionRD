@@ -84,7 +84,7 @@ public class Item {
 	public static Item snowball = (new ItemSnowball(76)).setIconIndex(14);
 	public static Item boat = (new ItemBoat(77)).setIconIndex(136);
 	public static Item leather = (new Item(78)).setIconIndex(103);
-	public static Item bucketMilk = (new Item(79)).setIconIndex(77);
+	public static Item bucketMilk = (new ItemBucket(79, -1)).setIconIndex(77);
 	public static Item brick = (new Item(80)).setIconIndex(22);
 	public static Item clay = (new Item(81)).setIconIndex(57);
 	public static Item reed = (new ItemReed(82, Block.reed)).setIconIndex(27);
@@ -94,6 +94,8 @@ public class Item {
 	public static Item minecartBox = (new ItemMinecart(86, 1)).setIconIndex(151);
 	public static Item minecartEngine = (new ItemMinecart(87, 2)).setIconIndex(167);
 	public static Item egg = (new Item(88)).setIconIndex(12);
+	public static Item compass = (new Item(89)).setIconIndex(54);
+	public static Item fishingRod = (new Item(90)).setIconIndex(69);
 	public static Item record13 = (new ItemRecord(2000, "13")).setIconIndex(240);
 	public static Item recordCat = (new ItemRecord(2001, "cat")).setIconIndex(241);
 	public final int shiftedIndex;

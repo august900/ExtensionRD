@@ -45,6 +45,10 @@ public class ItemBucket extends Item {
 						return new ItemStack(Item.bucketLava);
 					}
 				} else {
+					if(this.isFull < 0) {
+						return new ItemStack(Item.bucketEmpty);
+					}
+
 					if(var24.sideHit == 0) {
 						--var26;
 					}

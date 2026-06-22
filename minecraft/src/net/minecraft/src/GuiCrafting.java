@@ -3,17 +3,16 @@ package net.minecraft.src;
 import org.lwjgl.opengl.GL11;
 
 public class GuiCrafting extends GuiContainer {
-	private InventoryCrafting craftingInventory = new InventoryCrafting(this, 3, 3);
-	private IInventory l = new InventoryCraftResult();
+	public CraftingInventoryWorkbenchCB craftingInventory = new CraftingInventoryWorkbenchCB();
 
 	public GuiCrafting(InventoryPlayer var1) {
-		this.inventorySlots.add(new SlotCrafting(this, this.craftingInventory, this.l, 0, 124, 35));
+		this.inventorySlots.add(new SlotCrafting(this, this.craftingInventory.craftMatrix, this.craftingInventory.craftResult, 0, 124, 35));
 
 		int var2;
 		int var3;
 		for(var2 = 0; var2 < 3; ++var2) {
 			for(var3 = 0; var3 < 3; ++var3) {
-				this.inventorySlots.add(new SlotInventory(this, this.craftingInventory, var3 + var2 * 3, 30 + var3 * 18, 17 + var2 * 18));
+				this.inventorySlots.add(new SlotInventory(this, this.craftingInventory.craftMatrix, var3 + var2 * 3, 30 + var3 * 18, 17 + var2 * 18));
 			}
 		}
 
@@ -31,32 +30,7 @@ public class GuiCrafting extends GuiContainer {
 
 	public void onGuiClosed() {
 		super.onGuiClosed();
-
-		for(int var1 = 0; var1 < 9; ++var1) {
-			ItemStack var2 = this.craftingInventory.getStackInSlot(var1);
-			if(var2 != null) {
-				this.mc.thePlayer.dropPlayerItem(var2);
-			}
-		}
-
-	}
-
-	public void a(IInventory var1) {
-		int[] var2 = new int[9];
-
-		for(int var3 = 0; var3 < 3; ++var3) {
-			for(int var4 = 0; var4 < 3; ++var4) {
-				int var5 = var3 + var4 * 3;
-				ItemStack var6 = this.craftingInventory.getStackInSlot(var5);
-				if(var6 == null) {
-					var2[var5] = -1;
-				} else {
-					var2[var5] = var6.itemID;
-				}
-			}
-		}
-
-		this.l.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(var2));
+		this.craftingInventory.onCraftGuiClosed(this.mc.thePlayer);
 	}
 
 	protected void drawGuiContainerForegroundLayer() {

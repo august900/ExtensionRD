@@ -231,6 +231,7 @@ public class RenderEngine {
 			this.imageData.clear();
 			this.imageData.put(var2.imageData);
 			this.imageData.position(0).limit(var2.imageData.length);
+			var2.bindImage(this);
 
 			for(var3 = 0; var3 < var2.tileSize; ++var3) {
 				for(var4 = 0; var4 < var2.tileSize; ++var4) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityPainting extends Entity {
-	private int tickCounter1;
+	private int tickCounter;
 	public int direction;
 	private int xPosition;
 	private int yPosition;
@@ -13,7 +13,7 @@ public class EntityPainting extends Entity {
 
 	public EntityPainting(World var1) {
 		super(var1);
-		this.tickCounter1 = 0;
+		this.tickCounter = 0;
 		this.direction = 0;
 		this.yOffset = 0.0F;
 		this.setSize(0.5F, 0.5F);
@@ -80,34 +80,34 @@ public class EntityPainting extends Entity {
 		}
 
 		if(var1 == 0) {
-			var5 -= this.getPaintingOffset(this.art.sizeX);
+			var5 -= this.getArtSize(this.art.sizeX);
 		}
 
 		if(var1 == 1) {
-			var7 += this.getPaintingOffset(this.art.sizeX);
+			var7 += this.getArtSize(this.art.sizeX);
 		}
 
 		if(var1 == 2) {
-			var5 += this.getPaintingOffset(this.art.sizeX);
+			var5 += this.getArtSize(this.art.sizeX);
 		}
 
 		if(var1 == 3) {
-			var7 -= this.getPaintingOffset(this.art.sizeX);
+			var7 -= this.getArtSize(this.art.sizeX);
 		}
 
-		var6 += this.getPaintingOffset(this.art.sizeY);
+		var6 += this.getArtSize(this.art.sizeY);
 		this.setPosition((double)var5, (double)var6, (double)var7);
 		float var9 = -(0.1F / 16.0F);
 		this.boundingBox.setBounds((double)(var5 - var2 - var9), (double)(var6 - var3 - var9), (double)(var7 - var4 - var9), (double)(var5 + var2 + var9), (double)(var6 + var3 + var9), (double)(var7 + var4 + var9));
 	}
 
-	private float getPaintingOffset(int var1) {
+	private float getArtSize(int var1) {
 		return var1 == 32 ? 0.5F : (var1 == 64 ? 0.5F : 0.0F);
 	}
 
 	public void onUpdate() {
-		if(this.tickCounter1++ == 100 && !this.onValidSurface()) {
-			this.tickCounter1 = 0;
+		if(this.tickCounter++ == 100 && !this.onValidSurface()) {
+			this.tickCounter = 0;
 			this.setEntityDead();
 			this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(Item.painting)));
 		}

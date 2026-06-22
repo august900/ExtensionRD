@@ -115,6 +115,7 @@ public class RenderItem extends Render {
 				GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
 				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+				GL11.glScalef(1.0F, 1.0F, 1.0F);
 				this.itemRenderBlocks.renderBlockOnInventory(var7);
 				GL11.glPopMatrix();
 			} else if(var3.getIconIndex() >= 0) {
@@ -129,6 +130,7 @@ public class RenderItem extends Render {
 				GL11.glEnable(GL11.GL_LIGHTING);
 			}
 
+			GL11.glEnable(GL11.GL_CULL_FACE);
 		}
 	}
 

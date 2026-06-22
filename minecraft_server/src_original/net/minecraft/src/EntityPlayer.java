@@ -162,10 +162,13 @@ public class EntityPlayer extends EntityLiving {
 
 	public void readEntityFromNBT(NBTTagCompound var1) {
 		super.readEntityFromNBT(var1);
+		NBTTagList var2 = var1.getTagList("Inventory");
+		this.inventory.readFromNBT(var2);
 	}
 
 	public void writeEntityToNBT(NBTTagCompound var1) {
 		super.writeEntityToNBT(var1);
+		var1.setTag("Inventory", this.inventory.writeToNBT(new NBTTagList()));
 	}
 
 	public void displayGUIChest(IInventory var1) {
@@ -188,7 +191,7 @@ public class EntityPlayer extends EntityLiving {
 		} else if((float)this.heartsLife > (float)this.heartsHalvesLife / 2.0F) {
 			return false;
 		} else {
-			if(var1 instanceof EntityMobs || var1 instanceof EntityArrow) {
+			if(var1 instanceof EntityMob || var1 instanceof EntityArrow) {
 				if(this.worldObj.difficultySetting == 0) {
 					var2 = 0;
 				}
@@ -222,7 +225,7 @@ public class EntityPlayer extends EntityLiving {
 	}
 
 	public void destroyCurrentEquippedItem() {
-		this.inventory.readFromNBT(this.inventory.currentItem, (ItemStack)null);
+		this.inventory.setInventorySlotContents(this.inventory.currentItem, (ItemStack)null);
 	}
 
 	public double getYOffset() {

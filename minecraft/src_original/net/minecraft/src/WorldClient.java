@@ -9,6 +9,7 @@ public class WorldClient extends World {
 	private LinkedList blocksToReceive = new LinkedList();
 	private NetClientHandler sendQueue;
 	private ChunkProviderClient clientChunkProvider;
+	private boolean noTileEntityUpdates = false;
 	private MCHashTable entityHashTable = new MCHashTable();
 	private Set entityList = new HashSet();
 	private Set entitySpawnQueue = new HashSet();
@@ -22,20 +23,30 @@ public class WorldClient extends World {
 	}
 
 	public void tick() {
-		int var1;
-		for(var1 = 0; var1 < 10 && !this.entitySpawnQueue.isEmpty(); ++var1) {
-			Entity var2 = (Entity)this.entitySpawnQueue.iterator().next();
-			this.spawnEntityInWorld(var2);
+		++this.worldTime;
+		int var1 = this.calculateSkylightSubtracted(1.0F);
+		int var2;
+		if(var1 != this.skylightSubtracted) {
+			this.skylightSubtracted = var1;
+
+			for(var2 = 0; var2 < this.worldAccesses.size(); ++var2) {
+				((IWorldAccess)this.worldAccesses.get(var2)).updateAllRenderers();
+			}
+		}
+
+		for(var2 = 0; var2 < 10 && !this.entitySpawnQueue.isEmpty(); ++var2) {
+			Entity var3 = (Entity)this.entitySpawnQueue.iterator().next();
+			this.spawnEntityInWorld(var3);
 		}
 
 		this.sendQueue.processReadPackets();
 
-		for(var1 = 0; var1 < this.blocksToReceive.size(); ++var1) {
-			WorldBlockPositionType var3 = (WorldBlockPositionType)this.blocksToReceive.get(var1);
-			if(--var3.acceptCountdown == 0) {
-				super.setBlockAndMetadata(var3.posX, var3.posY, var3.posZ, var3.blockID, var3.metadata);
-				super.markBlockNeedsUpdate(var3.posX, var3.posY, var3.posZ);
-				this.blocksToReceive.remove(var1--);
+		for(var2 = 0; var2 < this.blocksToReceive.size(); ++var2) {
+			WorldBlockPositionType var4 = (WorldBlockPositionType)this.blocksToReceive.get(var2);
+			if(--var4.acceptCountdown == 0) {
+				super.setBlockAndMetadata(var4.posX, var4.posY, var4.posZ, var4.blockID, var4.metadata);
+				super.markBlockNeedsUpdate(var4.posX, var4.posY, var4.posZ);
+				this.blocksToReceive.remove(var2--);
 			}
 		}
 
@@ -181,6 +192,12 @@ public class WorldClient extends World {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public void updateTileEntityChunkAndDoNothing(int var1, int var2, int var3, TileEntity var4) {
+		if(!this.noTileEntityUpdates) {
+			this.sendQueue.addToSendQueue(new Packet59ComplexEntity(var1, var2, var3, var4));
 		}
 	}
 

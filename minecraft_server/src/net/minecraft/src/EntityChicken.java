@@ -40,7 +40,7 @@ public class EntityChicken extends EntityAnimal {
 		}
 
 		this.wingRotation += this.moveWings * 2.0F;
-		if(--this.timeUntilNextEgg <= 0) {
+		if(!this.worldObj.multiplayerWorld && --this.timeUntilNextEgg <= 0) {
 			this.worldObj.playSoundAtEntity(this, "mob.chickenplop", 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 			this.dropItem(Item.egg.shiftedIndex, 1);
 			this.timeUntilNextEgg = this.rand.nextInt(6000) + 6000;

@@ -5,11 +5,15 @@ import java.util.Map;
 
 public class EntityList {
 	private static Map stringToClassMapping = new HashMap();
+	private static Map classToStringMapping = new HashMap();
+	private static Map IDtoClassMapping = new HashMap();
 	private static Map classToIDMapping = new HashMap();
 
-	private static void addMapping(Class var0, String var1) {
+	private static void addMapping(Class var0, String var1, int var2) {
 		stringToClassMapping.put(var1, var0);
-		classToIDMapping.put(var0, var1);
+		classToStringMapping.put(var0, var1);
+		IDtoClassMapping.put(Integer.valueOf(var2), var0);
+		classToIDMapping.put(var0, Integer.valueOf(var2));
 	}
 
 	public static Entity createEntityByName(String var0, World var1) {
@@ -48,30 +52,53 @@ public class EntityList {
 		return var2;
 	}
 
+	public static Entity createEntityByID(int var0, World var1) {
+		Entity var2 = null;
+
+		try {
+			Class var3 = (Class)IDtoClassMapping.get(Integer.valueOf(var0));
+			if(var3 != null) {
+				var2 = (Entity)var3.getConstructor(new Class[]{World.class}).newInstance(new Object[]{var1});
+			}
+		} catch (Exception var4) {
+			var4.printStackTrace();
+		}
+
+		if(var2 == null) {
+			System.out.println("Skipping Entity with id " + var0);
+		}
+
+		return var2;
+	}
+
+	public static int getEntityID(Entity var0) {
+		return ((Integer)classToIDMapping.get(var0.getClass())).intValue();
+	}
+
 	public static String getEntityString(Entity var0) {
-		return (String)classToIDMapping.get(var0.getClass());
+		return (String)classToStringMapping.get(var0.getClass());
 	}
 
 	static {
-		addMapping(EntityArrow.class, "Arrow");
-		addMapping(EntitySnowball.class, "Snowball");
-		addMapping(EntityItem.class, "Item");
-		addMapping(EntityPainting.class, "Painting");
-		addMapping(EntityLiving.class, "Mob");
-		addMapping(EntityMob.class, "Monster");
-		addMapping(EntityCreeper.class, "Creeper");
-		addMapping(EntitySkeleton.class, "Skeleton");
-		addMapping(EntitySpider.class, "Spider");
-		addMapping(EntityGiantZombie.class, "Giant");
-		addMapping(EntityZombie.class, "Zombie");
-		addMapping(EntitySlime.class, "Slime");
-		addMapping(EntityPig.class, "Pig");
-		addMapping(EntitySheep.class, "Sheep");
-		addMapping(EntityCow.class, "Cow");
-		addMapping(EntityChicken.class, "Chicken");
-		addMapping(EntityTNTPrimed.class, "PrimedTnt");
-		addMapping(EntityFallingSand.class, "FallingSand");
-		addMapping(EntityMinecart.class, "Minecart");
-		addMapping(EntityBoat.class, "Boat");
+		addMapping(EntityArrow.class, "Arrow", 10);
+		addMapping(EntitySnowball.class, "Snowball", 11);
+		addMapping(EntityItem.class, "Item", 1);
+		addMapping(EntityPainting.class, "Painting", 9);
+		addMapping(EntityLiving.class, "Mob", 48);
+		addMapping(EntityMob.class, "Monster", 49);
+		addMapping(EntityCreeper.class, "Creeper", 50);
+		addMapping(EntitySkeleton.class, "Skeleton", 51);
+		addMapping(EntitySpider.class, "Spider", 52);
+		addMapping(EntityGiantZombie.class, "Giant", 53);
+		addMapping(EntityZombie.class, "Zombie", 54);
+		addMapping(EntitySlime.class, "Slime", 55);
+		addMapping(EntityPig.class, "Pig", 90);
+		addMapping(EntitySheep.class, "Sheep", 91);
+		addMapping(EntityCow.class, "Cow", 91);
+		addMapping(EntityChicken.class, "Chicken", 91);
+		addMapping(EntityTNTPrimed.class, "PrimedTnt", 20);
+		addMapping(EntityFallingSand.class, "FallingSand", 21);
+		addMapping(EntityMinecart.class, "Minecart", 40);
+		addMapping(EntityBoat.class, "Boat", 41);
 	}
 }

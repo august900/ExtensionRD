@@ -44,7 +44,6 @@ net/minecraft/src/NetLoginHandler/<init> (Lnet/minecraft/server/MinecraftServer;
 net/minecraft/src/NetLoginHandler/tryLogin ()V java/io/IOException
 net/minecraft/src/NetServerHandler/handlePackets ()V java/io/IOException
 net/minecraft/src/NetworkListenThread/<init> (Lnet/minecraft/server/MinecraftServer;Ljava/net/InetAddress;I)V java/io/IOException
-net/minecraft/src/NetworkListenThread/handleNetworkListenThread ()V java/io/IOException
 net/minecraft/src/NetworkManager/<init> (Ljava/net/Socket;Ljava/lang/String;Lnet/minecraft/src/NetHandler;)V java/io/IOException
 net/minecraft/src/Packet/getPacketId ()I java/io/IOException
 net/minecraft/src/Packet/readPacket (Ljava/io/DataInputStream;)Lnet/minecraft/src/Packet; java/io/IOException
@@ -119,7 +118,7 @@ net/minecraft/src/PlayerInstance/onUpdate ()V java/io/IOException
 net/minecraft/src/PlayerManager/updatePlayerInstances ()V java/io/IOException
 net/minecraft/src/ServerConfiguration/onTick ()V java/io/IOException
 net/minecraft/src/ServerConfigurationManager/onTick ()V java/io/IOException
-net/minecraft/src/ThreadDownloadResources/downloadResource (Ljava/net/URL;Ljava/io/File;I)V java/io/IOException
+net/minecraft/src/ThreadDownloadResources/downloadResource (Ljava/net/URL;Ljava/io/File;J)V java/io/IOException
 paulscode/sound/Library/<init> ()V paulscode/sound/SoundSystemException
 paulscode/sound/Library/init ()V paulscode/sound/SoundSystemException
 paulscode/sound/SoundSystem/<init> (Ljava/lang/Class;)V paulscode/sound/SoundSystemException

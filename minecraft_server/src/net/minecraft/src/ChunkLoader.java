@@ -161,7 +161,7 @@ public class ChunkLoader implements IChunkLoader {
 		if(var4.heightMap == null || !var4.skylightMap.isValid()) {
 			var4.heightMap = new byte[256];
 			var4.skylightMap = new NibbleArray(var4.blocks.length);
-			var4.generateHeightMap();
+			var4.generateSkylightMap();
 		}
 
 		if(!var4.blocklightMap.isValid()) {
@@ -172,11 +172,11 @@ public class ChunkLoader implements IChunkLoader {
 		NBTTagList var5 = var1.getTagList("Entities");
 		if(var5 != null) {
 			for(int var6 = 0; var6 < var5.tagCount(); ++var6) {
-				NBTTagCompound var7 = (NBTTagCompound)var5.entities(var6);
+				NBTTagCompound var7 = (NBTTagCompound)var5.tagAt(var6);
 				Entity var8 = EntityList.createEntityFromNBT(var7, var0);
 				var4.hasEntities = true;
 				if(var8 != null) {
-					var4.removeEntityAtIndex(var8);
+					var4.addEntity(var8);
 				}
 			}
 		}
@@ -184,7 +184,7 @@ public class ChunkLoader implements IChunkLoader {
 		NBTTagList var10 = var1.getTagList("TileEntities");
 		if(var10 != null) {
 			for(int var11 = 0; var11 < var10.tagCount(); ++var11) {
-				NBTTagCompound var12 = (NBTTagCompound)var10.entities(var11);
+				NBTTagCompound var12 = (NBTTagCompound)var10.tagAt(var11);
 				TileEntity var9 = TileEntity.createAndLoadEntity(var12);
 				if(var9 != null) {
 					var4.addTileEntity(var9);

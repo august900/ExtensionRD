@@ -52,7 +52,7 @@ public class NBTTagList extends NBTBase {
 		this.tagList.add(var1);
 	}
 
-	public NBTBase entities(int var1) {
+	public NBTBase tagAt(int var1) {
 		return (NBTBase)this.tagList.get(var1);
 	}
 

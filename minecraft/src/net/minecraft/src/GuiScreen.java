@@ -17,6 +17,7 @@ public class GuiScreen extends Gui {
 	protected List controlList = new ArrayList();
 	public boolean allowUserInput = false;
 	protected FontRenderer fontRenderer;
+	private GuiButton selectedButton = null;
 
 	public void drawScreen(int var1, int var2, float var3) {
 		for(int var4 = 0; var4 < this.controlList.size(); ++var4) {
@@ -51,7 +52,8 @@ public class GuiScreen extends Gui {
 		if(var3 == 0) {
 			for(int var4 = 0; var4 < this.controlList.size(); ++var4) {
 				GuiButton var5 = (GuiButton)this.controlList.get(var4);
-				if(var5.mousePressed(var1, var2)) {
+				if(var5.mousePressed(this.mc, var1, var2)) {
+					this.selectedButton = var5;
 					this.mc.sndManager.playSoundFX("random.click", 1.0F, 1.0F);
 					this.actionPerformed(var5);
 				}
@@ -61,6 +63,11 @@ public class GuiScreen extends Gui {
 	}
 
 	protected void mouseMovedOrUp(int var1, int var2, int var3) {
+		if(this.selectedButton != null && var3 == 0) {
+			this.selectedButton.mouseReleased(var1, var2);
+			this.selectedButton = null;
+		}
+
 	}
 
 	protected void actionPerformed(GuiButton var1) {

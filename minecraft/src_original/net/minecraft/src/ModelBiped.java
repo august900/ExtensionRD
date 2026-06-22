@@ -10,6 +10,7 @@ public class ModelBiped extends ModelBase {
 	public ModelRenderer bipedLeftLeg;
 	public boolean heldItemLeft;
 	public boolean heldItemRight;
+	public boolean isSneak;
 
 	public ModelBiped() {
 		this(0.0F);
@@ -22,6 +23,7 @@ public class ModelBiped extends ModelBase {
 	public ModelBiped(float var1, float var2) {
 		this.heldItemLeft = false;
 		this.heldItemRight = false;
+		this.isSneak = false;
 		this.bipedHead = new ModelRenderer(0, 0);
 		this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, var1);
 		this.bipedHead.setRotationPoint(0.0F, 0.0F + var2, 0.0F);
@@ -109,6 +111,26 @@ public class ModelBiped extends ModelBase {
 			this.bipedRightArm.rotateAngleX = (float)((double)this.bipedRightArm.rotateAngleX - ((double)var8 * 1.2D + (double)var9));
 			this.bipedRightArm.rotateAngleY += this.bipedBody.rotateAngleY * 2.0F;
 			this.bipedRightArm.rotateAngleZ = MathHelper.sin(this.swingProgress * (float)Math.PI) * -0.4F;
+		}
+
+		if(this.isSneak) {
+			this.bipedBody.rotateAngleX = 0.5F;
+			this.bipedRightLeg.rotateAngleX -= 0.0F;
+			this.bipedLeftLeg.rotateAngleX -= 0.0F;
+			this.bipedRightArm.rotateAngleX += 0.4F;
+			this.bipedLeftArm.rotateAngleX += 0.4F;
+			this.bipedRightLeg.rotationPointZ = 4.0F;
+			this.bipedLeftLeg.rotationPointZ = 4.0F;
+			this.bipedRightLeg.rotationPointY = 9.0F;
+			this.bipedLeftLeg.rotationPointY = 9.0F;
+			this.bipedHead.rotationPointY = 1.0F;
+		} else {
+			this.bipedBody.rotateAngleX = 0.0F;
+			this.bipedRightLeg.rotationPointZ = 0.0F;
+			this.bipedLeftLeg.rotationPointZ = 0.0F;
+			this.bipedRightLeg.rotationPointY = 12.0F;
+			this.bipedLeftLeg.rotationPointY = 12.0F;
+			this.bipedHead.rotationPointY = 0.0F;
 		}
 
 		this.bipedRightArm.rotateAngleZ += MathHelper.cos(var3 * 0.09F) * 0.05F + 0.05F;

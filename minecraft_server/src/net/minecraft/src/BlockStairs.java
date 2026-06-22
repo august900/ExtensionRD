@@ -54,24 +54,26 @@ public class BlockStairs extends Block {
 	}
 
 	public void onNeighborBlockChange(World var1, int var2, int var3, int var4, int var5) {
-		if(var1.getBlockMaterial(var2, var3 + 1, var4).isSolid()) {
-			var1.setBlockWithNotify(var2, var3, var4, this.modelBlock.blockID);
-		} else {
-			this.g(var1, var2, var3, var4);
-			this.g(var1, var2 + 1, var3 - 1, var4);
-			this.g(var1, var2 - 1, var3 - 1, var4);
-			this.g(var1, var2, var3 - 1, var4 - 1);
-			this.g(var1, var2, var3 - 1, var4 + 1);
-			this.g(var1, var2 + 1, var3 + 1, var4);
-			this.g(var1, var2 - 1, var3 + 1, var4);
-			this.g(var1, var2, var3 + 1, var4 - 1);
-			this.g(var1, var2, var3 + 1, var4 + 1);
-		}
+		if(!var1.multiplayerWorld) {
+			if(var1.getBlockMaterial(var2, var3 + 1, var4).isSolid()) {
+				var1.setBlockWithNotify(var2, var3, var4, this.modelBlock.blockID);
+			} else {
+				this.updateState(var1, var2, var3, var4);
+				this.updateState(var1, var2 + 1, var3 - 1, var4);
+				this.updateState(var1, var2 - 1, var3 - 1, var4);
+				this.updateState(var1, var2, var3 - 1, var4 - 1);
+				this.updateState(var1, var2, var3 - 1, var4 + 1);
+				this.updateState(var1, var2 + 1, var3 + 1, var4);
+				this.updateState(var1, var2 - 1, var3 + 1, var4);
+				this.updateState(var1, var2, var3 + 1, var4 - 1);
+				this.updateState(var1, var2, var3 + 1, var4 + 1);
+			}
 
-		this.modelBlock.onNeighborBlockChange(var1, var2, var3, var4, var5);
+			this.modelBlock.onNeighborBlockChange(var1, var2, var3, var4, var5);
+		}
 	}
 
-	private void g(World var1, int var2, int var3, int var4) {
+	private void updateState(World var1, int var2, int var3, int var4) {
 		if(this.isBlockStair(var1, var2, var3, var4)) {
 			byte var5 = -1;
 			if(this.isBlockStair(var1, var2 + 1, var3 + 1, var4)) {
@@ -139,7 +141,7 @@ public class BlockStairs extends Block {
 
 	private boolean isBlockStair(World var1, int var2, int var3, int var4) {
 		int var5 = var1.getBlockId(var2, var3, var4);
-		return var5 == 0 ? false : Block.canBlockGrass[var5].getRenderType() == 10;
+		return var5 == 0 ? false : Block.blocksList[var5].getRenderType() == 10;
 	}
 
 	public void onBlockClicked(World var1, int var2, int var3, int var4, EntityPlayer var5) {

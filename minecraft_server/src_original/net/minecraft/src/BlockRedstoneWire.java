@@ -279,6 +279,6 @@ public class BlockRedstoneWire extends Block {
 
 	public static boolean isPowerProviderOrWire(IBlockAccess var0, int var1, int var2, int var3) {
 		int var4 = var0.getBlockId(var1, var2, var3);
-		return var4 == Block.redstoneWire.blockID ? true : (var4 == 0 ? false : Block.canBlockGrass[var4].canProvidePower());
+		return var4 == Block.redstoneWire.blockID ? true : (var4 == 0 ? false : Block.blocksList[var4].canProvidePower());
 	}
 }

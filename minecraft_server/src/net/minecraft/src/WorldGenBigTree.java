@@ -146,7 +146,7 @@ public class WorldGenBigTree extends WorldGenerator {
 		}
 	}
 
-	float b(int var1) {
+	float leafSize(int var1) {
 		return var1 >= 0 && var1 < this.leafDistanceLimit ? (var1 != 0 && var1 != this.leafDistanceLimit - 1 ? 3.0F : 2.0F) : -1.0F;
 	}
 
@@ -154,7 +154,7 @@ public class WorldGenBigTree extends WorldGenerator {
 		int var4 = var2;
 
 		for(int var5 = var2 + this.leafDistanceLimit; var4 < var5; ++var4) {
-			float var6 = this.b(var4 - var2);
+			float var6 = this.leafSize(var4 - var2);
 			this.genTreeLayer(var1, var4, var3, var6, (byte)1, 18);
 		}
 

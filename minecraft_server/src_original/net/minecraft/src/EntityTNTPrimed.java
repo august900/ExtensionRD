@@ -46,14 +46,14 @@ public class EntityTNTPrimed extends Entity {
 
 		if(this.fuse-- <= 0) {
 			this.setEntityDead();
-			this.createExplosion();
+			this.explode();
 		} else {
 			this.worldObj.spawnParticle("smoke", this.posX, this.posY + 0.5D, this.posZ, 0.0D, 0.0D, 0.0D);
 		}
 
 	}
 
-	private void createExplosion() {
+	private void explode() {
 		float var1 = 4.0F;
 		this.worldObj.createExplosion((Entity)null, this.posX, this.posY, this.posZ, var1);
 	}

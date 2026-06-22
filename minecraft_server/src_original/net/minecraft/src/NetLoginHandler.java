@@ -55,7 +55,7 @@ public class NetLoginHandler extends NetHandler {
 
 	public void handleLogin(Packet1Login var1) {
 		this.username = var1.username;
-		if(var1.protocolVersion != 14) {
+		if(var1.protocolVersion != 2) {
 			this.kickUser("Outdated client!");
 		} else {
 			if(!this.mcServer.onlineMode) {
@@ -73,9 +73,12 @@ public class NetLoginHandler extends NetHandler {
 			logger.info(this.getUserAndIPString() + " logged in");
 			NetServerHandler var3 = new NetServerHandler(this.mcServer, this.netManager, var2);
 			var3.sendPacket(new Packet1Login("", "", 0));
+			var3.sendPacket(new Packet6SpawnPosition(this.mcServer.worldMngr.spawnX, this.mcServer.worldMngr.spawnY, this.mcServer.worldMngr.spawnZ));
 			this.mcServer.configManager.playerLoggedIn(var2);
 			var3.teleportTo(var2.posX, var2.posY, var2.posZ, var2.rotationYaw, var2.rotationPitch);
+			var3.sendInventoryPackets();
 			this.mcServer.networkServer.addPlayer(var3);
+			var3.sendPacket(new Packet4UpdateTime(this.mcServer.worldMngr.worldTime));
 		}
 
 		this.finishedProcessing = true;

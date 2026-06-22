@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
@@ -138,8 +139,8 @@ public class GuiIngame extends Gui {
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		String var21;
-		if(this.mc.options.d) {
-			var8.drawStringWithShadow("Minecraft Alpha v1.0.16_02 (" + this.mc.debug + ")", 2, 2, 16777215);
+		if(Keyboard.isKeyDown(Keyboard.KEY_F3)) {
+			var8.drawStringWithShadow("Minecraft Alpha v1.1.2_01 (" + this.mc.debug + ")", 2, 2, 16777215);
 			var8.drawStringWithShadow(this.mc.debugInfoRenders(), 2, 12, 16777215);
 			var8.drawStringWithShadow(this.mc.getEntityDebug(), 2, 22, 16777215);
 			var8.drawStringWithShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);
@@ -152,7 +153,7 @@ public class GuiIngame extends Gui {
 			var21 = "Allocated memory: " + var27 * 100L / var22 + "% (" + var27 / 1024L / 1024L + "MB)";
 			this.drawString(var8, var21, var6 - var8.getStringWidth(var21) - 2, 12, 14737632);
 		} else {
-			var8.drawStringWithShadow("Minecraft Alpha v1.0.16_02", 2, 2, 16777215);
+			var8.drawStringWithShadow("Minecraft Alpha v1.1.2_01", 2, 2, 16777215);
 		}
 
 		if(this.recordPlayingUpFor > 0) {

@@ -19,7 +19,7 @@ public class EntityTracker {
 
 	public void trackEntity(Entity var1) {
 		if(var1 instanceof EntityPlayerMP) {
-			this.trackEntity(var1, 256, 2);
+			this.trackEntity(var1, 512, 2);
 			EntityPlayerMP var2 = (EntityPlayerMP)var1;
 			Iterator var3 = this.trackedEntitySet.iterator();
 
@@ -29,14 +29,12 @@ public class EntityTracker {
 					var4.updatePlayerEntity(var2);
 				}
 			}
-		}
-
-		if(var1 instanceof EntityItem) {
+		} else if(var1 instanceof EntityItem) {
 			this.trackEntity(var1, 64, 20);
-		}
-
-		if(var1 instanceof EntityMinecart) {
+		} else if(var1 instanceof EntityMinecart) {
 			this.trackEntity(var1, 160, 4);
+		} else if(var1 instanceof IAnimals) {
+			this.trackEntity(var1, 160, 2);
 		}
 
 	}

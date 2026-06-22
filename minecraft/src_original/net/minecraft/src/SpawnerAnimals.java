@@ -111,6 +111,12 @@ public class SpawnerAnimals {
 								if(var29.getCanSpawnHere()) {
 									++var4;
 									var1.spawnEntityInWorld(var29);
+									if(var29 instanceof EntitySpider && var1.rand.nextInt(100) == 0) {
+										EntitySkeleton var30 = new EntitySkeleton(var1);
+										var30.setLocationAndAngles((double)var18, (double)var19, (double)var20, var29.rotationYaw, 0.0F);
+										var1.spawnEntityInWorld(var30);
+										var30.mountEntity(var29);
+									}
 								}
 							}
 						}

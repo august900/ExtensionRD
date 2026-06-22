@@ -62,6 +62,10 @@ public class TileEntity {
 		return var1;
 	}
 
+	public void onInventoryChanged() {
+		this.worldObj.updateTileEntityChunkAndDoNothing(this.xCoord, this.yCoord, this.zCoord, this);
+	}
+
 	static {
 		addMapping(TileEntityFurnace.class, "Furnace");
 		addMapping(TileEntityChest.class, "Chest");

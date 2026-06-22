@@ -5,6 +5,7 @@ public class MovementInput {
 	public float moveForward = 0.0F;
 	public boolean unused = false;
 	public boolean jump = false;
+	public boolean sneak = false;
 
 	public void updatePlayerMoveState(EntityPlayer var1) {
 	}

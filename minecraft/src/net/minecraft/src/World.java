@@ -32,6 +32,7 @@ public class World implements IBlockAccess {
 	public boolean editingBlocks;
 	public static float[] lightBrightnessTable = new float[16];
 	private final long lockTimestamp;
+	protected int autosavePeriod;
 	public List playerEntities;
 	public int difficultySetting;
 	public Object fontRenderer;
@@ -40,9 +41,9 @@ public class World implements IBlockAccess {
 	public int spawnY;
 	public int spawnZ;
 	public boolean isNewWorld;
-	private List worldAccesses;
+	protected List worldAccesses;
 	private IChunkProvider chunkProvider;
-	private File saveDirectory;
+	public File saveDirectory;
 	public long randomSeed;
 	private NBTTagCompound nbtCompoundPlayer;
 	public long sizeOnDisk;
@@ -116,6 +117,7 @@ public class World implements IBlockAccess {
 		this.DIST_HASH_MAGIC = 1013904223;
 		this.editingBlocks = false;
 		this.lockTimestamp = System.currentTimeMillis();
+		this.autosavePeriod = 40;
 		this.playerEntities = new ArrayList();
 		this.rand = new Random();
 		this.isNewWorld = false;
@@ -149,6 +151,7 @@ public class World implements IBlockAccess {
 		this.DIST_HASH_MAGIC = 1013904223;
 		this.editingBlocks = false;
 		this.lockTimestamp = System.currentTimeMillis();
+		this.autosavePeriod = 40;
 		this.playerEntities = new ArrayList();
 		this.rand = new Random();
 		this.isNewWorld = false;
@@ -1527,7 +1530,7 @@ public class World implements IBlockAccess {
 		}
 
 		++this.worldTime;
-		if(this.worldTime % 4L == 0L) {
+		if(this.worldTime % (long)this.autosavePeriod == 0L) {
 			this.saveWorld(false, (IProgressUpdate)null);
 		}
 
@@ -1595,7 +1598,7 @@ public class World implements IBlockAccess {
 				var9 = this.getTopSolidOrLiquidBlock(var7 + var3, var8 + var4);
 				if(var9 >= 0 && var9 < 128 && var14.getSavedLightValue(EnumSkyBlock.Block, var7, var9, var8) < 10) {
 					var10 = var14.getBlockID(var7, var9 - 1, var8);
-					if(var14.getBlockID(var7, var9, var8) == 0 && var10 != 0 && var10 != Block.ice.blockID && Block.blocksList[var10].material.getIsSolid()) {
+					if(var14.getBlockID(var7, var9, var8) == 0 && Block.snow.canPlaceBlockAt(this, var7 + var3, var9, var8 + var4)) {
 						this.setBlockWithNotify(var7 + var3, var9, var8 + var4, Block.snow.blockID);
 					}
 
@@ -1706,9 +1709,13 @@ public class World implements IBlockAccess {
 		return this.loadedEntityList;
 	}
 
-	public void updateTileEntityChunkAndDoNothing(int var1, int var2, int var3) {
+	public void updateTileEntityChunkAndDoNothing(int var1, int var2, int var3, TileEntity var4) {
 		if(this.blockExists(var1, var2, var3)) {
 			this.getChunkFromBlockCoords(var1, var3).setChunkModified();
+		}
+
+		for(int var5 = 0; var5 < this.worldAccesses.size(); ++var5) {
+			((IWorldAccess)this.worldAccesses.get(var5)).doNothingWithTileEntity(var1, var2, var3, var4);
 		}
 
 	}
@@ -1893,6 +1900,28 @@ public class World implements IBlockAccess {
 		} catch (IOException var7) {
 			throw new MinecraftException("Failed to check session lock, aborting");
 		}
+	}
+
+	public void setWorldTime(long var1) {
+		this.worldTime = var1;
+	}
+
+	public void joinEntityInSurroundings(Entity var1) {
+		int var2 = MathHelper.floor_double(var1.posX / 16.0D);
+		int var3 = MathHelper.floor_double(var1.posZ / 16.0D);
+		byte var4 = 2;
+
+		for(int var5 = var2 - var4; var5 <= var2 + var4; ++var5) {
+			for(int var6 = var3 - var4; var6 <= var3 + var4; ++var6) {
+				this.getChunkFromChunkCoords(var5, var6);
+			}
+		}
+
+		if(!this.loadedEntityList.contains(var1)) {
+			System.out.println("REINSERTING PLAYER!");
+			this.loadedEntityList.add(var1);
+		}
+
 	}
 
 	static {

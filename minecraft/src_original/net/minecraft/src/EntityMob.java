@@ -32,11 +32,15 @@ public class EntityMob extends EntityCreature implements IMobs {
 
 	public boolean attackEntityFrom(Entity var1, int var2) {
 		if(super.attackEntityFrom(var1, var2)) {
-			if(var1 != this) {
-				this.entityToAttack = var1;
-			}
+			if(this.riddenByEntity != var1 && this.ridingEntity != var1) {
+				if(var1 != this) {
+					this.entityToAttack = var1;
+				}
 
-			return true;
+				return true;
+			} else {
+				return true;
+			}
 		} else {
 			return false;
 		}

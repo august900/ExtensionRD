@@ -16,14 +16,14 @@ public class WorldManager implements IWorldAccess {
 		this.mcServer.entityTracker.trackEntity(var1);
 	}
 
-	public void markBlockRangeNeedsUpdate(Entity var1) {
+	public void releaseEntitySkin(Entity var1) {
 		this.mcServer.entityTracker.untrackEntity(var1);
 	}
 
 	public void playSound(String var1, double var2, double var4, double var6, float var8, float var9) {
 	}
 
-	public void doNothingWithTileEntity(int var1, int var2, int var3, int var4, int var5, int var6) {
+	public void markBlockRangeNeedsUpdate(int var1, int var2, int var3, int var4, int var5, int var6) {
 	}
 
 	public void updateAllRenderers() {
@@ -34,5 +34,9 @@ public class WorldManager implements IWorldAccess {
 	}
 
 	public void playRecord(String var1, int var2, int var3, int var4) {
+	}
+
+	public void doNothingWithTileEntity(int var1, int var2, int var3, TileEntity var4) {
+		this.mcServer.configManager.sentTileEntityToPlayer(var1, var2, var3, var4);
 	}
 }

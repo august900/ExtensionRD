@@ -244,11 +244,11 @@ public class AxisAlignedBB {
 			var4 = null;
 		}
 
-		if(!this.isVecinXZ(var5)) {
+		if(!this.isVecInXZ(var5)) {
 			var5 = null;
 		}
 
-		if(!this.isVecinXZ(var6)) {
+		if(!this.isVecInXZ(var6)) {
 			var6 = null;
 		}
 
@@ -321,7 +321,7 @@ public class AxisAlignedBB {
 		return var1 == null ? false : var1.yCoord >= this.minY && var1.yCoord <= this.maxY && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
 	}
 
-	private boolean isVecinXZ(Vec3D var1) {
+	private boolean isVecInXZ(Vec3D var1) {
 		return var1 == null ? false : var1.xCoord >= this.minX && var1.xCoord <= this.maxX && var1.zCoord >= this.minZ && var1.zCoord <= this.maxZ;
 	}
 

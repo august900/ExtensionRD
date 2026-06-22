@@ -122,7 +122,7 @@ class MinecartTrackLogic {
 		return var1;
 	}
 
-	private boolean handleKeyPress(MinecartTrackLogic var1) {
+	private boolean canConnectTo(MinecartTrackLogic var1) {
 		if(this.isConnectedTo(var1)) {
 			return true;
 		} else if(this.connectedTracks.size() == 2) {
@@ -199,7 +199,7 @@ class MinecartTrackLogic {
 			return false;
 		} else {
 			var4.refreshConnectedTracks();
-			return var4.handleKeyPress(this);
+			return var4.canConnectTo(this);
 		}
 	}
 
@@ -309,7 +309,7 @@ class MinecartTrackLogic {
 			MinecartTrackLogic var8 = this.getMinecartTrackLogic((ChunkPosition)this.connectedTracks.get(var7));
 			if(var8 != null) {
 				var8.refreshConnectedTracks();
-				if(var8.handleKeyPress(this)) {
+				if(var8.canConnectTo(this)) {
 					var8.connectToNeighbor(this);
 				}
 			}
@@ -317,7 +317,7 @@ class MinecartTrackLogic {
 
 	}
 
-	static int getAdjacentTracks(MinecartTrackLogic var0) {
+	static int getNAdjacentTracks(MinecartTrackLogic var0) {
 		return var0.getAdjacentTracks();
 	}
 }

@@ -1,6 +1,6 @@
 package net.minecraft.src;
 
-class SlotCrafting extends SlotInventory {
+public class SlotCrafting extends SlotInventory {
 	private final IInventory craftMatrix;
 
 	public SlotCrafting(GuiContainer var1, IInventory var2, IInventory var3, int var4, int var5, int var6) {

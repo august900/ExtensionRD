@@ -174,10 +174,13 @@ public class EntityPlayer extends EntityLiving {
 
 	public void readEntityFromNBT(NBTTagCompound var1) {
 		super.readEntityFromNBT(var1);
+		NBTTagList var2 = var1.getTagList("Inventory");
+		this.inventory.readFromNBT(var2);
 	}
 
 	public void writeEntityToNBT(NBTTagCompound var1) {
 		super.writeEntityToNBT(var1);
+		var1.setTag("Inventory", this.inventory.writeToNBT(new NBTTagList()));
 	}
 
 	public void displayGUIChest(IInventory var1) {

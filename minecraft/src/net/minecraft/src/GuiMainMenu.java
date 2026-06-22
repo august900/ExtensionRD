@@ -57,9 +57,7 @@ public class GuiMainMenu extends GuiScreen {
 	public void initGui() {
 		Calendar var1 = Calendar.getInstance();
 		var1.setTime(new Date());
-		if(this.mc.session.username.equals("athna") && var1.get(2) + 1 == 7 && var1.get(5) == 26 && var1.get(1) == 2010) {
-			this.splashString = "Happy birthday! I love you! Alex x";
-		} else if(var1.get(2) + 1 == 11 && var1.get(5) == 9) {
+		if(var1.get(2) + 1 == 11 && var1.get(5) == 9) {
 			this.splashString = "Happy birthday, ez!";
 		} else if(var1.get(2) + 1 == 6 && var1.get(5) == 1) {
 			this.splashString = "Happy birthday, Notch!";

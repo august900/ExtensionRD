@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL12;
 
 public abstract class GuiContainer extends GuiScreen {
 	private static RenderItem itemRenderer = new RenderItem();
-	private ItemStack l = null;
 	protected int xSize = 176;
 	protected int ySize = 166;
 	protected List inventorySlots = new ArrayList();
@@ -40,10 +39,11 @@ public abstract class GuiContainer extends GuiScreen {
 			}
 		}
 
-		if(this.l != null) {
+		InventoryPlayer var10 = this.mc.thePlayer.inventory;
+		if(var10.draggedItemStack != null) {
 			GL11.glTranslatef(0.0F, 0.0F, 32.0F);
-			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, this.l, var1 - var4 - 8, var2 - var5 - 8);
-			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, this.l, var1 - var4 - 8, var2 - var5 - 8);
+			itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, var10.draggedItemStack, var1 - var4 - 8, var2 - var5 - 8);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, var10.draggedItemStack, var1 - var4 - 8, var2 - var5 - 8);
 		}
 
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
@@ -63,7 +63,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 	private void drawSlotInventory(SlotInventory var1) {
 		IInventory var2 = var1.inventory;
-		int var3 = var1.slotNumber;
+		int var3 = var1.slotIndex;
 		int var4 = var1.xDisplayPosition;
 		int var5 = var1.yDisplayPosition;
 		ItemStack var6 = var2.getStackInSlot(var3);
@@ -82,7 +82,7 @@ public abstract class GuiContainer extends GuiScreen {
 		itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, var6, var4, var5);
 	}
 
-	private SlotInventory getSlotAtPosition(int var1, int var2) {
+	private Slot getSlotAtPosition(int var1, int var2) {
 		for(int var3 = 0; var3 < this.inventorySlots.size(); ++var3) {
 			SlotInventory var4 = (SlotInventory)this.inventorySlots.get(var3);
 			if(var4.getIsMouseOverSlot(var1, var2)) {
@@ -95,78 +95,78 @@ public abstract class GuiContainer extends GuiScreen {
 
 	protected void mouseClicked(int var1, int var2, int var3) {
 		if(var3 == 0 || var3 == 1) {
-			SlotInventory var4 = this.getSlotAtPosition(var1, var2);
-			int var6;
+			Slot var4 = this.getSlotAtPosition(var1, var2);
+			InventoryPlayer var5 = this.mc.thePlayer.inventory;
+			int var7;
 			if(var4 != null) {
-				var4.onSlotChanged();
-				ItemStack var5 = var4.getStack();
-				if(var5 != null || this.l != null) {
-					if(var5 != null && this.l == null) {
-						var6 = var3 == 0 ? var5.stackSize : (var5.stackSize + 1) / 2;
-						this.l = var4.inventory.decrStackSize(var4.slotNumber, var6);
-						if(var5.stackSize == 0) {
+				ItemStack var6 = var4.getStack();
+				if(var6 != null || var5.draggedItemStack != null) {
+					if(var6 != null && var5.draggedItemStack == null) {
+						var7 = var3 == 0 ? var6.stackSize : (var6.stackSize + 1) / 2;
+						var5.draggedItemStack = var4.inventory.decrStackSize(var4.slotIndex, var7);
+						if(var6.stackSize == 0) {
 							var4.putStack((ItemStack)null);
 						}
 
 						var4.onPickupFromSlot();
-					} else if(var5 == null && this.l != null && var4.isItemValid(this.l)) {
-						var6 = var3 == 0 ? this.l.stackSize : 1;
-						if(var6 > var4.inventory.getInventoryStackLimit()) {
-							var6 = var4.inventory.getInventoryStackLimit();
+					} else if(var6 == null && var5.draggedItemStack != null && var4.isItemValid(var5.draggedItemStack)) {
+						var7 = var3 == 0 ? var5.draggedItemStack.stackSize : 1;
+						if(var7 > var4.inventory.getInventoryStackLimit()) {
+							var7 = var4.inventory.getInventoryStackLimit();
 						}
 
-						var4.putStack(this.l.splitStack(var6));
-						if(this.l.stackSize == 0) {
-							this.l = null;
+						var4.putStack(var5.draggedItemStack.splitStack(var7));
+						if(var5.draggedItemStack.stackSize == 0) {
+							var5.draggedItemStack = null;
 						}
-					} else if(var5 != null && this.l != null) {
-						if(var4.isItemValid(this.l)) {
-							if(var5.itemID != this.l.itemID) {
-								if(this.l.stackSize <= var4.inventory.getInventoryStackLimit()) {
-									var4.putStack(this.l);
-									this.l = var5;
+					} else if(var6 != null && var5.draggedItemStack != null) {
+						if(var4.isItemValid(var5.draggedItemStack)) {
+							if(var6.itemID != var5.draggedItemStack.itemID) {
+								if(var5.draggedItemStack.stackSize <= var4.inventory.getInventoryStackLimit()) {
+									var4.putStack(var5.draggedItemStack);
+									var5.draggedItemStack = var6;
 								}
-							} else if(var5.itemID == this.l.itemID) {
+							} else if(var6.itemID == var5.draggedItemStack.itemID) {
 								if(var3 == 0) {
-									var6 = this.l.stackSize;
-									if(var6 > var4.inventory.getInventoryStackLimit() - var5.stackSize) {
-										var6 = var4.inventory.getInventoryStackLimit() - var5.stackSize;
+									var7 = var5.draggedItemStack.stackSize;
+									if(var7 > var4.inventory.getInventoryStackLimit() - var6.stackSize) {
+										var7 = var4.inventory.getInventoryStackLimit() - var6.stackSize;
 									}
 
-									if(var6 > this.l.getMaxStackSize() - var5.stackSize) {
-										var6 = this.l.getMaxStackSize() - var5.stackSize;
+									if(var7 > var5.draggedItemStack.getMaxStackSize() - var6.stackSize) {
+										var7 = var5.draggedItemStack.getMaxStackSize() - var6.stackSize;
 									}
 
-									this.l.splitStack(var6);
-									if(this.l.stackSize == 0) {
-										this.l = null;
+									var5.draggedItemStack.splitStack(var7);
+									if(var5.draggedItemStack.stackSize == 0) {
+										var5.draggedItemStack = null;
 									}
 
-									var5.stackSize += var6;
+									var6.stackSize += var7;
 								} else if(var3 == 1) {
-									var6 = 1;
-									if(var6 > var4.inventory.getInventoryStackLimit() - var5.stackSize) {
-										var6 = var4.inventory.getInventoryStackLimit() - var5.stackSize;
+									var7 = 1;
+									if(var7 > var4.inventory.getInventoryStackLimit() - var6.stackSize) {
+										var7 = var4.inventory.getInventoryStackLimit() - var6.stackSize;
 									}
 
-									if(var6 > this.l.getMaxStackSize() - var5.stackSize) {
-										var6 = this.l.getMaxStackSize() - var5.stackSize;
+									if(var7 > var5.draggedItemStack.getMaxStackSize() - var6.stackSize) {
+										var7 = var5.draggedItemStack.getMaxStackSize() - var6.stackSize;
 									}
 
-									this.l.splitStack(var6);
-									if(this.l.stackSize == 0) {
-										this.l = null;
+									var5.draggedItemStack.splitStack(var7);
+									if(var5.draggedItemStack.stackSize == 0) {
+										var5.draggedItemStack = null;
 									}
 
-									var5.stackSize += var6;
+									var6.stackSize += var7;
 								}
 							}
-						} else if(var5.itemID == this.l.itemID && this.l.getMaxStackSize() > 1) {
-							var6 = var5.stackSize;
-							if(var6 > 0 && var6 + this.l.stackSize <= this.l.getMaxStackSize()) {
-								this.l.stackSize += var6;
-								var5.splitStack(var6);
-								if(var5.stackSize == 0) {
+						} else if(var6.itemID == var5.draggedItemStack.itemID && var5.draggedItemStack.getMaxStackSize() > 1) {
+							var7 = var6.stackSize;
+							if(var7 > 0 && var7 + var5.draggedItemStack.stackSize <= var5.draggedItemStack.getMaxStackSize()) {
+								var5.draggedItemStack.stackSize += var7;
+								var6.splitStack(var7);
+								if(var6.stackSize == 0) {
 									var4.putStack((ItemStack)null);
 								}
 
@@ -175,20 +175,22 @@ public abstract class GuiContainer extends GuiScreen {
 						}
 					}
 				}
-			} else if(this.l != null) {
-				int var8 = (this.width - this.xSize) / 2;
-				var6 = (this.height - this.ySize) / 2;
-				if(var1 < var8 || var2 < var6 || var1 >= var8 + this.xSize || var2 >= var6 + this.xSize) {
-					EntityPlayerSP var7 = this.mc.thePlayer;
+
+				var4.onSlotChanged();
+			} else if(var5.draggedItemStack != null) {
+				int var9 = (this.width - this.xSize) / 2;
+				var7 = (this.height - this.ySize) / 2;
+				if(var1 < var9 || var2 < var7 || var1 >= var9 + this.xSize || var2 >= var7 + this.xSize) {
+					EntityPlayerSP var8 = this.mc.thePlayer;
 					if(var3 == 0) {
-						var7.dropPlayerItem(this.l);
-						this.l = null;
+						var8.dropPlayerItem(var5.draggedItemStack);
+						var5.draggedItemStack = null;
 					}
 
 					if(var3 == 1) {
-						var7.dropPlayerItem(this.l.splitStack(1));
-						if(this.l.stackSize == 0) {
-							this.l = null;
+						var8.dropPlayerItem(var5.draggedItemStack.splitStack(1));
+						if(var5.draggedItemStack.stackSize == 0) {
+							var5.draggedItemStack = null;
 						}
 					}
 				}
@@ -211,13 +213,12 @@ public abstract class GuiContainer extends GuiScreen {
 	}
 
 	public void onGuiClosed() {
-		if(this.l != null) {
-			this.mc.thePlayer.dropPlayerItem(this.l);
+		InventoryPlayer var1 = this.mc.thePlayer.inventory;
+		if(var1.draggedItemStack != null) {
+			this.mc.thePlayer.dropPlayerItem(var1.draggedItemStack);
+			var1.draggedItemStack = null;
 		}
 
-	}
-
-	public void a(IInventory var1) {
 	}
 
 	public boolean doesGuiPauseGame() {

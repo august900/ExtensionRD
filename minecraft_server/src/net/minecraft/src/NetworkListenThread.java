@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.minecraft.server.MinecraftServer;
 
@@ -15,7 +16,7 @@ public class NetworkListenThread {
 	private int connectionNumber = 0;
 	private ArrayList pendingConnections = new ArrayList();
 	private ArrayList playerList = new ArrayList();
-	private MinecraftServer mcServer;
+	public MinecraftServer mcServer;
 
 	public NetworkListenThread(MinecraftServer var1, InetAddress var2, int var3) throws IOException {
 		this.mcServer = var1;
@@ -38,20 +39,34 @@ public class NetworkListenThread {
 		}
 	}
 
-	public void handleNetworkListenThread() throws IOException {
+	public void handleNetworkListenThread() {
 		int var1;
 		for(var1 = 0; var1 < this.pendingConnections.size(); ++var1) {
 			NetLoginHandler var2 = (NetLoginHandler)this.pendingConnections.get(var1);
-			var2.tryLogin();
+
+			try {
+				var2.tryLogin();
+			} catch (Exception var5) {
+				var2.kickUser("Internal server error");
+				logger.log(Level.WARNING, "Failed to handle packet: " + var5, var5);
+			}
+
 			if(var2.finishedProcessing) {
 				this.pendingConnections.remove(var1--);
 			}
 		}
 
 		for(var1 = 0; var1 < this.playerList.size(); ++var1) {
-			NetServerHandler var3 = (NetServerHandler)this.playerList.get(var1);
-			var3.handlePackets();
-			if(var3.connectionClosed) {
+			NetServerHandler var6 = (NetServerHandler)this.playerList.get(var1);
+
+			try {
+				var6.handlePackets();
+			} catch (Exception var4) {
+				var6.kickPlayer("Internal server error");
+				logger.log(Level.WARNING, "Failed to handle packet: " + var4, var4);
+			}
+
+			if(var6.connectionClosed) {
 				this.playerList.remove(var1--);
 			}
 		}

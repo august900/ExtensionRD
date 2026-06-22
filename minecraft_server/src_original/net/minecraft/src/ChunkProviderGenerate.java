@@ -18,7 +18,6 @@ public class ChunkProviderGenerate implements IChunkProvider {
 	private double[] gravelNoise = new double[256];
 	private double[] stoneNoise = new double[256];
 	private MapGenBase caveGenerator = new MapGenCaves();
-	private MapGenBase caveGenerator2 = new MapGenBase2();
 	double[] noise3;
 	double[] noise1;
 	double[] noise2;
@@ -186,7 +185,7 @@ public class ChunkProviderGenerate implements IChunkProvider {
 		this.generateTerrain(var1, var2, var3);
 		this.replaceSurfaceBlocks(var1, var2, var3);
 		this.caveGenerator.generate(this, this.worldObj, var1, var2, var3);
-		var4.generateHeightMap();
+		var4.generateSkylightMap();
 		return var4;
 	}
 

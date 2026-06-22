@@ -65,7 +65,7 @@ public class Chunk {
 	public void doNothing() {
 	}
 
-	public void generateHeightMap() {
+	public void generateSkylightMap() {
 		int var1 = 127;
 
 		int var2;
@@ -123,7 +123,7 @@ public class Chunk {
 		}
 
 		if(var5 != var4) {
-			this.worldObj.markBlockAsNeedsUpdate(var1, var3, var5, var4);
+			this.worldObj.markBlocksDirtyVertical(var1, var3, var5, var4);
 			this.heightMap[var3 << 4 | var1] = (byte)var5;
 			int var7;
 			int var8;
@@ -194,14 +194,14 @@ public class Chunk {
 		byte var6 = (byte)var4;
 		int var7 = this.heightMap[var3 << 4 | var1] & 255;
 		int var8 = this.blocks[var1 << 11 | var3 << 7 | var2] & 255;
-		if(var8 == var4) {
+		if(var8 == var4 && this.data.get(var1, var2, var3) == var5) {
 			return false;
 		} else {
 			int var9 = this.xPosition * 16 + var1;
 			int var10 = this.zPosition * 16 + var3;
 			this.blocks[var1 << 11 | var3 << 7 | var2] = var6;
 			if(var8 != 0 && !this.worldObj.multiplayerWorld) {
-				Block.canBlockGrass[var8].onBlockRemoval(this.worldObj, var9, var2, var10);
+				Block.blocksList[var8].onBlockRemoval(this.worldObj, var9, var2, var10);
 			}
 
 			this.data.set(var1, var2, var3, var5);
@@ -217,7 +217,7 @@ public class Chunk {
 			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var9, var2, var10, var9, var2, var10);
 			this.updateSkylight_do(var1, var3);
 			if(var4 != 0) {
-				Block.canBlockGrass[var4].onBlockAdded(this.worldObj, var9, var2, var10);
+				Block.blocksList[var4].onBlockAdded(this.worldObj, var9, var2, var10);
 			}
 
 			this.isModified = true;
@@ -236,7 +236,7 @@ public class Chunk {
 			int var9 = this.zPosition * 16 + var3;
 			this.blocks[var1 << 11 | var3 << 7 | var2] = var5;
 			if(var7 != 0) {
-				Block.canBlockGrass[var7].onBlockRemoval(this.worldObj, var8, var2, var9);
+				Block.blocksList[var7].onBlockRemoval(this.worldObj, var8, var2, var9);
 			}
 
 			this.data.set(var1, var2, var3, 0);
@@ -252,7 +252,7 @@ public class Chunk {
 			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Block, var8, var2, var9, var8, var2, var9);
 			this.updateSkylight_do(var1, var3);
 			if(var4 != 0 && !this.worldObj.multiplayerWorld) {
-				Block.canBlockGrass[var4].onBlockAdded(this.worldObj, var8, var2, var9);
+				Block.blocksList[var4].onBlockAdded(this.worldObj, var8, var2, var9);
 			}
 
 			this.isModified = true;
@@ -302,7 +302,7 @@ public class Chunk {
 		return var5;
 	}
 
-	public void removeEntityAtIndex(Entity var1) {
+	public void addEntity(Entity var1) {
 		if(!this.isChunkRendered) {
 			this.hasEntities = true;
 			int var2 = MathHelper.floor_double(var1.posX / 16.0D);
@@ -353,7 +353,11 @@ public class Chunk {
 		TileEntity var5 = (TileEntity)this.chunkTileEntityMap.get(var4);
 		if(var5 == null) {
 			int var6 = this.getBlockID(var1, var2, var3);
-			BlockContainer var7 = (BlockContainer)Block.canBlockGrass[var6];
+			if(!Block.isBlockContainer[var6]) {
+				return null;
+			}
+
+			BlockContainer var7 = (BlockContainer)Block.blocksList[var6];
 			var7.onBlockAdded(this.worldObj, this.xPosition * 16 + var1, var2, this.zPosition * 16 + var3);
 			var5 = (TileEntity)this.chunkTileEntityMap.get(var4);
 		}
@@ -374,7 +378,7 @@ public class Chunk {
 		var4.xCoord = this.xPosition * 16 + var1;
 		var4.yCoord = var2;
 		var4.zCoord = this.zPosition * 16 + var3;
-		if(this.getBlockID(var1, var2, var3) != 0 && Block.canBlockGrass[this.getBlockID(var1, var2, var3)] instanceof BlockContainer) {
+		if(this.getBlockID(var1, var2, var3) != 0 && Block.blocksList[this.getBlockID(var1, var2, var3)] instanceof BlockContainer) {
 			if(this.isChunkLoaded) {
 				if(this.chunkTileEntityMap.get(var5) != null) {
 					this.worldObj.loadedTileEntityList.remove(this.chunkTileEntityMap.get(var5));
@@ -473,7 +477,7 @@ public class Chunk {
 		return this.neverSave ? false : (this.hasEntities && this.worldObj.worldTime != this.lastSaveTime ? true : this.isModified);
 	}
 
-	public int setChunkData(byte[] var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
+	public int getChunkData(byte[] var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
 		int var9;
 		int var10;
 		int var11;

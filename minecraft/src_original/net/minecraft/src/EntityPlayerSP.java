@@ -26,6 +26,10 @@ public class EntityPlayerSP extends EntityPlayer {
 
 	public void onLivingUpdate() {
 		this.movementInput.updatePlayerMoveState(this);
+		if(this.movementInput.sneak && this.ySize < 0.2F) {
+			this.ySize = 0.2F;
+		}
+
 		super.onLivingUpdate();
 	}
 
@@ -40,14 +44,11 @@ public class EntityPlayerSP extends EntityPlayer {
 	public void writeEntityToNBT(NBTTagCompound var1) {
 		super.writeEntityToNBT(var1);
 		var1.setInteger("Score", this.score);
-		var1.setTag("Inventory", this.inventory.writeToNBT(new NBTTagList()));
 	}
 
 	public void readEntityFromNBT(NBTTagCompound var1) {
 		super.readEntityFromNBT(var1);
 		this.score = var1.getInteger("Score");
-		NBTTagList var2 = var1.getTagList("Inventory");
-		this.inventory.readFromNBT(var2);
 	}
 
 	public void displayGUIChest(IInventory var1) {
@@ -108,5 +109,9 @@ public class EntityPlayerSP extends EntityPlayer {
 	}
 
 	public void onPlayerUpdate() {
+	}
+
+	public boolean isSneaking() {
+		return this.movementInput.sneak;
 	}
 }

@@ -9,7 +9,7 @@ public class EntityArrow extends Entity {
 	private int inTile = 0;
 	private boolean inData = false;
 	public int arrowShake = 0;
-	private EntityLiving entityLiving;
+	private EntityLiving shootingEntity;
 	private int ticksInGround;
 	private int ticksInAir = 0;
 
@@ -20,7 +20,7 @@ public class EntityArrow extends Entity {
 
 	public EntityArrow(World var1, EntityLiving var2) {
 		super(var1);
-		this.entityLiving = var2;
+		this.shootingEntity = var2;
 		this.setSize(0.5F, 0.5F);
 		this.setLocationAndAngles(var2.posX, var2.posY, var2.posZ, var2.rotationYaw, var2.rotationPitch);
 		this.posX -= (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI) * 0.16F);
@@ -97,7 +97,7 @@ public class EntityArrow extends Entity {
 		float var10;
 		for(int var8 = 0; var8 < var5.size(); ++var8) {
 			Entity var9 = (Entity)var5.get(var8);
-			if(var9.canBeCollidedWith() && (var9 != this.entityLiving || this.ticksInAir >= 5)) {
+			if(var9.canBeCollidedWith() && (var9 != this.shootingEntity || this.ticksInAir >= 5)) {
 				var10 = 0.3F;
 				AxisAlignedBB var11 = var9.boundingBox.expand((double)var10, (double)var10, (double)var10);
 				MovingObjectPosition var12 = var11.calculateIntercept(var15, var2);
@@ -118,7 +118,7 @@ public class EntityArrow extends Entity {
 		float var16;
 		if(var3 != null) {
 			if(var3.entityHit != null) {
-				if(var3.entityHit.attackEntityFrom(this.entityLiving, 4)) {
+				if(var3.entityHit.attackEntityFrom(this.shootingEntity, 4)) {
 					this.worldObj.playSoundAtEntity(this, "random.drr", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
 					this.setEntityDead();
 				} else {
@@ -207,7 +207,7 @@ public class EntityArrow extends Entity {
 	}
 
 	public void onCollideWithPlayer(EntityPlayer var1) {
-		if(this.inData && this.entityLiving == var1 && this.arrowShake <= 0 && var1.inventory.addItemStackToInventory(new ItemStack(Item.arrow.shiftedIndex, 1))) {
+		if(this.inData && this.shootingEntity == var1 && this.arrowShake <= 0 && var1.inventory.addItemStackToInventory(new ItemStack(Item.arrow.shiftedIndex, 1))) {
 			this.worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 			var1.onItemPickup(this, 1);
 			this.setEntityDead();

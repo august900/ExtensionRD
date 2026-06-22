@@ -1,5 +1,7 @@
 package net.minecraft.src;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutput;
@@ -33,6 +35,32 @@ public class CompressedStreamTools {
 			var2.close();
 		}
 
+	}
+
+	public static NBTTagCompound decompress(byte[] var0) throws IOException {
+		DataInputStream var1 = new DataInputStream(new GZIPInputStream(new ByteArrayInputStream(var0)));
+
+		NBTTagCompound var2;
+		try {
+			var2 = read(var1);
+		} finally {
+			var1.close();
+		}
+
+		return var2;
+	}
+
+	public static byte[] compress(NBTTagCompound var0) throws IOException {
+		ByteArrayOutputStream var1 = new ByteArrayOutputStream();
+		DataOutputStream var2 = new DataOutputStream(new GZIPOutputStream(var1));
+
+		try {
+			write(var0, var2);
+		} finally {
+			var2.close();
+		}
+
+		return var1.toByteArray();
 	}
 
 	public static NBTTagCompound read(DataInput var0) throws IOException {

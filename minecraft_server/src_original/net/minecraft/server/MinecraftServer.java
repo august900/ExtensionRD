@@ -21,14 +21,15 @@ import net.minecraft.src.IUpdatePlayerListBox;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NetworkListenThread;
-import net.minecraft.src.NoiseGenerator;
 import net.minecraft.src.Packet3Chat;
+import net.minecraft.src.Packet4UpdateTime;
 import net.minecraft.src.PropertyManager;
+import net.minecraft.src.ServerCommand;
 import net.minecraft.src.ServerConfigurationManager;
 import net.minecraft.src.ServerGUI;
 import net.minecraft.src.ThreadCommandReader;
 import net.minecraft.src.ThreadServerApplication;
-import net.minecraft.src.ThreadSleepForever;
+import net.minecraft.src.ThreadSleepForeverServer;
 import net.minecraft.src.Vec3D;
 import net.minecraft.src.WorldManager;
 import net.minecraft.src.WorldServer;
@@ -51,7 +52,7 @@ public class MinecraftServer implements ICommandListener, Runnable {
 	public boolean onlineMode;
 
 	public MinecraftServer() {
-		new ThreadSleepForever(this);
+		new ThreadSleepForeverServer(this);
 	}
 
 	private boolean startServer() throws IOException {
@@ -59,7 +60,7 @@ public class MinecraftServer implements ICommandListener, Runnable {
 		var1.setDaemon(true);
 		var1.start();
 		ConsoleLogManager.init();
-		logger.info("Starting minecraft server version 0.1.3");
+		logger.info("Starting minecraft server version 0.2.1");
 		if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L) {
 			logger.warning("**** NOT ENOUGH RAM!");
 			logger.warning("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");
@@ -104,8 +105,10 @@ public class MinecraftServer implements ICommandListener, Runnable {
 
 	private void initWorld(String var1) {
 		logger.info("Preparing start region");
-		this.worldMngr = new WorldServer(new File("."), var1);
+		this.worldMngr = new WorldServer(new File("."), var1, this.propertyManagerObj.getBooleanProperty("monsters", false));
 		this.worldMngr.addWorldAccess(new WorldManager(this));
+		this.worldMngr.difficultySetting = 1;
+		this.configManager.setPlayerManager(this.worldMngr);
 		byte var2 = 10;
 
 		for(int var3 = -var2; var3 <= var2; ++var3) {
@@ -141,6 +144,10 @@ public class MinecraftServer implements ICommandListener, Runnable {
 
 	private void stop() {
 		logger.info("Stopping server");
+		if(this.configManager != null) {
+			this.configManager.savePlayerStates();
+		}
+
 		if(this.worldMngr != null) {
 			this.save();
 		}
@@ -234,6 +241,10 @@ public class MinecraftServer implements ICommandListener, Runnable {
 		AxisAlignedBB.clearBoundingBoxPool();
 		Vec3D.initialize();
 		++this.deathTime;
+		if(this.deathTime % 20 == 0) {
+			this.configManager.sendPacketToAllPlayers(new Packet4UpdateTime(this.worldMngr.worldTime));
+		}
+
 		this.worldMngr.tick();
 
 		while(this.worldMngr.updatingLighting()) {
@@ -257,14 +268,14 @@ public class MinecraftServer implements ICommandListener, Runnable {
 	}
 
 	public void addCommand(String var1, ICommandListener var2) {
-		this.commands.add(new NoiseGenerator(var1, var2));
+		this.commands.add(new ServerCommand(var1, var2));
 	}
 
 	public void commandLineParser() {
 		while(this.commands.size() > 0) {
-			NoiseGenerator var1 = (NoiseGenerator)this.commands.remove(0);
-			String var2 = var1.a;
-			ICommandListener var3 = var1.b;
+			ServerCommand var1 = (ServerCommand)this.commands.remove(0);
+			String var2 = var1.command;
+			ICommandListener var3 = var1.commandListener;
 			String var4 = var3.getUsername();
 			if(!var2.toLowerCase().startsWith("help") && !var2.toLowerCase().startsWith("?")) {
 				if(var2.toLowerCase().startsWith("list")) {
@@ -350,7 +361,7 @@ public class MinecraftServer implements ICommandListener, Runnable {
 										this.print(var4, "Teleporting " + var5[1] + " to " + var5[2] + ".");
 									}
 								} else {
-									var3.addHelpCommandMessage("Syntax error, please provice a source and a target-");
+									var3.addHelpCommandMessage("Syntax error, please provice a source and a target.");
 								}
 							} else if(var2.toLowerCase().startsWith("give ")) {
 								var5 = var2.split(" ");
@@ -391,7 +402,20 @@ public class MinecraftServer implements ICommandListener, Runnable {
 							} else if(var2.toLowerCase().startsWith("say ")) {
 								var2 = var2.substring(var2.indexOf(" ")).trim();
 								logger.info("[" + var4 + "] " + var2);
-								this.configManager.sendPacketToPlayer(new Packet3Chat("\u00a7d[Server] " + var2));
+								this.configManager.sendPacketToAllPlayers(new Packet3Chat("\u00a7d[Server] " + var2));
+							} else if(var2.toLowerCase().startsWith("tell ")) {
+								var5 = var2.split(" ");
+								if(var5.length >= 3) {
+									var2 = var2.substring(var2.indexOf(" ")).trim();
+									var2 = var2.substring(var2.indexOf(" ")).trim();
+									logger.info("[" + var4 + "->" + var5[1] + "] " + var2);
+									this.configManager.sendPacketToAllPlayers(new Packet3Chat("\u00a7d[Server] " + var2));
+									var2 = "\u00a77" + var4 + " whispers " + var2;
+									logger.info(var2);
+									if(!this.configManager.sendPacketToPlayer(var5[1], new Packet3Chat(var2))) {
+										var3.addHelpCommandMessage("There\'s no player by that name online.");
+									}
+								}
 							} else {
 								logger.info("Unknown console command. Type \"help\" for help.");
 							}
@@ -412,6 +436,7 @@ public class MinecraftServer implements ICommandListener, Runnable {
 				var3.addHelpCommandMessage("   deop <player>             removes op status from a player");
 				var3.addHelpCommandMessage("   tp <player1> <player2>    moves one player to the same location as another player");
 				var3.addHelpCommandMessage("   give <player> <id> [num]  gives a player a resource");
+				var3.addHelpCommandMessage("   tell <player> <message>   sends a private message to a player");
 				var3.addHelpCommandMessage("   stop                      gracefully stops the server");
 				var3.addHelpCommandMessage("   save-all                  forces a server-wide level save");
 				var3.addHelpCommandMessage("   save-off                  disables terrain saving (useful for backup scripts)");
@@ -425,7 +450,7 @@ public class MinecraftServer implements ICommandListener, Runnable {
 
 	private void print(String var1, String var2) {
 		String var3 = var1 + ": " + var2;
-		this.configManager.setPlayerManager("\u00a77(" + var3 + ")");
+		this.configManager.sendChatMessageToAllOps("\u00a77(" + var3 + ")");
 		logger.info(var3);
 	}
 

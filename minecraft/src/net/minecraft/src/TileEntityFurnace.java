@@ -107,40 +107,41 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
 		boolean var2 = false;
 		if(this.furnaceBurnTime > 0) {
 			--this.furnaceBurnTime;
-			var2 = true;
 		}
 
-		if(this.furnaceBurnTime == 0 && this.canSmelt()) {
-			this.currentItemBurnTime = this.furnaceBurnTime = this.getItemBurnTime(this.furnaceItemStacks[1]);
-			if(this.furnaceBurnTime > 0) {
-				var2 = true;
-				if(this.furnaceItemStacks[1] != null) {
-					--this.furnaceItemStacks[1].stackSize;
-					if(this.furnaceItemStacks[1].stackSize == 0) {
-						this.furnaceItemStacks[1] = null;
+		if(!this.worldObj.multiplayerWorld) {
+			if(this.furnaceBurnTime == 0 && this.canSmelt()) {
+				this.currentItemBurnTime = this.furnaceBurnTime = this.getItemBurnTime(this.furnaceItemStacks[1]);
+				if(this.furnaceBurnTime > 0) {
+					var2 = true;
+					if(this.furnaceItemStacks[1] != null) {
+						--this.furnaceItemStacks[1].stackSize;
+						if(this.furnaceItemStacks[1].stackSize == 0) {
+							this.furnaceItemStacks[1] = null;
+						}
 					}
 				}
 			}
-		}
 
-		if(this.isBurning() && this.canSmelt()) {
-			++this.furnaceCookTime;
-			if(this.furnaceCookTime == 200) {
+			if(this.isBurning() && this.canSmelt()) {
+				++this.furnaceCookTime;
+				if(this.furnaceCookTime == 200) {
+					this.furnaceCookTime = 0;
+					this.smeltItem();
+					var2 = true;
+				}
+			} else {
 				this.furnaceCookTime = 0;
-				this.smeltItem();
-				var2 = true;
 			}
-		} else {
-			this.furnaceCookTime = 0;
-		}
 
-		if(var1 != this.furnaceBurnTime > 0) {
-			var2 = true;
-			BlockFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+			if(var1 != this.furnaceBurnTime > 0) {
+				var2 = true;
+				BlockFurnace.updateFurnaceBlockState(this.furnaceBurnTime > 0, this.worldObj, this.xCoord, this.yCoord, this.zCoord);
+			}
 		}
 
 		if(var2) {
-			this.worldObj.updateTileEntityChunkAndDoNothing(this.xCoord, this.yCoord, this.zCoord);
+			this.onInventoryChanged();
 		}
 
 	}
@@ -180,11 +181,7 @@ public class TileEntityFurnace extends TileEntity implements IInventory {
 			return 0;
 		} else {
 			int var2 = var1.getItem().shiftedIndex;
-			return var2 < 256 && Block.blocksList[var2].material == Material.wood ? 300 : (var2 == Item.stick.shiftedIndex ? 100 : (var2 == Item.coal.shiftedIndex ? 1600 : 0));
+			return var2 < 256 && Block.blocksList[var2].material == Material.wood ? 300 : (var2 == Item.stick.shiftedIndex ? 100 : (var2 == Item.coal.shiftedIndex ? 1600 : (var2 == Item.bucketLava.shiftedIndex ? 20000 : 0)));
 		}
-	}
-
-	public void onInventoryChanged() {
-		this.worldObj.updateTileEntityChunkAndDoNothing(this.xCoord, this.yCoord, this.zCoord);
 	}
 }

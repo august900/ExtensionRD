@@ -1107,4 +1107,7 @@ public class RenderGlobal implements IWorldAccess {
 		}
 
 	}
+
+	public void doNothingWithTileEntity(int var1, int var2, int var3, TileEntity var4) {
+	}
 }

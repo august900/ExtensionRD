@@ -1,6 +1,6 @@
 package net.minecraft.src;
 
-public class EntityGiantZombie extends EntityMobs {
+public class EntityGiantZombie extends EntityMob {
 	public EntityGiantZombie(World var1) {
 		super(var1);
 		this.texture = "/mob/zombie.png";

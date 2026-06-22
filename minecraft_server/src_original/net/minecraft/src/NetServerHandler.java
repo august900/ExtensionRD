@@ -15,6 +15,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 	private double lastPosY;
 	private double lastPosZ;
 	private boolean hasMoved = true;
+	private ItemStack heldItem = null;
 
 	public NetServerHandler(MinecraftServer var1, NetworkManager var2, EntityPlayerMP var3) {
 		this.mcServer = var1;
@@ -35,7 +36,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 	public void kickPlayer(String var1) {
 		this.netManager.addToSendQueue(new Packet255KickDisconnect(var1));
 		this.netManager.serverShutdown();
-		this.mcServer.configManager.sendPacketToAllPlayers(this.playerEntity);
+		this.mcServer.configManager.playerLoggedOut(this.playerEntity);
 		this.connectionClosed = true;
 	}
 
@@ -122,6 +123,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 	}
 
 	public void handleBlockDig(Packet14BlockDig var1) {
+		this.playerEntity.inventory.mainInventory[this.playerEntity.inventory.currentItem] = this.heldItem;
 		boolean var2 = this.mcServer.worldMngr.disableSpawnProtection = this.mcServer.configManager.isOp(this.playerEntity.username);
 		boolean var3 = false;
 		if(var1.status == 0) {
@@ -192,7 +194,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 		}
 
 		if(var8 > 16 || var2) {
-			ItemStack var9 = new ItemStack(var1.id);
+			ItemStack var9 = var1.id >= 0 ? new ItemStack(var1.id) : null;
 			this.playerEntity.theItemInWorldManager.activeBlockOrUseItem(this.playerEntity, this.mcServer.worldMngr, var9, var3, var4, var5, var6);
 		}
 
@@ -202,7 +204,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
 	public void handleErrorMessage(String var1) {
 		logger.info(this.playerEntity.username + " lost connection: " + var1);
-		this.mcServer.configManager.sendPacketToAllPlayers(this.playerEntity);
+		this.mcServer.configManager.playerLoggedOut(this.playerEntity);
 		this.connectionClosed = true;
 	}
 
@@ -217,12 +219,14 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
 	public void handleBlockItemSwitch(Packet16BlockItemSwitch var1) {
 		int var2 = var1.id;
+		this.playerEntity.inventory.currentItem = this.playerEntity.inventory.mainInventory.length - 1;
 		if(var2 == 0) {
-			this.playerEntity.inventory.mainInventory[this.playerEntity.inventory.currentItem] = null;
+			this.heldItem = null;
 		} else {
-			this.playerEntity.inventory.mainInventory[this.playerEntity.inventory.currentItem] = new ItemStack(var2);
+			this.heldItem = new ItemStack(var2);
 		}
 
+		this.playerEntity.inventory.mainInventory[this.playerEntity.inventory.currentItem] = this.heldItem;
 		this.mcServer.entityTracker.sendPacketToTrackedPlayers(this.playerEntity, new Packet16BlockItemSwitch(this.playerEntity.entityID, var2));
 	}
 
@@ -257,7 +261,7 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 			} else {
 				var2 = "<" + this.playerEntity.username + "> " + var2;
 				logger.info(var2);
-				this.mcServer.configManager.sendPacketToPlayer(new Packet3Chat(var2));
+				this.mcServer.configManager.sendPacketToAllPlayers(new Packet3Chat(var2));
 			}
 
 		}
@@ -267,15 +271,17 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 		if(var1.toLowerCase().startsWith("/me ")) {
 			var1 = "* " + this.playerEntity.username + " " + var1.substring(var1.indexOf(" ")).trim();
 			logger.info(var1);
-			this.mcServer.configManager.sendPacketToPlayer(new Packet3Chat(var1));
+			this.mcServer.configManager.sendPacketToAllPlayers(new Packet3Chat(var1));
 		} else if(var1.toLowerCase().startsWith("/tell ")) {
 			String[] var2 = var1.split(" ");
 			if(var2.length >= 3) {
 				var1 = var1.substring(var1.indexOf(" ")).trim();
 				var1 = var1.substring(var1.indexOf(" ")).trim();
 				var1 = "\u00a77" + this.playerEntity.username + " whispers " + var1;
-				logger.info(var1);
-				this.mcServer.configManager.sendPacketToPlayer(new Packet3Chat(var1));
+				logger.info(var1 + " to " + var2[1]);
+				if(!this.mcServer.configManager.sendPacketToPlayer(var2[1], new Packet3Chat(var1))) {
+					this.sendPacket(new Packet3Chat("\u00a7cThere\'s no player by that name online."));
+				}
 			}
 		} else {
 			int var3;
@@ -343,5 +349,35 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
 	public String getUsername() {
 		return this.playerEntity.username;
+	}
+
+	public void handlePlayerInventory(Packet5PlayerInventory var1) {
+		if(var1.inventoryType == -1) {
+			this.playerEntity.inventory.mainInventory = var1.inventory;
+		}
+
+		if(var1.inventoryType == -2) {
+			this.playerEntity.inventory.craftingInventory = var1.inventory;
+		}
+
+		if(var1.inventoryType == -3) {
+			this.playerEntity.inventory.armorInventory = var1.inventory;
+		}
+
+	}
+
+	public void sendInventoryPackets() {
+		this.netManager.addToSendQueue(new Packet5PlayerInventory(-1, this.playerEntity.inventory.mainInventory));
+		this.netManager.addToSendQueue(new Packet5PlayerInventory(-2, this.playerEntity.inventory.craftingInventory));
+		this.netManager.addToSendQueue(new Packet5PlayerInventory(-3, this.playerEntity.inventory.armorInventory));
+	}
+
+	public void handleComplexEntity(Packet59ComplexEntity var1) {
+		TileEntity var2 = this.mcServer.worldMngr.getBlockTileEntity(var1.xCoord, var1.yCoord, var1.zCoord);
+		if(var2 != null) {
+			var2.readFromNBT(var1.tileEntityNBT);
+			var2.onInventoryChanged();
+		}
+
 	}
 }

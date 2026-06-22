@@ -21,6 +21,7 @@ public class EntityLiving extends Entity {
 	protected float unusedFloat1 = 1.0F;
 	protected int scoreValue = 0;
 	protected float unusedFloat2 = 0.0F;
+	public boolean isAIEnabled = false;
 	public float prevSwingProgress;
 	public float swingProgress;
 	public int health = 10;
@@ -39,6 +40,13 @@ public class EntityLiving extends Entity {
 	public float prevLimbYaw;
 	public float limbYaw;
 	public float limbSwing;
+	private int newPosRotationIncrements;
+	private double newPosX;
+	private double newPosY;
+	private double newPosZ;
+	private double newRotationYaw;
+	private double newRotationPitch;
+	float unusedFloat3 = 0.0F;
 	protected int entityAge = 0;
 	protected float moveStrafing;
 	protected float moveForward;
@@ -171,6 +179,16 @@ public class EntityLiving extends Entity {
 		this.prevRidingRotUnused = 0.0F;
 	}
 
+	public void setPositionAndRotation(double var1, double var3, double var5, float var7, float var8, int var9) {
+		this.yOffset = 0.0F;
+		this.newPosX = var1;
+		this.newPosY = var3;
+		this.newPosZ = var5;
+		this.newRotationYaw = (double)var7;
+		this.newRotationPitch = (double)var8;
+		this.newPosRotationIncrements = var9;
+	}
+
 	public void onUpdate() {
 		super.onUpdate();
 		this.onLivingUpdate();
@@ -276,6 +294,10 @@ public class EntityLiving extends Entity {
 	}
 
 	public boolean attackEntityFrom(Entity var1, int var2) {
+		if(this.worldObj.multiplayerWorld) {
+			var2 = 0;
+		}
+
 		this.entityAge = 0;
 		if(this.health <= 0) {
 			return false;
@@ -490,19 +512,39 @@ public class EntityLiving extends Entity {
 	}
 
 	public void onLivingUpdate() {
+		if(this.newPosRotationIncrements > 0) {
+			double var1 = this.posX + (this.newPosX - this.posX) / (double)this.newPosRotationIncrements;
+			double var3 = this.posY + (this.newPosY - this.posY) / (double)this.newPosRotationIncrements;
+			double var5 = this.posZ + (this.newPosZ - this.posZ) / (double)this.newPosRotationIncrements;
+
+			double var7;
+			for(var7 = this.newRotationYaw - (double)this.rotationYaw; var7 < -180.0D; var7 += 360.0D) {
+			}
+
+			while(var7 >= 180.0D) {
+				var7 -= 360.0D;
+			}
+
+			this.rotationYaw = (float)((double)this.rotationYaw + var7 / (double)this.newPosRotationIncrements);
+			this.rotationPitch = (float)((double)this.rotationPitch + (this.newRotationPitch - (double)this.rotationPitch) / (double)this.newPosRotationIncrements);
+			--this.newPosRotationIncrements;
+			this.setPosition(var1, var3, var5);
+			this.setRotation(this.rotationYaw, this.rotationPitch);
+		}
+
 		if(this.health <= 0) {
 			this.isJumping = false;
 			this.moveStrafing = 0.0F;
 			this.moveForward = 0.0F;
 			this.randomYawVelocity = 0.0F;
-		} else {
+		} else if(!this.isAIEnabled) {
 			this.updateEntityActionState();
 		}
 
-		boolean var1 = this.handleWaterMovement();
+		boolean var9 = this.handleWaterMovement();
 		boolean var2 = this.handleLavaMovement();
 		if(this.isJumping) {
-			if(var1) {
+			if(var9) {
 				this.motionY += (double)0.04F;
 			} else if(var2) {
 				this.motionY += (double)0.04F;
@@ -515,12 +557,12 @@ public class EntityLiving extends Entity {
 		this.moveForward *= 0.98F;
 		this.randomYawVelocity *= 0.9F;
 		this.moveEntityWithHeading(this.moveStrafing, this.moveForward);
-		List var3 = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand((double)0.2F, 0.0D, (double)0.2F));
-		if(var3 != null && var3.size() > 0) {
-			for(int var4 = 0; var4 < var3.size(); ++var4) {
-				Entity var5 = (Entity)var3.get(var4);
-				if(var5.canBePushed()) {
-					var5.applyEntityCollision(this);
+		List var10 = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.expand((double)0.2F, 0.0D, (double)0.2F));
+		if(var10 != null && var10.size() > 0) {
+			for(int var4 = 0; var4 < var10.size(); ++var4) {
+				Entity var11 = (Entity)var10.get(var4);
+				if(var11.canBePushed()) {
+					var11.applyEntityCollision(this);
 				}
 			}
 		}

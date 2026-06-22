@@ -116,13 +116,13 @@ public class Chunk {
 		int var3 = this.getHeightValue(var1, var2);
 		int var4 = this.xPosition * 16 + var1;
 		int var5 = this.zPosition * 16 + var2;
-		this.checkSkylightNeighborHeight(var4 - 1, var5, var3);
-		this.checkSkylightNeighborHeight(var4 + 1, var5, var3);
-		this.checkSkylightNeighborHeight(var4, var5 - 1, var3);
-		this.checkSkylightNeighborHeight(var4, var5 + 1, var3);
+		this.checkSkylightNeighborUpdate(var4 - 1, var5, var3);
+		this.checkSkylightNeighborUpdate(var4 + 1, var5, var3);
+		this.checkSkylightNeighborUpdate(var4, var5 - 1, var3);
+		this.checkSkylightNeighborUpdate(var4, var5 + 1, var3);
 	}
 
-	private void checkSkylightNeighborHeight(int var1, int var2, int var3) {
+	private void checkSkylightNeighborUpdate(int var1, int var2, int var3) {
 		int var4 = this.worldObj.getHeightValue(var1, var2);
 		if(var4 > var3) {
 			this.worldObj.scheduleLightingUpdate(EnumSkyBlock.Sky, var1, var3, var2, var1, var4, var2);
@@ -215,7 +215,7 @@ public class Chunk {
 		byte var6 = (byte)var4;
 		int var7 = this.heightMap[var3 << 4 | var1] & 255;
 		int var8 = this.blocks[var1 << 11 | var3 << 7 | var2] & 255;
-		if(var8 == var4) {
+		if(var8 == var4 && this.data.get(var1, var2, var3) == var5) {
 			return false;
 		} else {
 			int var9 = this.xPosition * 16 + var1;
@@ -374,6 +374,10 @@ public class Chunk {
 		TileEntity var5 = (TileEntity)this.chunkTileEntityMap.get(var4);
 		if(var5 == null) {
 			int var6 = this.getBlockID(var1, var2, var3);
+			if(!Block.isBlockContainer[var6]) {
+				return null;
+			}
+
 			BlockContainer var7 = (BlockContainer)Block.blocksList[var6];
 			var7.onBlockAdded(this.worldObj, this.xPosition * 16 + var1, var2, this.zPosition * 16 + var3);
 			var5 = (TileEntity)this.chunkTileEntityMap.get(var4);

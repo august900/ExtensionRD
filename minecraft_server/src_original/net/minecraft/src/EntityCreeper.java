@@ -1,6 +1,6 @@
 package net.minecraft.src;
 
-public class EntityCreeper extends EntityMobs {
+public class EntityCreeper extends EntityMob {
 	int timeSinceIgnited;
 	int lastActiveTime;
 	int fuseDuration = 30;

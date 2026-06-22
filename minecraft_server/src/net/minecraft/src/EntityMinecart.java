@@ -68,7 +68,7 @@ public class EntityMinecart extends Entity implements IInventory {
 		if(this.damageTaken > 40) {
 			this.entityDropItem(Item.minecartEmpty.shiftedIndex, 1, 0.0F);
 			if(this.minecartType == 1) {
-				this.entityDropItem(Block.crate.blockID, 1, 0.0F);
+				this.entityDropItem(Block.chest.blockID, 1, 0.0F);
 			} else if(this.minecartType == 2) {
 				this.entityDropItem(Block.stoneOvenIdle.blockID, 1, 0.0F);
 			}
@@ -486,7 +486,7 @@ public class EntityMinecart extends Entity implements IInventory {
 			this.cargoItems = new ItemStack[this.getSizeInventory()];
 
 			for(int var3 = 0; var3 < var2.tagCount(); ++var3) {
-				NBTTagCompound var4 = (NBTTagCompound)var2.entities(var3);
+				NBTTagCompound var4 = (NBTTagCompound)var2.tagAt(var3);
 				int var5 = var4.getByte("Slot") & 255;
 				if(var5 >= 0 && var5 < this.cargoItems.length) {
 					this.cargoItems[var5] = new ItemStack(var4);

@@ -151,34 +151,33 @@ public class EntityRenderer {
 		double var7 = var2.prevPosZ + (var2.posZ - var2.prevPosZ) * (double)var1;
 		if(this.mc.options.thirdPersonView) {
 			double var9 = 4.0D;
-			float var10000 = var2.prevRenderYawOffset + (var2.renderYawOffset - var2.prevRenderYawOffset) * var1;
-			float var12 = var2.rotationYaw - 10.0F;
-			float var13 = var2.rotationPitch + 2.0F;
-			double var14 = (double)(-MathHelper.sin(var12 / 180.0F * (float)Math.PI) * MathHelper.cos(var13 / 180.0F * (float)Math.PI)) * var9;
-			double var16 = (double)(MathHelper.cos(var12 / 180.0F * (float)Math.PI) * MathHelper.cos(var13 / 180.0F * (float)Math.PI)) * var9;
-			double var18 = (double)(-MathHelper.sin(var13 / 180.0F * (float)Math.PI)) * var9;
+			float var11 = var2.rotationYaw;
+			float var12 = var2.rotationPitch;
+			double var13 = (double)(-MathHelper.sin(var11 / 180.0F * (float)Math.PI) * MathHelper.cos(var12 / 180.0F * (float)Math.PI)) * var9;
+			double var15 = (double)(MathHelper.cos(var11 / 180.0F * (float)Math.PI) * MathHelper.cos(var12 / 180.0F * (float)Math.PI)) * var9;
+			double var17 = (double)(-MathHelper.sin(var12 / 180.0F * (float)Math.PI)) * var9;
 
-			for(int var20 = 0; var20 < 8; ++var20) {
-				float var21 = (float)((var20 & 1) * 2 - 1);
-				float var22 = (float)((var20 >> 1 & 1) * 2 - 1);
-				float var23 = (float)((var20 >> 2 & 1) * 2 - 1);
+			for(int var19 = 0; var19 < 8; ++var19) {
+				float var20 = (float)((var19 & 1) * 2 - 1);
+				float var21 = (float)((var19 >> 1 & 1) * 2 - 1);
+				float var22 = (float)((var19 >> 2 & 1) * 2 - 1);
+				var20 *= 0.1F;
 				var21 *= 0.1F;
 				var22 *= 0.1F;
-				var23 *= 0.1F;
-				MovingObjectPosition var24 = this.mc.theWorld.rayTraceBlocks(Vec3D.createVector(var3 + (double)var21, var5 + (double)var22, var7 + (double)var23), Vec3D.createVector(var3 - var14 + (double)var21 + (double)var23, var5 - var18 + (double)var22, var7 - var16 + (double)var23));
-				if(var24 != null) {
-					double var25 = var24.hitVec.distanceTo(Vec3D.createVector(var3, var5, var7));
-					if(var25 < var9) {
-						var9 = var25;
+				MovingObjectPosition var23 = this.mc.theWorld.rayTraceBlocks(Vec3D.createVector(var3 + (double)var20, var5 + (double)var21, var7 + (double)var22), Vec3D.createVector(var3 - var13 + (double)var20 + (double)var22, var5 - var17 + (double)var21, var7 - var15 + (double)var22));
+				if(var23 != null) {
+					double var24 = var23.hitVec.distanceTo(Vec3D.createVector(var3, var5, var7));
+					if(var24 < var9) {
+						var9 = var24;
 					}
 				}
 			}
 
-			GL11.glRotatef(var2.rotationPitch - var13, 1.0F, 0.0F, 0.0F);
-			GL11.glRotatef(var2.rotationYaw - var12, 0.0F, 1.0F, 0.0F);
+			GL11.glRotatef(var2.rotationPitch - var12, 1.0F, 0.0F, 0.0F);
+			GL11.glRotatef(var2.rotationYaw - var11, 0.0F, 1.0F, 0.0F);
 			GL11.glTranslatef(0.0F, 0.0F, (float)(-var9));
-			GL11.glRotatef(var12 - var2.rotationYaw, 0.0F, 1.0F, 0.0F);
-			GL11.glRotatef(var13 - var2.rotationPitch, 1.0F, 0.0F, 0.0F);
+			GL11.glRotatef(var11 - var2.rotationYaw, 0.0F, 1.0F, 0.0F);
+			GL11.glRotatef(var12 - var2.rotationPitch, 1.0F, 0.0F, 0.0F);
 		} else {
 			GL11.glTranslatef(0.0F, 0.0F, -0.1F);
 		}
@@ -248,28 +247,29 @@ public class EntityRenderer {
 			this.prevFrameTime = System.currentTimeMillis();
 		}
 
-		int var3;
 		if(this.mc.inGameHasFocus) {
 			this.mc.mouseHelper.mouseXYChange();
-			int var2 = this.mc.mouseHelper.deltaX;
-			var3 = this.mc.mouseHelper.deltaY;
-			byte var4 = 1;
+			float var2 = this.mc.options.mouseSensitivity * 0.6F + 0.2F;
+			float var3 = var2 * var2 * var2 * 8.0F;
+			float var4 = (float)this.mc.mouseHelper.deltaX * var3;
+			float var5 = (float)this.mc.mouseHelper.deltaY * var3;
+			byte var6 = 1;
 			if(this.mc.options.invertMouse) {
-				var4 = -1;
+				var6 = -1;
 			}
 
-			this.mc.thePlayer.setAngles((float)var2, (float)(var3 * var4));
+			this.mc.thePlayer.setAngles(var4, var5 * (float)var6);
 		}
 
 		if(!this.mc.skipRenderWorld) {
 			ScaledResolution var7 = new ScaledResolution(this.mc.displayWidth, this.mc.displayHeight);
-			var3 = var7.getScaledWidth();
-			int var8 = var7.getScaledHeight();
-			int var5 = Mouse.getX() * var3 / this.mc.displayWidth;
-			int var6 = var8 - Mouse.getY() * var8 / this.mc.displayHeight - 1;
+			int var8 = var7.getScaledWidth();
+			int var9 = var7.getScaledHeight();
+			int var10 = Mouse.getX() * var8 / this.mc.displayWidth;
+			int var11 = var9 - Mouse.getY() * var9 / this.mc.displayHeight - 1;
 			if(this.mc.theWorld != null) {
 				this.renderWorld(var1);
-				this.mc.ingameGUI.renderGameOverlay(var1, this.mc.currentScreen != null, var5, var6);
+				this.mc.ingameGUI.renderGameOverlay(var1, this.mc.currentScreen != null, var10, var11);
 			} else {
 				GL11.glViewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);
 				GL11.glClearColor(0.0F, 0.0F, 0.0F, 0.0F);
@@ -283,7 +283,7 @@ public class EntityRenderer {
 
 			if(this.mc.currentScreen != null) {
 				GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
-				this.mc.currentScreen.drawScreen(var5, var6, var1);
+				this.mc.currentScreen.drawScreen(var10, var11, var1);
 			}
 
 		}
@@ -379,10 +379,6 @@ public class EntityRenderer {
 			GL11.glDisable(GL11.GL_FOG);
 			if(this.mc.theWorld.snowCovered) {
 				this.renderSnow(var1);
-			}
-
-			if(this.mc.isRaining) {
-				this.i(var1);
 			}
 
 			if(this.pointedEntity != null) {
@@ -488,67 +484,6 @@ public class EntityRenderer {
 					var7.addVertexWithUV((double)(var15 + 1), (double)var18, (double)(var16 + 0), (double)(1.0F * var20 + var23), (double)((float)var18 * var20 / 8.0F + var22 * var20 + var24));
 					var7.addVertexWithUV((double)(var15 + 1), (double)var19, (double)(var16 + 0), (double)(1.0F * var20 + var23), (double)((float)var19 * var20 / 8.0F + var22 * var20 + var24));
 					var7.addVertexWithUV((double)(var15 + 0), (double)var19, (double)(var16 + 1), (double)(0.0F * var20 + var23), (double)((float)var19 * var20 / 8.0F + var22 * var20 + var24));
-					var7.setTranslationD(0.0D, 0.0D, 0.0D);
-					var7.draw();
-				}
-			}
-		}
-
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glDisable(GL11.GL_BLEND);
-	}
-
-	private void i(float var1) {
-		EntityPlayerSP var2 = this.mc.thePlayer;
-		World var3 = this.mc.theWorld;
-		int var4 = MathHelper.floor_double(var2.posX);
-		int var5 = MathHelper.floor_double(var2.posY);
-		int var6 = MathHelper.floor_double(var2.posZ);
-		Tessellator var7 = Tessellator.instance;
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/rain.png"));
-		double var8 = var2.lastTickPosX + (var2.posX - var2.lastTickPosX) * (double)var1;
-		double var10 = var2.lastTickPosY + (var2.posY - var2.lastTickPosY) * (double)var1;
-		double var12 = var2.lastTickPosZ + (var2.posZ - var2.lastTickPosZ) * (double)var1;
-		byte var14 = 5;
-		if(this.mc.options.fancyGraphics) {
-			var14 = 10;
-		}
-
-		for(int var15 = var4 - var14; var15 <= var4 + var14; ++var15) {
-			for(int var16 = var6 - var14; var16 <= var6 + var14; ++var16) {
-				int var17 = var3.getPrecipitationHeight(var15, var16);
-				int var18 = var5 - var14;
-				int var19 = var5 + var14;
-				if(var18 < var17) {
-					var18 = var17;
-				}
-
-				if(var19 < var17) {
-					var19 = var17;
-				}
-
-				float var20 = 2.0F;
-				if(var18 != var19) {
-					float var21 = ((float)(this.rendererUpdateCount + var15 * var15 * 3121 + var15 * 45238971 + var16 * var16 * 418711 + var16 * 13761 & 31) + var1) / 32.0F;
-					double var22 = (double)((float)var15 + 0.5F) - var2.posX;
-					double var24 = (double)((float)var16 + 0.5F) - var2.posZ;
-					float var26 = MathHelper.sqrt_double(var22 * var22 + var24 * var24) / (float)var14;
-					var7.startDrawingQuads();
-					float var27 = var3.getBrightness(var15, 128, var16);
-					GL11.glColor4f(var27, var27, var27, (1.0F - var26 * var26) * 0.7F);
-					var7.setTranslationD(-var8 * 1.0D, -var10 * 1.0D, -var12 * 1.0D);
-					var7.addVertexWithUV((double)(var15 + 0), (double)var18, (double)(var16 + 0), (double)(0.0F * var20), (double)((float)var18 * var20 / 8.0F + var21 * var20));
-					var7.addVertexWithUV((double)(var15 + 1), (double)var18, (double)(var16 + 1), (double)(1.0F * var20), (double)((float)var18 * var20 / 8.0F + var21 * var20));
-					var7.addVertexWithUV((double)(var15 + 1), (double)var19, (double)(var16 + 1), (double)(1.0F * var20), (double)((float)var19 * var20 / 8.0F + var21 * var20));
-					var7.addVertexWithUV((double)(var15 + 0), (double)var19, (double)(var16 + 0), (double)(0.0F * var20), (double)((float)var19 * var20 / 8.0F + var21 * var20));
-					var7.addVertexWithUV((double)(var15 + 0), (double)var18, (double)(var16 + 1), (double)(0.0F * var20), (double)((float)var18 * var20 / 8.0F + var21 * var20));
-					var7.addVertexWithUV((double)(var15 + 1), (double)var18, (double)(var16 + 0), (double)(1.0F * var20), (double)((float)var18 * var20 / 8.0F + var21 * var20));
-					var7.addVertexWithUV((double)(var15 + 1), (double)var19, (double)(var16 + 0), (double)(1.0F * var20), (double)((float)var19 * var20 / 8.0F + var21 * var20));
-					var7.addVertexWithUV((double)(var15 + 0), (double)var19, (double)(var16 + 1), (double)(0.0F * var20), (double)((float)var19 * var20 / 8.0F + var21 * var20));
 					var7.setTranslationD(0.0D, 0.0D, 0.0D);
 					var7.draw();
 				}

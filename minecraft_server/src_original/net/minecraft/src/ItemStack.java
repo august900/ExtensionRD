@@ -100,4 +100,8 @@ public final class ItemStack {
 
 	public void onItemDestroyedByUse(EntityPlayer var1) {
 	}
+
+	public ItemStack copy() {
+		return new ItemStack(this.itemID, this.stackSize, this.itemDmg);
+	}
 }

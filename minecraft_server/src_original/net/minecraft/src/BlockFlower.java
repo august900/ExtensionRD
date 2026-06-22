@@ -21,14 +21,14 @@ public class BlockFlower extends Block {
 
 	public void onNeighborBlockChange(World var1, int var2, int var3, int var4, int var5) {
 		super.onNeighborBlockChange(var1, var2, var3, var4, var5);
-		this.dropIfNeighborPlaced(var1, var2, var3, var4);
+		this.g(var1, var2, var3, var4);
 	}
 
 	public void updateTick(World var1, int var2, int var3, int var4, Random var5) {
-		this.dropIfNeighborPlaced(var1, var2, var3, var4);
+		this.g(var1, var2, var3, var4);
 	}
 
-	protected final void dropIfNeighborPlaced(World var1, int var2, int var3, int var4) {
+	protected final void g(World var1, int var2, int var3, int var4) {
 		if(!this.canBlockStay(var1, var2, var3, var4)) {
 			this.dropBlockAsItem(var1, var2, var3, var4, var1.getBlockMetadata(var2, var3, var4));
 			var1.setBlockWithNotify(var2, var3, var4, 0);

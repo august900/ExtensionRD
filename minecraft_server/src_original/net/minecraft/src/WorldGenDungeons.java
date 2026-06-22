@@ -74,7 +74,7 @@ public class WorldGenDungeons extends WorldGenerator {
 						}
 
 						if(var15 == 1) {
-							var1.setBlockWithNotify(var12, var4, var14, Block.crate.blockID);
+							var1.setBlockWithNotify(var12, var4, var14, Block.chest.blockID);
 							TileEntityChest var16 = (TileEntityChest)var1.getBlockTileEntity(var12, var4, var14);
 							int var17 = 0;
 
@@ -95,7 +95,7 @@ public class WorldGenDungeons extends WorldGenerator {
 				}
 			}
 
-			var1.setBlockWithNotify(var3, var4, var5, Block.spawner.blockID);
+			var1.setBlockWithNotify(var3, var4, var5, Block.mobSpawner.blockID);
 			TileEntityMobSpawner var19 = (TileEntityMobSpawner)var1.getBlockTileEntity(var3, var4, var5);
 			var19.mobID = this.pickMobSpawner(var2);
 			return true;

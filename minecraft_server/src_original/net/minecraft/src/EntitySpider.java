@@ -1,11 +1,15 @@
 package net.minecraft.src;
 
-public class EntitySpider extends EntityMobs {
+public class EntitySpider extends EntityMob {
 	public EntitySpider(World var1) {
 		super(var1);
 		this.texture = "/mob/spider.png";
 		this.setSize(1.4F, 0.9F);
 		this.moveSpeed = 0.8F;
+	}
+
+	public double getMountedYOffset() {
+		return (double)this.height * 0.75D - 0.5D;
 	}
 
 	protected Entity findPlayerToAttack() {

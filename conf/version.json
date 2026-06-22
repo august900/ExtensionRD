@@ -1,6 +1,6 @@
 {
  "phase": "alpha",
- "releaseTime": "2010-08-13T09:30:14+00:00",
+ "releaseTime": "2010-09-23T12:39:20+00:00",
  "$schema": "https://meta.omniarchive.uk/schemas/v1/client.schema.json",
  "mainClass": "org.mcphackers.launchwrapper.Launch",
  "javaVersion": {
@@ -293,19 +293,19 @@
  "assets": "a1.0.14",
  "downloads": {
   "server": {
-   "sha1": "63b25633859a8fee7938b69d7a0df9e942a221fc",
-   "size": 262714,
-   "url": "https://vault.omniarchive.uk/archive/java/server-alpha/a0.1.3.jar"
+   "sha1": "c6217416ce92eb91d1511392f21f830746937418",
+   "size": 274703,
+   "url": "https://vault.omniarchive.uk/archive/java/server-alpha/a0.2.1.jar"
   },
   "client": {
-   "sha1": "b45ada7f4f421298be217e805d2ccd41e3421c6a",
-   "size": 860260,
-   "url": "https://vault.omniarchive.uk/archive/java/client-alpha/a1.0.16_02.jar"
+   "sha1": "daa4b9f192d2c260837d3b98c39432324da28e86",
+   "size": 897164,
+   "url": "https://launcher.mojang.com/v1/objects/daa4b9f192d2c260837d3b98c39432324da28e86/client.jar"
   },
   "windows_server": {
-   "sha1": "8350d846f2950009d018833c5ae9f8f5bff5508e",
-   "size": 443450,
-   "url": "https://vault.omniarchive.uk/archive/java/server-alpha/a0.1.3.exe"
+   "sha1": "ff67a824fbb697c841fa983a7b54547ebf06b03b",
+   "size": 455439,
+   "url": "https://vault.omniarchive.uk/archive/java/server-alpha/a0.2.1.exe"
   }
  },
  "complianceLevel": 0,
@@ -391,7 +391,7 @@
    }
   ]
  },
- "id": "a1.0.16_02",
+ "id": "a1.1.2_01",
  "time": "2026-03-26T08:14:15+00:00",
  "clientJsonVersion": 1
 }

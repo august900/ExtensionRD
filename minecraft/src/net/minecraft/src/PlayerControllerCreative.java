@@ -8,9 +8,6 @@ public class PlayerControllerCreative extends PlayerController {
 		this.isInTestMode = true;
 	}
 
-	public void a() {
-	}
-
 	public void onRespawn(EntityPlayer var1) {
 		for(int var2 = 0; var2 < 9; ++var2) {
 			if(var1.inventory.mainInventory[var2] == null) {

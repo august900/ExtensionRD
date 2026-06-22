@@ -1,11 +1,12 @@
 package net.minecraft.src;
 
 public class InventoryPlayer implements IInventory {
-	public ItemStack[] mainInventory = new ItemStack[36];
+	public ItemStack[] mainInventory = new ItemStack[37];
 	public ItemStack[] armorInventory = new ItemStack[4];
 	public ItemStack[] craftingInventory = new ItemStack[4];
 	public int currentItem = 0;
 	private EntityPlayer player;
+	public boolean inventoryChanged = false;
 
 	public InventoryPlayer(EntityPlayer var1) {
 		this.player = var1;
@@ -95,7 +96,7 @@ public class InventoryPlayer implements IInventory {
 		}
 	}
 
-	public void readFromNBT(int var1, ItemStack var2) {
+	public void setInventorySlotContents(int var1, ItemStack var2) {
 		ItemStack[] var3 = this.mainInventory;
 		if(var1 >= var3.length) {
 			var1 -= var3.length;
@@ -117,6 +118,62 @@ public class InventoryPlayer implements IInventory {
 		}
 
 		return var2;
+	}
+
+	public NBTTagList writeToNBT(NBTTagList var1) {
+		int var2;
+		NBTTagCompound var3;
+		for(var2 = 0; var2 < this.mainInventory.length; ++var2) {
+			if(this.mainInventory[var2] != null) {
+				var3 = new NBTTagCompound();
+				var3.setByte("Slot", (byte)var2);
+				this.mainInventory[var2].writeToNBT(var3);
+				var1.setTag(var3);
+			}
+		}
+
+		for(var2 = 0; var2 < this.armorInventory.length; ++var2) {
+			if(this.armorInventory[var2] != null) {
+				var3 = new NBTTagCompound();
+				var3.setByte("Slot", (byte)(var2 + 100));
+				this.armorInventory[var2].writeToNBT(var3);
+				var1.setTag(var3);
+			}
+		}
+
+		for(var2 = 0; var2 < this.craftingInventory.length; ++var2) {
+			if(this.craftingInventory[var2] != null) {
+				var3 = new NBTTagCompound();
+				var3.setByte("Slot", (byte)(var2 + 80));
+				this.craftingInventory[var2].writeToNBT(var3);
+				var1.setTag(var3);
+			}
+		}
+
+		return var1;
+	}
+
+	public void readFromNBT(NBTTagList var1) {
+		this.mainInventory = new ItemStack[36];
+		this.armorInventory = new ItemStack[4];
+		this.craftingInventory = new ItemStack[4];
+
+		for(int var2 = 0; var2 < var1.tagCount(); ++var2) {
+			NBTTagCompound var3 = (NBTTagCompound)var1.tagAt(var2);
+			int var4 = var3.getByte("Slot") & 255;
+			if(var4 >= 0 && var4 < this.mainInventory.length) {
+				this.mainInventory[var4] = new ItemStack(var3);
+			}
+
+			if(var4 >= 80 && var4 < this.craftingInventory.length + 80) {
+				this.craftingInventory[var4 - 80] = new ItemStack(var3);
+			}
+
+			if(var4 >= 100 && var4 < this.armorInventory.length + 100) {
+				this.armorInventory[var4 - 100] = new ItemStack(var3);
+			}
+		}
+
 	}
 
 	public int getSizeInventory() {

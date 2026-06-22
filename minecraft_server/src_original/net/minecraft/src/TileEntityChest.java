@@ -17,6 +17,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 			var2.stackSize = this.getInventoryStackLimit();
 		}
 
+		this.onInventoryChanged();
 	}
 
 	public void readFromNBT(NBTTagCompound var1) {
@@ -25,7 +26,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 		this.chestContents = new ItemStack[this.getSizeInventory()];
 
 		for(int var3 = 0; var3 < var2.tagCount(); ++var3) {
-			NBTTagCompound var4 = (NBTTagCompound)var2.entities(var3);
+			NBTTagCompound var4 = (NBTTagCompound)var2.tagAt(var3);
 			int var5 = var4.getByte("Slot") & 255;
 			if(var5 >= 0 && var5 < this.chestContents.length) {
 				this.chestContents[var5] = new ItemStack(var4);

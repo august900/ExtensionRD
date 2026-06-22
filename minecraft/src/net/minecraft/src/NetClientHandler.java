@@ -276,7 +276,7 @@ public class NetClientHandler extends NetHandler {
 
 	public void handleHandshake(Packet2Handshake var1) {
 		if(var1.username.equals("-")) {
-			this.addToSendQueue(new Packet1Login(this.mc.session.username, "Password", 14));
+			this.addToSendQueue(new Packet1Login(this.mc.session.username, "Password", 2));
 		} else {
 			try {
 				URL var2 = new URL("http://www.minecraft.net/game/joinserver.jsp?user=" + this.mc.session.username + "&sessionId=" + this.mc.session.sessionId + "&serverId=" + var1.username);
@@ -284,7 +284,7 @@ public class NetClientHandler extends NetHandler {
 				String var4 = var3.readLine();
 				var3.close();
 				if(var4.equalsIgnoreCase("ok")) {
-					this.addToSendQueue(new Packet1Login(this.mc.session.username, "Password", 14));
+					this.addToSendQueue(new Packet1Login(this.mc.session.username, "Password", 2));
 				} else {
 					this.netManager.networkShutdown("Failed to login: " + var4);
 				}
@@ -299,5 +299,55 @@ public class NetClientHandler extends NetHandler {
 	public void disconnect() {
 		this.disconnected = true;
 		this.netManager.networkShutdown("Closed");
+	}
+
+	public void handleMobSpawn(Packet24MobSpawn var1) {
+		double var2 = (double)var1.xPosition / 32.0D;
+		double var4 = (double)var1.yPosition / 32.0D;
+		double var6 = (double)var1.zPosition / 32.0D;
+		float var8 = (float)(var1.yaw * 360) / 256.0F;
+		float var9 = (float)(var1.pitch * 360) / 256.0F;
+		EntityLiving var10 = (EntityLiving)EntityList.createEntityByID(var1.type, this.mc.theWorld);
+		var10.serverPosX = var1.xPosition;
+		var10.serverPosY = var1.yPosition;
+		var10.serverPosZ = var1.zPosition;
+		var10.setPositionAndRotation(var2, var4, var6, var8, var9);
+		var10.isAIEnabled = true;
+		this.worldClient.addEntityToWorld(var1.entityId, var10);
+	}
+
+	public void handleUpdateTime(Packet4UpdateTime var1) {
+		this.mc.theWorld.setWorldTime(var1.time);
+	}
+
+	public void handlePlayerInventory(Packet5PlayerInventory var1) {
+		EntityPlayerSP var2 = this.mc.thePlayer;
+		if(var1.inventoryType == -1) {
+			var2.inventory.mainInventory = var1.inventory;
+		}
+
+		if(var1.inventoryType == -2) {
+			var2.inventory.craftingInventory = var1.inventory;
+		}
+
+		if(var1.inventoryType == -3) {
+			var2.inventory.armorInventory = var1.inventory;
+		}
+
+	}
+
+	public void handleComplexEntity(Packet59ComplexEntity var1) {
+		TileEntity var2 = this.worldClient.getBlockTileEntity(var1.xCoord, var1.yCoord, var1.zCoord);
+		if(var2 != null) {
+			var2.readFromNBT(var1.tileEntityNBT);
+			this.worldClient.markBlocksDirty(var1.xCoord, var1.yCoord, var1.zCoord, var1.xCoord, var1.yCoord, var1.zCoord);
+		}
+
+	}
+
+	public void handleSpawnPosition(Packet6SpawnPosition var1) {
+		this.worldClient.spawnX = var1.xPosition;
+		this.worldClient.spawnY = var1.yPosition;
+		this.worldClient.spawnZ = var1.zPosition;
 	}
 }

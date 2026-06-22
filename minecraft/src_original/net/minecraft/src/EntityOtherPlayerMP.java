@@ -20,6 +20,7 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 		}
 
 		this.noClip = true;
+		this.renderDistanceWeight = 10.0D;
 	}
 
 	public boolean attackEntityFrom(Entity var1, int var2) {

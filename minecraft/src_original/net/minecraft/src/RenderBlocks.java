@@ -1283,33 +1283,41 @@ public class RenderBlocks {
 			var9 = true;
 		}
 
+		boolean var10 = this.blockAccess.getBlockId(var2 - 1, var3, var4) == var1.blockID;
+		boolean var11 = this.blockAccess.getBlockId(var2 + 1, var3, var4) == var1.blockID;
+		boolean var12 = this.blockAccess.getBlockId(var2, var3, var4 - 1) == var1.blockID;
+		boolean var13 = this.blockAccess.getBlockId(var2, var3, var4 + 1) == var1.blockID;
 		if(!var8 && !var9) {
 			var8 = true;
 		}
 
 		var6 = 7.0F / 16.0F;
 		var7 = 9.0F / 16.0F;
-		float var10 = 12.0F / 16.0F;
-		float var11 = 15.0F / 16.0F;
+		float var14 = 12.0F / 16.0F;
+		float var15 = 15.0F / 16.0F;
+		float var16 = var10 ? 0.0F : var6;
+		float var17 = var11 ? 1.0F : var7;
+		float var18 = var12 ? 0.0F : var6;
+		float var19 = var13 ? 1.0F : var7;
 		if(var8) {
-			var1.setBlockBounds(0.0F, var10, var6, 1.0F, var11, var7);
+			var1.setBlockBounds(var16, var14, var6, var17, var15, var7);
 			this.renderStandardBlock(var1, var2, var3, var4);
 		}
 
 		if(var9) {
-			var1.setBlockBounds(var6, var10, 0.0F, var7, var11, 1.0F);
+			var1.setBlockBounds(var6, var14, var18, var7, var15, var19);
 			this.renderStandardBlock(var1, var2, var3, var4);
 		}
 
-		var10 = 6.0F / 16.0F;
-		var11 = 9.0F / 16.0F;
+		var14 = 6.0F / 16.0F;
+		var15 = 9.0F / 16.0F;
 		if(var8) {
-			var1.setBlockBounds(0.0F, var10, var6, 1.0F, var11, var7);
+			var1.setBlockBounds(var16, var14, var6, var17, var15, var7);
 			this.renderStandardBlock(var1, var2, var3, var4);
 		}
 
 		if(var9) {
-			var1.setBlockBounds(var6, var10, 0.0F, var7, var11, 1.0F);
+			var1.setBlockBounds(var6, var14, var18, var7, var15, var19);
 			this.renderStandardBlock(var1, var2, var3, var4);
 		}
 
@@ -1795,50 +1803,100 @@ public class RenderBlocks {
 			var3.setNormal(0.0F, -1.0F, 0.0F);
 			this.renderTorchAtAngle(var1, -0.5D, -0.5D, -0.5D, 0.0D, 0.0D);
 			var3.draw();
-		} else if(var4 == 10) {
-			for(int var6 = 0; var6 < 2; ++var6) {
-				if(var6 == 0) {
-					var1.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.5F);
+		} else {
+			int var7;
+			if(var4 == 10) {
+				for(var7 = 0; var7 < 2; ++var7) {
+					if(var7 == 0) {
+						var1.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 0.5F);
+					}
+
+					if(var7 == 1) {
+						var1.setBlockBounds(0.0F, 0.0F, 0.5F, 1.0F, 0.5F, 1.0F);
+					}
+
+					GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, -1.0F, 0.0F);
+					this.renderBottomFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(0));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, 1.0F, 0.0F);
+					this.renderTopFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(1));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, 0.0F, -1.0F);
+					this.renderEastFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(2));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, 0.0F, 1.0F);
+					this.renderWestFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(3));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(-1.0F, 0.0F, 0.0F);
+					this.renderNorthFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(4));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(1.0F, 0.0F, 0.0F);
+					this.renderSouthFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(5));
+					var3.draw();
+					GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+				}
+			} else if(var4 == 11) {
+				for(var7 = 0; var7 < 4; ++var7) {
+					float var6 = 2.0F / 16.0F;
+					if(var7 == 0) {
+						var1.setBlockBounds(0.5F - var6, 0.0F, 0.0F, 0.5F + var6, 1.0F, var6 * 2.0F);
+					}
+
+					if(var7 == 1) {
+						var1.setBlockBounds(0.5F - var6, 0.0F, 1.0F - var6 * 2.0F, 0.5F + var6, 1.0F, 1.0F);
+					}
+
+					var6 = 1.0F / 16.0F;
+					if(var7 == 2) {
+						var1.setBlockBounds(0.5F - var6, 1.0F - var6 * 3.0F, -var6 * 2.0F, 0.5F + var6, 1.0F - var6, 1.0F + var6 * 2.0F);
+					}
+
+					if(var7 == 3) {
+						var1.setBlockBounds(0.5F - var6, 0.5F - var6 * 3.0F, -var6 * 2.0F, 0.5F + var6, 0.5F - var6, 1.0F + var6 * 2.0F);
+					}
+
+					GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, -1.0F, 0.0F);
+					this.renderBottomFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(0));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, 1.0F, 0.0F);
+					this.renderTopFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(1));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, 0.0F, -1.0F);
+					this.renderEastFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(2));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(0.0F, 0.0F, 1.0F);
+					this.renderWestFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(3));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(-1.0F, 0.0F, 0.0F);
+					this.renderNorthFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(4));
+					var3.draw();
+					var3.startDrawingQuads();
+					var3.setNormal(1.0F, 0.0F, 0.0F);
+					this.renderSouthFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(5));
+					var3.draw();
+					GL11.glTranslatef(0.5F, 0.5F, 0.5F);
 				}
 
-				if(var6 == 1) {
-					var1.setBlockBounds(0.0F, 0.0F, 0.5F, 1.0F, 0.5F, 1.0F);
-				}
-
-				GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-				var3.startDrawingQuads();
-				var3.setNormal(0.0F, -1.0F, 0.0F);
-				this.renderBottomFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(0));
-				var3.draw();
-				var3.startDrawingQuads();
-				var3.setNormal(0.0F, 1.0F, 0.0F);
-				this.renderTopFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(1));
-				var3.draw();
-				var3.startDrawingQuads();
-				var3.setNormal(0.0F, 0.0F, -1.0F);
-				this.renderEastFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(2));
-				var3.draw();
-				var3.startDrawingQuads();
-				var3.setNormal(0.0F, 0.0F, 1.0F);
-				this.renderWestFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(3));
-				var3.draw();
-				var3.startDrawingQuads();
-				var3.setNormal(-1.0F, 0.0F, 0.0F);
-				this.renderNorthFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(4));
-				var3.draw();
-				var3.startDrawingQuads();
-				var3.setNormal(1.0F, 0.0F, 0.0F);
-				this.renderSouthFace(var1, 0.0D, 0.0D, 0.0D, var1.getBlockTextureFromSide(5));
-				var3.draw();
-				GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+				var1.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 			}
-
-			var1.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		}
 
 	}
 
 	public static boolean renderItemIn3d(int var0) {
-		return var0 == 0 ? true : (var0 == 13 ? true : var0 == 10);
+		return var0 == 0 ? true : (var0 == 13 ? true : (var0 == 10 ? true : var0 == 11));
 	}
 }

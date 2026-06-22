@@ -3,6 +3,7 @@ package net.minecraft.src;
 public abstract class BlockContainer extends Block {
 	protected BlockContainer(int var1, Material var2) {
 		super(var1, var2);
+		isBlockContainer[var1] = true;
 	}
 
 	protected BlockContainer(int var1, int var2, Material var3) {

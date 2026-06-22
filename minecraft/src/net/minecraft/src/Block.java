@@ -16,6 +16,7 @@ public class Block {
 	public static final Block[] blocksList = new Block[256];
 	public static final boolean[] tickOnLoad = new boolean[256];
 	public static final boolean[] opaqueCubeLookup = new boolean[256];
+	public static final boolean[] isBlockContainer = new boolean[256];
 	public static final int[] lightOpacity = new int[256];
 	public static final boolean[] canBlockGrass = new boolean[256];
 	public static final int[] lightValue = new int[256];
@@ -103,6 +104,9 @@ public class Block {
 	public static final Block blockClay = (new BlockClay(82, 72)).setHardness(0.6F).setStepSound(soundGravelFootstep);
 	public static final Block reed = (new BlockReed(83, 73)).setHardness(0.0F).setStepSound(soundGrassFootstep);
 	public static final Block jukebox = (new BlockJukeBox(84, 74)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep);
+	public static final Block fence = (new BlockFence(85, 4)).setHardness(2.0F).setResistance(5.0F).setStepSound(soundWoodFootstep);
+	public static final Block oreRuby = (new BlockOre(100, 84)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep);
+	
 	public int blockIndexInTexture;
 	public final int blockID;
 	protected float hardness;
@@ -132,6 +136,7 @@ public class Block {
 			opaqueCubeLookup[var1] = this.isOpaqueCube();
 			lightOpacity[var1] = this.isOpaqueCube() ? 255 : 0;
 			canBlockGrass[var1] = this.getCanBlockGrass();
+			isBlockContainer[var1] = false;
 		}
 	}
 

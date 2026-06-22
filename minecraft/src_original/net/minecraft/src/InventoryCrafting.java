@@ -3,15 +3,15 @@ package net.minecraft.src;
 public class InventoryCrafting implements IInventory {
 	private ItemStack[] stackList;
 	private int gridSize;
-	private GuiContainer craftingInventory;
+	private CraftingInventoryCB craftingInventory;
 
-	public InventoryCrafting(GuiContainer var1, int var2, int var3) {
+	public InventoryCrafting(CraftingInventoryCB var1, int var2, int var3) {
 		this.gridSize = var2 * var3;
 		this.stackList = new ItemStack[this.gridSize];
 		this.craftingInventory = var1;
 	}
 
-	public InventoryCrafting(GuiContainer var1, ItemStack[] var2) {
+	public InventoryCrafting(CraftingInventoryCB var1, ItemStack[] var2) {
 		this.gridSize = var2.length;
 		this.stackList = var2;
 		this.craftingInventory = var1;
@@ -35,7 +35,7 @@ public class InventoryCrafting implements IInventory {
 			if(this.stackList[var1].stackSize <= var2) {
 				var3 = this.stackList[var1];
 				this.stackList[var1] = null;
-				this.craftingInventory.a(this);
+				this.craftingInventory.onCraftMatrixChanged(this);
 				return var3;
 			} else {
 				var3 = this.stackList[var1].splitStack(var2);
@@ -43,7 +43,7 @@ public class InventoryCrafting implements IInventory {
 					this.stackList[var1] = null;
 				}
 
-				this.craftingInventory.a(this);
+				this.craftingInventory.onCraftMatrixChanged(this);
 				return var3;
 			}
 		} else {
@@ -53,7 +53,7 @@ public class InventoryCrafting implements IInventory {
 
 	public void setInventorySlotContents(int var1, ItemStack var2) {
 		this.stackList[var1] = var2;
-		this.craftingInventory.a(this);
+		this.craftingInventory.onCraftMatrixChanged(this);
 	}
 
 	public int getInventoryStackLimit() {

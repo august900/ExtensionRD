@@ -17,6 +17,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 			if(this.chestContents[var1].stackSize <= var2) {
 				var3 = this.chestContents[var1];
 				this.chestContents[var1] = null;
+				this.onInventoryChanged();
 				return var3;
 			} else {
 				var3 = this.chestContents[var1].splitStack(var2);
@@ -24,6 +25,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 					this.chestContents[var1] = null;
 				}
 
+				this.onInventoryChanged();
 				return var3;
 			}
 		} else {
@@ -37,6 +39,7 @@ public class TileEntityChest extends TileEntity implements IInventory {
 			var2.stackSize = this.getInventoryStackLimit();
 		}
 
+		this.onInventoryChanged();
 	}
 
 	public String getInvName() {

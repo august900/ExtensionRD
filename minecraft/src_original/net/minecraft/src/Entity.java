@@ -6,6 +6,7 @@ import java.util.Random;
 public abstract class Entity {
 	private static int nextEntityID = 0;
 	public int entityID = nextEntityID++;
+	public double renderDistanceWeight = 1.0D;
 	public boolean preventEntitySpawning = false;
 	public Entity riddenByEntity;
 	public Entity ridingEntity;
@@ -227,10 +228,34 @@ public abstract class Entity {
 			double var13 = var3;
 			double var15 = var5;
 			AxisAlignedBB var17 = this.boundingBox.copy();
-			List var18 = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(var1, var3, var5));
+			boolean var18 = this.onGround && this.isSneaking();
+			if(var18) {
+				double var19;
+				for(var19 = 0.05D; var1 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(var1, -1.0D, 0.0D)).size() == 0; var11 = var1) {
+					if(var1 < var19 && var1 >= -var19) {
+						var1 = 0.0D;
+					} else if(var1 > 0.0D) {
+						var1 -= var19;
+					} else {
+						var1 += var19;
+					}
+				}
 
-			for(int var19 = 0; var19 < var18.size(); ++var19) {
-				var3 = ((AxisAlignedBB)var18.get(var19)).calculateYOffset(this.boundingBox, var3);
+				for(; var5 != 0.0D && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.getOffsetBoundingBox(0.0D, -1.0D, var5)).size() == 0; var15 = var5) {
+					if(var5 < var19 && var5 >= -var19) {
+						var5 = 0.0D;
+					} else if(var5 > 0.0D) {
+						var5 -= var19;
+					} else {
+						var5 += var19;
+					}
+				}
+			}
+
+			List var35 = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(var1, var3, var5));
+
+			for(int var20 = 0; var20 < var35.size(); ++var20) {
+				var3 = ((AxisAlignedBB)var35.get(var20)).calculateYOffset(this.boundingBox, var3);
 			}
 
 			this.boundingBox.offset(0.0D, var3, 0.0D);
@@ -240,11 +265,11 @@ public abstract class Entity {
 				var1 = var5;
 			}
 
-			boolean var34 = this.onGround || var13 != var3 && var13 < 0.0D;
+			boolean var36 = this.onGround || var13 != var3 && var13 < 0.0D;
 
-			int var20;
-			for(var20 = 0; var20 < var18.size(); ++var20) {
-				var1 = ((AxisAlignedBB)var18.get(var20)).calculateXOffset(this.boundingBox, var1);
+			int var21;
+			for(var21 = 0; var21 < var35.size(); ++var21) {
+				var1 = ((AxisAlignedBB)var35.get(var21)).calculateXOffset(this.boundingBox, var1);
 			}
 
 			this.boundingBox.offset(var1, 0.0D, 0.0D);
@@ -254,8 +279,8 @@ public abstract class Entity {
 				var1 = var5;
 			}
 
-			for(var20 = 0; var20 < var18.size(); ++var20) {
-				var5 = ((AxisAlignedBB)var18.get(var20)).calculateZOffset(this.boundingBox, var5);
+			for(var21 = 0; var21 < var35.size(); ++var21) {
+				var5 = ((AxisAlignedBB)var35.get(var21)).calculateZOffset(this.boundingBox, var5);
 			}
 
 			this.boundingBox.offset(0.0D, 0.0D, var5);
@@ -265,22 +290,22 @@ public abstract class Entity {
 				var1 = var5;
 			}
 
-			double var22;
-			int var27;
-			double var35;
-			if(this.stepHeight > 0.0F && var34 && this.ySize < 0.05F && (var11 != var1 || var15 != var5)) {
-				var35 = var1;
-				var22 = var3;
-				double var24 = var5;
+			double var23;
+			int var28;
+			double var37;
+			if(this.stepHeight > 0.0F && var36 && this.ySize < 0.05F && (var11 != var1 || var15 != var5)) {
+				var37 = var1;
+				var23 = var3;
+				double var25 = var5;
 				var1 = var11;
 				var3 = (double)this.stepHeight;
 				var5 = var15;
-				AxisAlignedBB var26 = this.boundingBox.copy();
+				AxisAlignedBB var27 = this.boundingBox.copy();
 				this.boundingBox.setBB(var17);
-				var18 = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(var11, var3, var15));
+				var35 = this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox.addCoord(var11, var3, var15));
 
-				for(var27 = 0; var27 < var18.size(); ++var27) {
-					var3 = ((AxisAlignedBB)var18.get(var27)).calculateYOffset(this.boundingBox, var3);
+				for(var28 = 0; var28 < var35.size(); ++var28) {
+					var3 = ((AxisAlignedBB)var35.get(var28)).calculateYOffset(this.boundingBox, var3);
 				}
 
 				this.boundingBox.offset(0.0D, var3, 0.0D);
@@ -290,8 +315,8 @@ public abstract class Entity {
 					var1 = var5;
 				}
 
-				for(var27 = 0; var27 < var18.size(); ++var27) {
-					var1 = ((AxisAlignedBB)var18.get(var27)).calculateXOffset(this.boundingBox, var1);
+				for(var28 = 0; var28 < var35.size(); ++var28) {
+					var1 = ((AxisAlignedBB)var35.get(var28)).calculateXOffset(this.boundingBox, var1);
 				}
 
 				this.boundingBox.offset(var1, 0.0D, 0.0D);
@@ -301,8 +326,8 @@ public abstract class Entity {
 					var1 = var5;
 				}
 
-				for(var27 = 0; var27 < var18.size(); ++var27) {
-					var5 = ((AxisAlignedBB)var18.get(var27)).calculateZOffset(this.boundingBox, var5);
+				for(var28 = 0; var28 < var35.size(); ++var28) {
+					var5 = ((AxisAlignedBB)var35.get(var28)).calculateZOffset(this.boundingBox, var5);
 				}
 
 				this.boundingBox.offset(0.0D, 0.0D, var5);
@@ -312,11 +337,11 @@ public abstract class Entity {
 					var1 = var5;
 				}
 
-				if(var35 * var35 + var24 * var24 >= var1 * var1 + var5 * var5) {
-					var1 = var35;
-					var3 = var22;
-					var5 = var24;
-					this.boundingBox.setBB(var26);
+				if(var37 * var37 + var25 * var25 >= var1 * var1 + var5 * var5) {
+					var1 = var37;
+					var3 = var23;
+					var5 = var25;
+					this.boundingBox.setBB(var27);
 				} else {
 					this.ySize = (float)((double)this.ySize + 0.5D);
 				}
@@ -350,54 +375,54 @@ public abstract class Entity {
 				this.motionZ = 0.0D;
 			}
 
-			var35 = this.posX - var7;
-			var22 = this.posZ - var9;
-			this.distanceWalkedModified = (float)((double)this.distanceWalkedModified + (double)MathHelper.sqrt_double(var35 * var35 + var22 * var22) * 0.6D);
-			int var25;
-			int var36;
+			var37 = this.posX - var7;
+			var23 = this.posZ - var9;
+			this.distanceWalkedModified = (float)((double)this.distanceWalkedModified + (double)MathHelper.sqrt_double(var37 * var37 + var23 * var23) * 0.6D);
+			int var26;
 			int var38;
-			if(this.canTriggerWalking) {
-				var36 = MathHelper.floor_double(this.posX);
-				var25 = MathHelper.floor_double(this.posY - (double)0.2F - (double)this.yOffset);
-				var38 = MathHelper.floor_double(this.posZ);
-				var27 = this.worldObj.getBlockId(var36, var25, var38);
-				if(this.distanceWalkedModified > (float)this.nextStepDistance && var27 > 0) {
+			int var40;
+			if(this.canTriggerWalking && !var18) {
+				var38 = MathHelper.floor_double(this.posX);
+				var26 = MathHelper.floor_double(this.posY - (double)0.2F - (double)this.yOffset);
+				var40 = MathHelper.floor_double(this.posZ);
+				var28 = this.worldObj.getBlockId(var38, var26, var40);
+				if(this.distanceWalkedModified > (float)this.nextStepDistance && var28 > 0) {
 					++this.nextStepDistance;
-					StepSound var28 = Block.blocksList[var27].stepSound;
-					if(this.worldObj.getBlockId(var36, var25 + 1, var38) == Block.snow.blockID) {
-						var28 = Block.snow.stepSound;
-						this.worldObj.playSoundAtEntity(this, var28.getStepSound(), var28.getVolume() * 0.15F, var28.getPitch());
-					} else if(!Block.blocksList[var27].material.getIsLiquid()) {
-						this.worldObj.playSoundAtEntity(this, var28.getStepSound(), var28.getVolume() * 0.15F, var28.getPitch());
+					StepSound var29 = Block.blocksList[var28].stepSound;
+					if(this.worldObj.getBlockId(var38, var26 + 1, var40) == Block.snow.blockID) {
+						var29 = Block.snow.stepSound;
+						this.worldObj.playSoundAtEntity(this, var29.getStepSound(), var29.getVolume() * 0.15F, var29.getPitch());
+					} else if(!Block.blocksList[var28].material.getIsLiquid()) {
+						this.worldObj.playSoundAtEntity(this, var29.getStepSound(), var29.getVolume() * 0.15F, var29.getPitch());
 					}
 
-					Block.blocksList[var27].onEntityWalking(this.worldObj, var36, var25, var38, this);
+					Block.blocksList[var28].onEntityWalking(this.worldObj, var38, var26, var40, this);
 				}
 			}
 
-			var36 = MathHelper.floor_double(this.boundingBox.minX);
-			var25 = MathHelper.floor_double(this.boundingBox.minY);
-			var38 = MathHelper.floor_double(this.boundingBox.minZ);
-			var27 = MathHelper.floor_double(this.boundingBox.maxX);
-			int var39 = MathHelper.floor_double(this.boundingBox.maxY);
-			int var29 = MathHelper.floor_double(this.boundingBox.maxZ);
+			var38 = MathHelper.floor_double(this.boundingBox.minX);
+			var26 = MathHelper.floor_double(this.boundingBox.minY);
+			var40 = MathHelper.floor_double(this.boundingBox.minZ);
+			var28 = MathHelper.floor_double(this.boundingBox.maxX);
+			int var41 = MathHelper.floor_double(this.boundingBox.maxY);
+			int var30 = MathHelper.floor_double(this.boundingBox.maxZ);
 
-			for(int var30 = var36; var30 <= var27; ++var30) {
-				for(int var31 = var25; var31 <= var39; ++var31) {
-					for(int var32 = var38; var32 <= var29; ++var32) {
-						int var33 = this.worldObj.getBlockId(var30, var31, var32);
-						if(var33 > 0) {
-							Block.blocksList[var33].onEntityCollidedWithBlock(this.worldObj, var30, var31, var32, this);
+			for(int var31 = var38; var31 <= var28; ++var31) {
+				for(int var32 = var26; var32 <= var41; ++var32) {
+					for(int var33 = var40; var33 <= var30; ++var33) {
+						int var34 = this.worldObj.getBlockId(var31, var32, var33);
+						if(var34 > 0) {
+							Block.blocksList[var34].onEntityCollidedWithBlock(this.worldObj, var31, var32, var33, this);
 						}
 					}
 				}
 			}
 
 			this.ySize *= 0.4F;
-			boolean var37 = this.handleWaterMovement();
+			boolean var39 = this.handleWaterMovement();
 			if(this.worldObj.isBoundingBoxBurning(this.boundingBox)) {
 				this.dealFireDamage(1);
-				if(!var37) {
+				if(!var39) {
 					++this.fire;
 					if(this.fire == 0) {
 						this.fire = 300;
@@ -407,12 +432,16 @@ public abstract class Entity {
 				this.fire = -this.fireResistance;
 			}
 
-			if(var37 && this.fire > 0) {
+			if(var39 && this.fire > 0) {
 				this.worldObj.playSoundAtEntity(this, "random.fizz", 0.7F, 1.6F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
 				this.fire = -this.fireResistance;
 			}
 
 		}
+	}
+
+	public boolean isSneaking() {
+		return false;
 	}
 
 	public AxisAlignedBB getBoundingBox() {
@@ -599,7 +628,7 @@ public abstract class Entity {
 
 	public boolean isInRangeToRenderDist(double var1) {
 		double var3 = this.boundingBox.getAverageEdgeLength();
-		var3 *= 64.0D;
+		var3 *= 64.0D * this.renderDistanceWeight;
 		return var1 < var3 * var3;
 	}
 

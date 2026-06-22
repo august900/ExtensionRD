@@ -1,11 +1,13 @@
 package net.minecraft.src;
 
 public class InventoryPlayer implements IInventory {
-	public ItemStack[] mainInventory = new ItemStack[36];
+	public ItemStack[] mainInventory = new ItemStack[37];
 	public ItemStack[] armorInventory = new ItemStack[4];
 	public ItemStack[] craftingInventory = new ItemStack[4];
 	public int currentItem = 0;
 	private EntityPlayer player;
+	public ItemStack draggedItemStack;
+	public boolean inventoryChanged = false;
 
 	public InventoryPlayer(EntityPlayer var1) {
 		this.player = var1;
@@ -350,5 +352,52 @@ public class InventoryPlayer implements IInventory {
 	}
 
 	public void onInventoryChanged() {
+		this.inventoryChanged = true;
+	}
+
+	public boolean getInventoryEqual(InventoryPlayer var1) {
+		int var2;
+		for(var2 = 0; var2 < this.mainInventory.length; ++var2) {
+			if(!this.getItemStacksEqual(var1.mainInventory[var2], this.mainInventory[var2])) {
+				return false;
+			}
+		}
+
+		for(var2 = 0; var2 < this.armorInventory.length; ++var2) {
+			if(!this.getItemStacksEqual(var1.armorInventory[var2], this.armorInventory[var2])) {
+				return false;
+			}
+		}
+
+		for(var2 = 0; var2 < this.craftingInventory.length; ++var2) {
+			if(!this.getItemStacksEqual(var1.craftingInventory[var2], this.craftingInventory[var2])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean getItemStacksEqual(ItemStack var1, ItemStack var2) {
+		return var1 == null && var2 == null ? true : (var1 != null && var2 != null ? var1.itemID == var2.itemID && var1.stackSize == var2.stackSize && var1.itemDmg == var2.itemDmg : false);
+	}
+
+	public InventoryPlayer copyInventory() {
+		InventoryPlayer var1 = new InventoryPlayer((EntityPlayer)null);
+
+		int var2;
+		for(var2 = 0; var2 < this.mainInventory.length; ++var2) {
+			var1.mainInventory[var2] = this.mainInventory[var2] != null ? this.mainInventory[var2].copy() : null;
+		}
+
+		for(var2 = 0; var2 < this.armorInventory.length; ++var2) {
+			var1.armorInventory[var2] = this.armorInventory[var2] != null ? this.armorInventory[var2].copy() : null;
+		}
+
+		for(var2 = 0; var2 < this.craftingInventory.length; ++var2) {
+			var1.craftingInventory[var2] = this.craftingInventory[var2] != null ? this.craftingInventory[var2].copy() : null;
+		}
+
+		return var1;
 	}
 }

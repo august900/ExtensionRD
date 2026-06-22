@@ -125,4 +125,8 @@ public final class ItemStack {
 	public void useItemOnEntity(EntityLiving var1) {
 		Item.itemsList[this.itemID].saddleEntity(this, var1);
 	}
+
+	public ItemStack copy() {
+		return new ItemStack(this.itemID, this.stackSize, this.itemDmg);
+	}
 }

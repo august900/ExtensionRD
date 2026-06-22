@@ -10,14 +10,15 @@ public class Block {
 	public static final StepSound soundGrassFootstep = new StepSound("grass", 1.0F, 1.0F);
 	public static final StepSound soundStoneFootstep = new StepSound("stone", 1.0F, 1.0F);
 	public static final StepSound soundMetalFootstep = new StepSound("stone", 1.0F, 1.5F);
-	public static final StepSound soundGlassFootstepo = new StepSoundGlass("stone", 1.0F, 1.0F);
+	public static final StepSound soundGlassFootstep = new StepSoundGlass("stone", 1.0F, 1.0F);
 	public static final StepSound soundClothFootstep = new StepSound("cloth", 1.0F, 1.0F);
 	public static final StepSound soundSandFootstep = new StepSoundSand("sand", 1.0F, 1.0F);
-	public static final Block[] canBlockGrass = new Block[256];
+	public static final Block[] blocksList = new Block[256];
 	public static final boolean[] tickOnLoad = new boolean[256];
 	public static final boolean[] opaqueCubeLookup = new boolean[256];
-	public static final int[] lightOpacity = new int[256];
 	public static final boolean[] isBlockContainer = new boolean[256];
+	public static final int[] lightOpacity = new int[256];
+	public static final boolean[] canBlockGrass = new boolean[256];
 	public static final int[] lightValue = new int[256];
 	public static final Block stone = (new BlockStone(1, 1)).setHardness(1.5F).setResistance(10.0F).setStepSound(soundStoneFootstep);
 	public static final BlockGrass grass = (BlockGrass)(new BlockGrass(2)).setHardness(0.6F).setStepSound(soundGrassFootstep);
@@ -38,7 +39,7 @@ public class Block {
 	public static final Block wood = (new BlockLog(17)).setHardness(2.0F).setStepSound(soundWoodFootstep);
 	public static final BlockLeaves leaves = (BlockLeaves)(new BlockLeaves(18, 52)).setHardness(0.2F).setLightOpacity(1).setStepSound(soundGrassFootstep);
 	public static final Block sponge = (new BlockSponge(19)).setHardness(0.6F).setStepSound(soundGrassFootstep);
-	public static final Block glass = (new BlockGlass(20, 49, Material.glass, false)).setHardness(0.3F).setStepSound(soundGlassFootstepo);
+	public static final Block glass = (new BlockGlass(20, 49, Material.glass, false)).setHardness(0.3F).setStepSound(soundGlassFootstep);
 	public static final Block clothRed = null;
 	public static final Block clothOrange = null;
 	public static final Block clothYellow = null;
@@ -70,9 +71,9 @@ public class Block {
 	public static final Block obsidian = (new BlockObsidian(49, 37)).setHardness(10.0F).setResistance(2000.0F).setStepSound(soundStoneFootstep);
 	public static final Block torch = (new BlockTorch(50, 80)).setHardness(0.0F).setLightValue(15.0F / 16.0F).setStepSound(soundWoodFootstep);
 	public static final BlockFire fire = (BlockFire)((BlockFire)(new BlockFire(51, 31)).setHardness(0.0F).setLightValue(1.0F).setStepSound(soundWoodFootstep));
-	public static final Block spawner = (new BlockMobSpawner(52, 65)).setHardness(5.0F).setStepSound(soundMetalFootstep);
+	public static final Block mobSpawner = (new BlockMobSpawner(52, 65)).setHardness(5.0F).setStepSound(soundMetalFootstep);
 	public static final Block stairCompactWood = new BlockStairs(53, planks);
-	public static final Block crate = (new BlockChest(54)).setHardness(2.5F).setStepSound(soundWoodFootstep);
+	public static final Block chest = (new BlockChest(54)).setHardness(2.5F).setStepSound(soundWoodFootstep);
 	public static final Block redstoneWire = (new BlockRedstoneWire(55, 84)).setHardness(0.0F).setStepSound(soundPowderFootstep);
 	public static final Block oreDiamond = (new BlockOre(56, 50)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep);
 	public static final Block blockDiamond = (new BlockOreBlock(57, 40)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
@@ -97,12 +98,13 @@ public class Block {
 	public static final Block torchRedstoneActive = (new BlockRedstoneTorch(76, 99, true)).setHardness(0.0F).setLightValue(0.5F).setStepSound(soundWoodFootstep);
 	public static final Block button = (new BlockButton(77, stone.blockIndexInTexture)).setHardness(0.5F).setStepSound(soundStoneFootstep);
 	public static final Block snow = (new BlockSnow(78, 66)).setHardness(0.1F).setStepSound(soundClothFootstep);
-	public static final Block ice = (new BlockIce(79, 67)).setHardness(0.5F).setLightOpacity(3).setStepSound(soundGlassFootstepo);
+	public static final Block ice = (new BlockIce(79, 67)).setHardness(0.5F).setLightOpacity(3).setStepSound(soundGlassFootstep);
 	public static final Block blockSnow = (new BlockSnowBlock(80, 66)).setHardness(0.2F).setStepSound(soundClothFootstep);
 	public static final Block cactus = (new BlockCactus(81, 70)).setHardness(0.4F).setStepSound(soundClothFootstep);
 	public static final Block blockClay = (new BlockClay(82, 72)).setHardness(0.6F).setStepSound(soundGravelFootstep);
 	public static final Block reed = (new BlockReed(83, 73)).setHardness(0.0F).setStepSound(soundGrassFootstep);
 	public static final Block jukebox = (new BlockJukeBox(84, 74)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep);
+	public static final Block fence = (new BlockFence(85, 4)).setHardness(2.0F).setResistance(5.0F).setStepSound(soundWoodFootstep);
 	public int blockIndexInTexture;
 	public final int blockID;
 	protected float hardness;
@@ -122,16 +124,17 @@ public class Block {
 		this.stepSound = soundPowderFootstep;
 		this.blockParticleGravity = 1.0F;
 		this.slipperiness = 0.6F;
-		if(canBlockGrass[var1] != null) {
-			throw new IllegalArgumentException("Slot " + var1 + " is already occupied by " + canBlockGrass[var1] + " when adding " + this);
+		if(blocksList[var1] != null) {
+			throw new IllegalArgumentException("Slot " + var1 + " is already occupied by " + blocksList[var1] + " when adding " + this);
 		} else {
 			this.material = var2;
-			canBlockGrass[var1] = this;
+			blocksList[var1] = this;
 			this.blockID = var1;
 			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 			opaqueCubeLookup[var1] = this.isOpaqueCube();
 			lightOpacity[var1] = this.isOpaqueCube() ? 255 : 0;
-			isBlockContainer[var1] = this.getCanBlockGrass();
+			canBlockGrass[var1] = this.getCanBlockGrass();
+			isBlockContainer[var1] = false;
 		}
 	}
 
@@ -391,7 +394,7 @@ public class Block {
 
 	public boolean canPlaceBlockAt(World var1, int var2, int var3, int var4) {
 		int var5 = var1.getBlockId(var2, var3, var4);
-		return var5 == 0 || canBlockGrass[var5].material.getIsLiquid();
+		return var5 == 0 || blocksList[var5].material.getIsLiquid();
 	}
 
 	public boolean blockActivated(World var1, int var2, int var3, int var4, EntityPlayer var5) {
@@ -434,7 +437,7 @@ public class Block {
 
 	static {
 		for(int var0 = 0; var0 < 256; ++var0) {
-			if(canBlockGrass[var0] != null) {
+			if(blocksList[var0] != null) {
 				Item.itemsList[var0] = new ItemBlock(var0 - 256);
 			}
 		}

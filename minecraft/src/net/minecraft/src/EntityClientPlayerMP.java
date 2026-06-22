@@ -4,12 +4,14 @@ import net.minecraft.client.Minecraft;
 
 public class EntityClientPlayerMP extends EntityPlayerSP {
 	private NetClientHandler sendQueue;
+	private int motionUpdateCounter = 0;
 	private double oldPosX;
 	private double oldBasePos;
 	private double oldPosY;
 	private double oldPosZ;
 	private float oldRotationYaw;
 	private float oldRotationPitch;
+	private InventoryPlayer serverSideInventory = new InventoryPlayer((EntityPlayer)null);
 
 	public EntityClientPlayerMP(Minecraft var1, World var2, Session var3, NetClientHandler var4) {
 		super(var1, var2, var3);
@@ -26,6 +28,17 @@ public class EntityClientPlayerMP extends EntityPlayerSP {
 	}
 
 	public void sendMotionUpdates() {
+		if(this.motionUpdateCounter++ == 20) {
+			if(!this.inventory.getInventoryEqual(this.serverSideInventory)) {
+				this.sendQueue.addToSendQueue(new Packet5PlayerInventory(-1, this.inventory.mainInventory));
+				this.sendQueue.addToSendQueue(new Packet5PlayerInventory(-2, this.inventory.craftingInventory));
+				this.sendQueue.addToSendQueue(new Packet5PlayerInventory(-3, this.inventory.armorInventory));
+				this.serverSideInventory = this.inventory.copyInventory();
+			}
+
+			this.motionUpdateCounter = 0;
+		}
+
 		double var1 = this.posX - this.oldPosX;
 		double var3 = this.boundingBox.minY - this.oldBasePos;
 		double var5 = this.posY - this.oldPosY;
@@ -59,6 +72,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP {
 	}
 
 	protected void joinEntityItemWithWorld(EntityItem var1) {
+		System.out.println("Dropping?");
 		Packet21PickupSpawn var2 = new Packet21PickupSpawn(var1);
 		this.sendQueue.addToSendQueue(var2);
 		var1.posX = (double)var2.xPosition / 32.0D;

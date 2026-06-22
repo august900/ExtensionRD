@@ -8,6 +8,10 @@ public class EntitySpider extends EntityMob {
 		this.moveSpeed = 0.8F;
 	}
 
+	public double getMountedYOffset() {
+		return (double)this.height * 0.75D - 0.5D;
+	}
+
 	protected Entity findPlayerToAttack() {
 		float var1 = this.getBrightness(1.0F);
 		if(var1 < 0.5F) {

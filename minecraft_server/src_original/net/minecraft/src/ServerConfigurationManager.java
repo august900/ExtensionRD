@@ -26,6 +26,7 @@ public class ServerConfigurationManager {
 	private File bannedPlayersFile;
 	private File ipBanFile;
 	private File opFile;
+	private PlayerNBTManager playerNBTManagerObj;
 
 	public ServerConfigurationManager(MinecraftServer var1) {
 		this.mcServer = var1;
@@ -42,12 +43,23 @@ public class ServerConfigurationManager {
 		this.saveOps();
 	}
 
+	public void setPlayerManager(WorldServer var1) {
+		this.playerNBTManagerObj = new PlayerNBTManager(new File(var1.saveDirectory, "players"));
+	}
+
 	public int getMaxTrackingDistance() {
 		return this.playerManagerObj.getMaxTrackingDistance();
 	}
 
 	public void playerLoggedIn(EntityPlayerMP var1) {
 		this.playerEntities.add(var1);
+		this.playerNBTManagerObj.readPlayerNBT(var1);
+		this.mcServer.worldMngr.chunkProviderServer.loadChunk((int)var1.posX >> 4, (int)var1.posZ >> 4);
+
+		while(this.mcServer.worldMngr.getCollidingBoundingBoxes(var1, var1.boundingBox).size() != 0) {
+			var1.setPosition(var1.posX, var1.posY + 1.0D, var1.posZ);
+		}
+
 		this.mcServer.worldMngr.spawnEntityInWorld(var1);
 		this.playerManagerObj.addPlayer(var1);
 	}
@@ -56,10 +68,11 @@ public class ServerConfigurationManager {
 		this.playerManagerObj.updateMountedMovingPlayer(var1);
 	}
 
-	public void sendPacketToAllPlayers(EntityPlayerMP var1) {
+	public void playerLoggedOut(EntityPlayerMP var1) {
+		this.playerManagerObj.removePlayer(var1);
+		this.playerNBTManagerObj.writePlayerNBT(var1);
 		this.mcServer.worldMngr.setEntityDead(var1);
 		this.playerEntities.remove(var1);
-		this.playerManagerObj.removePlayer(var1);
 	}
 
 	public EntityPlayerMP login(NetLoginHandler var1, String var2, String var3) {
@@ -97,7 +110,7 @@ public class ServerConfigurationManager {
 		this.playerManagerObj.markBlockNeedsUpdate(var1, var2, var3);
 	}
 
-	public void sendPacketToPlayer(Packet var1) {
+	public void sendPacketToAllPlayers(Packet var1) {
 		for(int var2 = 0; var2 < this.playerEntities.size(); ++var2) {
 			EntityPlayerMP var3 = (EntityPlayerMP)this.playerEntities.get(var2);
 			var3.playerNetServerHandler.sendPacket(var1);
@@ -286,7 +299,7 @@ public class ServerConfigurationManager {
 
 	}
 
-	public void setPlayerManager(String var1) {
+	public void sendChatMessageToAllOps(String var1) {
 		Packet3Chat var2 = new Packet3Chat(var1);
 
 		for(int var3 = 0; var3 < this.playerEntities.size(); ++var3) {
@@ -294,6 +307,27 @@ public class ServerConfigurationManager {
 			if(this.isOp(var4.username)) {
 				var4.playerNetServerHandler.sendPacket(var2);
 			}
+		}
+
+	}
+
+	public boolean sendPacketToPlayer(String var1, Packet var2) {
+		EntityPlayerMP var3 = this.getPlayerEntity(var1);
+		if(var3 != null) {
+			var3.playerNetServerHandler.sendPacket(var2);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void sentTileEntityToPlayer(int var1, int var2, int var3, TileEntity var4) {
+		this.playerManagerObj.sendTileEntity(new Packet59ComplexEntity(var1, var2, var3, var4), var1, var2, var3);
+	}
+
+	public void savePlayerStates() {
+		for(int var1 = 0; var1 < this.playerEntities.size(); ++var1) {
+			this.playerNBTManagerObj.writePlayerNBT((EntityPlayerMP)this.playerEntities.get(var1));
 		}
 
 	}

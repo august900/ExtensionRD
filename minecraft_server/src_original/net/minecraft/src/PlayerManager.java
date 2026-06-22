@@ -34,6 +34,16 @@ public class PlayerManager {
 		return var6;
 	}
 
+	public void sendTileEntity(Packet var1, int var2, int var3, int var4) {
+		int var5 = var2 >> 4;
+		int var6 = var4 >> 4;
+		PlayerInstance var7 = this.getPlayerInstance(var5, var6, false);
+		if(var7 != null) {
+			var7.sendTileEntity(var1);
+		}
+
+	}
+
 	public void markBlockNeedsUpdate(int var1, int var2, int var3) {
 		int var4 = var1 >> 4;
 		int var5 = var3 >> 4;
@@ -45,7 +55,7 @@ public class PlayerManager {
 	}
 
 	public void addPlayer(EntityPlayerMP var1) {
-		this.mcServer.configManager.sendPacketToPlayer(new Packet3Chat("\u00a7e" + var1.username + " joined the game."));
+		this.mcServer.configManager.sendPacketToAllPlayers(new Packet3Chat("\u00a7e" + var1.username + " joined the game."));
 		int var2 = (int)var1.posX >> 4;
 		int var3 = (int)var1.posZ >> 4;
 		var1.managedPosX = var1.posX;
@@ -61,7 +71,7 @@ public class PlayerManager {
 	}
 
 	public void removePlayer(EntityPlayerMP var1) {
-		this.mcServer.configManager.sendPacketToPlayer(new Packet3Chat("\u00a7e" + var1.username + " left the game."));
+		this.mcServer.configManager.sendPacketToAllPlayers(new Packet3Chat("\u00a7e" + var1.username + " left the game."));
 		int var2 = (int)var1.posX >> 4;
 		int var3 = (int)var1.posZ >> 4;
 

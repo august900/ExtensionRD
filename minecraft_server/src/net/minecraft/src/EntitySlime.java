@@ -1,6 +1,6 @@
 package net.minecraft.src;
 
-public class EntitySlime extends EntityLiving {
+public class EntitySlime extends EntityLiving implements IMobs {
 	public float squishFactor;
 	public float prevSquishFactor;
 	private int slimeJumpDelay = 0;
@@ -120,7 +120,7 @@ public class EntitySlime extends EntityLiving {
 
 	public boolean getCanSpawnHere() {
 		Chunk var1 = this.worldObj.getChunkFromBlockCoords(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY));
-		return (this.size == 1 || this.worldObj.difficultySetting > 0) && this.rand.nextInt(10) == 0 && var1.getRandomWithSeed(987234911L).nextInt(100) == 0 && this.posY < 16.0D;
+		return (this.size == 1 || this.worldObj.difficultySetting > 0) && this.rand.nextInt(10) == 0 && var1.getRandomWithSeed(987234911L).nextInt(10) == 0 && this.posY < 16.0D;
 	}
 
 	protected float getSoundVolume() {

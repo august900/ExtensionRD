@@ -4,21 +4,20 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class GuiInventory extends GuiContainer {
-	private InventoryCrafting craftingInventory;
-	private IInventory l = new InventoryCraftResult();
+	private CraftingInventoryPlayerCB craftingInventory;
 	private float xSize_lo;
 	private float ySize_lo;
 
 	public GuiInventory(IInventory var1, ItemStack[] var2) {
 		this.allowUserInput = true;
-		this.craftingInventory = new InventoryCrafting(this, var2);
-		this.inventorySlots.add(new SlotCrafting(this, this.craftingInventory, this.l, 0, 144, 36));
+		this.craftingInventory = new CraftingInventoryPlayerCB(var2);
+		this.inventorySlots.add(new SlotCrafting(this, this.craftingInventory.craftMatrix, this.craftingInventory.craftResult, 0, 144, 36));
 
 		int var3;
 		int var4;
 		for(var3 = 0; var3 < 2; ++var3) {
 			for(var4 = 0; var4 < 2; ++var4) {
-				this.inventorySlots.add(new SlotInventory(this, this.craftingInventory, var4 + var3 * 2, 88 + var4 * 18, 26 + var3 * 18));
+				this.inventorySlots.add(new SlotInventory(this, this.craftingInventory.craftMatrix, var4 + var3 * 2, 88 + var4 * 18, 26 + var3 * 18));
 			}
 		}
 
@@ -36,27 +35,6 @@ public class GuiInventory extends GuiContainer {
 			this.inventorySlots.add(new SlotInventory(this, var1, var3, 8 + var3 * 18, 142));
 		}
 
-		this.a(this.craftingInventory);
-	}
-
-	public void a(IInventory var1) {
-		int[] var2 = new int[9];
-
-		for(int var3 = 0; var3 < 3; ++var3) {
-			for(int var4 = 0; var4 < 3; ++var4) {
-				int var5 = -1;
-				if(var3 < 2 && var4 < 2) {
-					ItemStack var6 = this.craftingInventory.getStackInSlot(var3 + var4 * 2);
-					if(var6 != null) {
-						var5 = var6.itemID;
-					}
-				}
-
-				var2[var3 + var4 * 3] = var5;
-			}
-		}
-
-		this.l.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(var2));
 	}
 
 	protected void drawGuiContainerForegroundLayer() {

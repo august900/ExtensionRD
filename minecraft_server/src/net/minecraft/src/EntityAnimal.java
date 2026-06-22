@@ -1,6 +1,6 @@
 package net.minecraft.src;
 
-public abstract class EntityAnimal extends EntityCreature {
+public abstract class EntityAnimal extends EntityCreature implements IAnimals {
 	public EntityAnimal(World var1) {
 		super(var1);
 	}

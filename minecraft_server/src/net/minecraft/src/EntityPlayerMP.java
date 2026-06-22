@@ -70,6 +70,12 @@ public class EntityPlayerMP extends EntityPlayer {
 			if(var8) {
 				this.loadedChunks.remove(var1);
 				this.playerNetServerHandler.sendPacket(new Packet51MapChunk(var1.chunkXPos * 16, 0, var1.chunkZPos * 16, 16, 128, 16, this.mcServer.worldMngr));
+				List var9 = this.mcServer.worldMngr.getTileEntityList(var1.chunkXPos * 16, 0, var1.chunkZPos * 16, var1.chunkXPos * 16 + 16, 128, var1.chunkZPos * 16 + 16);
+
+				for(int var10 = 0; var10 < var9.size(); ++var10) {
+					TileEntity var7 = (TileEntity)var9.get(var10);
+					this.playerNetServerHandler.sendPacket(new Packet59ComplexEntity(var7.xCoord, var7.yCoord, var7.zCoord, var7));
+				}
 			}
 		}
 
