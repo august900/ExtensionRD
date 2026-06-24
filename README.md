@@ -1,6 +1,6 @@
 # Extension [RD]
 
-> An Alpha 1.0.16_02 mod made with RetroMCP.
+> An Alpha 1.1.2_01 mod made with RetroMCP, based off Minecraft Alpha 1.0.16 Verions.
 
 ## About
 
