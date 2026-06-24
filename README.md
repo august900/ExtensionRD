@@ -44,7 +44,7 @@ This project is developed using:
 
 * Java
 * RetroMCP
-* Minecraft Alpha 1.0.16_02
+* Minecraft Alpha 1.1.2_01
 
 Current codename:
 
