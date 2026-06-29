@@ -361,11 +361,18 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			(new WorldGenMinable(Block.oreRedstone.blockID, 7)).generate(this.worldObj, this.rand, var13, var14, var15);
 		}
 
-		for(var12 = 0; var12 < 1; ++var12) {
+		for(var12 = 0; var12 < 2; ++var12) {
 			var13 = var4 + this.rand.nextInt(16);
 			var14 = this.rand.nextInt(16);
 			var15 = var5 + this.rand.nextInt(16);
 			(new WorldGenMinable(Block.oreDiamond.blockID, 7)).generate(this.worldObj, this.rand, var13, var14, var15);
+		}
+		
+		for(var12 = 0; var12 < 1; ++var12) {
+			var13 = var4 + this.rand.nextInt(16);
+			var14 = this.rand.nextInt(16);
+			var15 = var5 + this.rand.nextInt(16);
+			(new WorldGenMinable(Block.oreRuby.blockID, 7)).generate(this.worldObj, this.rand, var13, var14, var15);
 		}
 
 		var10 = 0.5D;

@@ -1,3 +1,4 @@
+gui/items.png ce427baa894abbf4b7e8d92bcfce9a4f
 net/minecraft/client/Minecraft 284a2093f229c9b2e60e2dffbf94f518
 net/minecraft/client/MinecraftApplet 916819f29133488ea13b71c85ecb3f91
 net/minecraft/isom/IsomPreviewApplet a244b098f188a9ae223501f0cddbbf4a
@@ -66,7 +67,7 @@ net/minecraft/src/ChunkCoordIntPair e67214fe0515c7e3d342026e4c6889dc
 net/minecraft/src/ChunkLoader bbf3b59c38aded7f40c3f0326b1fc40f
 net/minecraft/src/ChunkPosition a1518117e658e0ea11a0882bbe7a09d4
 net/minecraft/src/ChunkProviderClient ab8ce850b7669c4138e2e4f556c8bf6e
-net/minecraft/src/ChunkProviderGenerate 40efc284db92b7a0c31bfe150ec751ba
+net/minecraft/src/ChunkProviderGenerate 6fc8703d5f9c355149ba94813e55d70f
 net/minecraft/src/ChunkProviderIso 332403c7a7bd0b6386352fb241b96440
 net/minecraft/src/ChunkProviderLoadOrGenerate 9f2c3acdcb93f93c1357ba24664ba434
 net/minecraft/src/ClippingHelper b5290916f94bf87bea48a0c60729abdd
@@ -76,7 +77,7 @@ net/minecraft/src/CompressedStreamTools e524ee667268ef03f8f50afb78db4615
 net/minecraft/src/CraftingInventoryCB 66d12c27a6a35e04ca0ab06103e35274
 net/minecraft/src/CraftingInventoryPlayerCB ae7c7df9019f3e00425deaa783de5f40
 net/minecraft/src/CraftingInventoryWorkbenchCB 357c09e926374d0b9a42e2bc148c283d
-net/minecraft/src/CraftingManager f7d2ae4f68ad0500f9db24912f0bbe63
+net/minecraft/src/CraftingManager 7b6548855614ddc1fb34487c9829c99e
 net/minecraft/src/CraftingRecipe abe7411a44adbe615dafc0d23f7d7824
 net/minecraft/src/EffectRenderer de26a212f56b01a8a698be5403b6c55b
 net/minecraft/src/Entity cbd07fe07e825e6f23c530aded4efdfa
@@ -172,7 +173,7 @@ net/minecraft/src/InventoryLargeChest 77be7b309b74282cd91d790afa5ecf15
 net/minecraft/src/InventoryPlayer 32e25c3da49a60c85bd4f71ac465107a
 net/minecraft/src/IProgressUpdate 2566eba0b9b3ecd85add8289a6f14f95
 net/minecraft/src/IsoImageBuffer 8ac6c38518183fff42436795108c1196
-net/minecraft/src/Item bc0db3f4d59f9ef94a77f9188a315852
+net/minecraft/src/Item aa61d2fc3955baf89edc5de9a86836e9
 net/minecraft/src/ItemArmor a385cfabe7d908d52a27171d7f045139
 net/minecraft/src/ItemAxe b96c9f3a1318d40033e1b68540854c47
 net/minecraft/src/ItemBlock 35647837427cf3fd7abb4786dfd0ee17
@@ -185,7 +186,7 @@ net/minecraft/src/ItemFood 1ae8345318e35c42a37c707d734a1ece
 net/minecraft/src/ItemHoe f5edcb3ed3f62f51d28479a7ea30edbb
 net/minecraft/src/ItemMinecart 352be71c65ff366c4e4f46e925fac055
 net/minecraft/src/ItemPainting ce498ef0ab3ebd48cb472544ef3969ea
-net/minecraft/src/ItemPickaxe 7e71b73ad4a0cfe211fea50b29e6f1c6
+net/minecraft/src/ItemPickaxe a09f6617997d7236db7c4c581824fa9e
 net/minecraft/src/ItemRecord 0ebc89080ad9799665418250822dfe03
 net/minecraft/src/ItemRedstone cebee7d604310c7e1ad711c918c93ea2
 net/minecraft/src/ItemReed 3fcfd9ff64e7d72f268d8ccf4447e310
