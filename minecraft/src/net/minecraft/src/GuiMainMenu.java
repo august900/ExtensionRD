@@ -11,7 +11,11 @@ import org.lwjgl.util.glu.GLU;
 
 public class GuiMainMenu extends GuiScreen {
 	private static final Random rand = new Random();
-	String[] logoBlockLayers = new String[]{" *   * * *   * *** *** *** *** *** ***", " ** ** * **  * *   *   * * * * *    * ", " * * * * * * * **  *   **  *** **   * ", " *   * * *  ** *   *   * * * * *    * ", " *   * * *   * *** *** * * * * *    * "};
+	String[] logoBlockLayers = new String[]{" *** * * *** **  ** ", 
+											" *   * *  *  * * * *",
+											" **   *   *  **  * *",
+											" *   * *  *  * * * *", 
+											" *** * *  *  * * ** "};
 	private LogoEffectRandomizer[][] logoEffects;
 	private float updateCounter = 0.0F;
 	private String splashString = "missingno";

@@ -128,7 +128,6 @@ net/minecraft/src/EnumOSIsom fc2901e049803377c52e699d1230bfa5
 net/minecraft/src/EnumSkyBlock c676fb04205d7d71403fcfcd10959b8d
 net/minecraft/src/Explosion 1e952cd85c88c2aac3e0ce587c7db32b
 net/minecraft/src/FontRenderer cfb6bab37aba32165af7d6fa7729c0a7
-net/minecraft/src/Frustum ab435d11dbc408d1c9b68e327f21de80
 net/minecraft/src/GameSettings 11bcddaf91b1dd4be53ad8f47e5a72b5
 net/minecraft/src/GameWindowListener 8f1c918f7944ee70f3199e014c996039
 net/minecraft/src/GLAllocation f5b13c8aa7e8c3bd3701b412bd080113
@@ -151,7 +150,7 @@ net/minecraft/src/GuiGameOver 8c933553b5d80335024284d6cd759bb5
 net/minecraft/src/GuiIngame 99e3cc6773bf9eafe0c63d593b457265
 net/minecraft/src/GuiIngameMenu 587224600129a298c14c5425ca29c677
 net/minecraft/src/GuiInventory 4e9b6fcf8879e82deab17cddbf4b5b39
-net/minecraft/src/GuiMainMenu f28590b162962768139143cfa1c1f7a0
+net/minecraft/src/GuiMainMenu 84f1ad796e5f8b3ea3c690c838e8adfc
 net/minecraft/src/GuiMultiplayer 08a1c9132eefee7545883cd29e5cbbff
 net/minecraft/src/GuiOptions c2962438f343aecb12bce5bad0f240be
 net/minecraft/src/GuiScreen 27ca400a5f5ed77458d0210f6c742849

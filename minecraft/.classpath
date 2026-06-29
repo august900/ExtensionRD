@@ -22,5 +22,7 @@
 	<classpathentry kind="lib" path="libraries/org/ow2/asm/asm-commons/9.9/asm-commons-9.9.jar"/>
 	<classpathentry kind="lib" path="jars/deobfuscated.jar" sourcepath="jars/deobfuscated-source.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="jars/deobfuscated-source.jar" sourcepath="jars/deobfuscated-source.jar"/>
+	<classpathentry kind="lib" path="jars/reobfuscated.jar" sourcepath="jars/reobfuscated.jar"/>
 	<classpathentry kind="output" path="output"/>
 </classpath>
