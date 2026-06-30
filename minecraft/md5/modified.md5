@@ -27,7 +27,7 @@ net/minecraft/src/BlockGravel ed9ec7ce574f950bbcc74436da87166a
 net/minecraft/src/BlockIce 6a2c8685f278ae00627ce6ac3c320b3f
 net/minecraft/src/BlockJukeBox b90a302d5af44bf2370fdc5ac6139147
 net/minecraft/src/BlockLadder 69303f26320f1b5b788fc321877352c4
-net/minecraft/src/BlockLeaves 6259385c7a810f0b0ae76cbbaf7af3c2
+net/minecraft/src/BlockLeaves 499cfb8f678da4ee0964534e1c2d5d92
 net/minecraft/src/BlockLeavesBase 8ccad2f60a66641e7dd0184485e1d9b0
 net/minecraft/src/BlockLever c14087077141ff8dd4ca83d72167f65b
 net/minecraft/src/BlockLog b8e563454a3fb23066ed0b28006cfb60
@@ -151,8 +151,8 @@ net/minecraft/src/GuiGameOver 8c933553b5d80335024284d6cd759bb5
 net/minecraft/src/GuiIngame 99e3cc6773bf9eafe0c63d593b457265
 net/minecraft/src/GuiIngameMenu 587224600129a298c14c5425ca29c677
 net/minecraft/src/GuiInventory 4e9b6fcf8879e82deab17cddbf4b5b39
-net/minecraft/src/GuiMainMenu 84f1ad796e5f8b3ea3c690c838e8adfc
-net/minecraft/src/GuiMultiplayer 08a1c9132eefee7545883cd29e5cbbff
+net/minecraft/src/GuiMainMenu 1d08b4c440a2516e3aae4ea57d4bd2c9
+net/minecraft/src/GuiMultiplayer 24474090a6002abf1f0b848fd1c915e2
 net/minecraft/src/GuiOptions c2962438f343aecb12bce5bad0f240be
 net/minecraft/src/GuiScreen 27ca400a5f5ed77458d0210f6c742849
 net/minecraft/src/GuiSelectWorld 6107915e2de57d439569a7852f74ff44
@@ -404,3 +404,4 @@ net/minecraft/src/WorldGenTrees 7abf8a25f10a51bc147c8e2c3b54d92d
 net/minecraft/src/WorldIso 2f4e00fecb95b4bd482e48a59a8fb2f5
 net/minecraft/src/WorldRenderer 14373ca39b12b6b2e56fb24dc3c49480
 terrain.png 7a96cfea2656105e372619b2b7e6fa5d
+title/splashes.txt 0c57eb8d2cbdc1dfe50443685d4aef02

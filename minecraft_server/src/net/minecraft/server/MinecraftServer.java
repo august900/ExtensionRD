@@ -60,7 +60,8 @@ public class MinecraftServer implements ICommandListener, Runnable {
 		var1.setDaemon(true);
 		var1.start();
 		ConsoleLogManager.init();
-		logger.info("Starting ExtRD server");
+		logger.info("Starting ExtRD server...");
+		logger.warning("DISCLAIMER: ExtRD Multiplayer still in testing. Please expect bugs and crashes (server and client)");
 		if(Runtime.getRuntime().maxMemory() / 1024L / 1024L < 512L) {
 			logger.warning("**** NOT ENOUGH RAM!");
 			logger.warning("To start the server with more ram, launch it as \"java -Xmx1024M -Xms1024M -jar minecraft_server.jar\"");

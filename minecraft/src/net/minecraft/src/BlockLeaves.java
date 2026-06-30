@@ -98,7 +98,13 @@ public class BlockLeaves extends BlockLeavesBase {
 	}
 
 	public int idDropped(int var1, Random var2) {
-		return Block.sapling.blockID;
+		Random var3 = new Random();
+		int var4 = var3.nextInt();
+		if(var4 % 8 == 0) {
+			return Item.appleRed.shiftedIndex;
+		} else { 
+			return Block.sapling.blockID;
+		}
 	}
 
 	public boolean isOpaqueCube() {

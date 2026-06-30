@@ -1,6 +1,6 @@
-net/minecraft/server/MinecraftServer 2e0fed1e02dd2b1810c768b8dda560b0
+net/minecraft/server/MinecraftServer d11698cb104b70d2b9a3b865c9b51482
 net/minecraft/src/AxisAlignedBB 3af9f607c50f62aa30bd0da705ba21f2
-net/minecraft/src/Block f7c8ca5c6cbabcdfaa044c3b293f2bea
+net/minecraft/src/Block 7fdd888594375cbc08683d7c73150437
 net/minecraft/src/BlockBookshelf f3e713ae9d3c96c6a31b43aac7fc780b
 net/minecraft/src/BlockBreakable 6fbbe77dcaea2d08dd65729dbfb1af53
 net/minecraft/src/BlockButton 783f8846390e1baa54bd50d8bab486c9
@@ -32,7 +32,7 @@ net/minecraft/src/BlockMinecartTrack 13896a93b820d34595732b2db345ae08
 net/minecraft/src/BlockMobSpawner b2806617eac3d9ca67929ca4bcb15679
 net/minecraft/src/BlockMushroom ef1b30ddfe2f9b7e917e2eecf99b34ca
 net/minecraft/src/BlockObsidian fa73dfe8f4bd07c03c23acbf055df9c0
-net/minecraft/src/BlockOre 64d4d670d93a9417ad645be138920bfa
+net/minecraft/src/BlockOre 5d064e6ea05c715026756bada6fbd33b
 net/minecraft/src/BlockOreBlock 8dac12ce44ab3a08c7679c2e668494dd
 net/minecraft/src/BlockPressurePlate ac29e17d81d2ea371b962cd043047afc
 net/minecraft/src/BlockRedstoneOre 04fb01c3b04c8687404ada0f500b91ce
@@ -58,7 +58,7 @@ net/minecraft/src/ChunkCoordinates 2233f8a291612bbebac4bf3abf1af1a0
 net/minecraft/src/ChunkCoordIntPair 1e4a5abc8e71d8d232d0e060afe4e3b6
 net/minecraft/src/ChunkLoader bbf3b59c38aded7f40c3f0326b1fc40f
 net/minecraft/src/ChunkPosition a1518117e658e0ea11a0882bbe7a09d4
-net/minecraft/src/ChunkProviderGenerate 40efc284db92b7a0c31bfe150ec751ba
+net/minecraft/src/ChunkProviderGenerate 6fc8703d5f9c355149ba94813e55d70f
 net/minecraft/src/ChunkProviderLoadOrGenerate 9f2c3acdcb93f93c1357ba24664ba434
 net/minecraft/src/ChunkProviderServer 21fe8210fae86ba74797b51028d17e5c
 net/minecraft/src/CompressedStreamTools e524ee667268ef03f8f50afb78db4615
@@ -110,7 +110,7 @@ net/minecraft/src/IMobs a692d8cd60f1575e30cc1b27bdeb23ef
 net/minecraft/src/InventoryLargeChest 00cc20a4203a2958bc217095cbc9e6eb
 net/minecraft/src/InventoryPlayer fb7b8be3994986c572c01be2272ed10b
 net/minecraft/src/IProgressUpdate 2566eba0b9b3ecd85add8289a6f14f95
-net/minecraft/src/Item 426eecec5c0c2b87489029b1143ea1a7
+net/minecraft/src/Item d7ed01381b8f91e1e483da3bbf719d99
 net/minecraft/src/ItemArmor a385cfabe7d908d52a27171d7f045139
 net/minecraft/src/ItemAxe b96c9f3a1318d40033e1b68540854c47
 net/minecraft/src/ItemBlock 35647837427cf3fd7abb4786dfd0ee17

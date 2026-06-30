@@ -11,6 +11,7 @@ import org.lwjgl.util.glu.GLU;
 
 public class GuiMainMenu extends GuiScreen {
 	private static final Random rand = new Random();
+	//EXTRD
 	String[] logoBlockLayers = new String[]{" *** * * *** **  ** ", 
 											" *   * *  *  * * * *",
 											" **   *   *  **  * *",
@@ -18,7 +19,7 @@ public class GuiMainMenu extends GuiScreen {
 											" *** * *  *  * * ** "};
 	private LogoEffectRandomizer[][] logoEffects;
 	private float updateCounter = 0.0F;
-	private String splashString = "missingno";
+	private String splashString = "Bro thinks he is developer (skull emoji comes here):";
 
 	public GuiMainMenu() {
 		try {
@@ -61,14 +62,29 @@ public class GuiMainMenu extends GuiScreen {
 	public void initGui() {
 		Calendar var1 = Calendar.getInstance();
 		var1.setTime(new Date());
+		
+		//DONT EVEN THINK. IF THIS EVER CHANGES, YOU ARE DEAD. MKAY????? 
+		
 		if(var1.get(2) + 1 == 11 && var1.get(5) == 9) {
 			this.splashString = "Happy birthday, ez!";
 		} else if(var1.get(2) + 1 == 6 && var1.get(5) == 1) {
 			this.splashString = "Happy birthday, Notch!";
 		} else if(var1.get(2) + 1 == 12 && var1.get(5) == 24) {
-			this.splashString = "Merry X-mas!";
+			this.splashString = "Merry Christmas!";
 		} else if(var1.get(2) + 1 == 1 && var1.get(5) == 1) {
 			this.splashString = "Happy new year!";
+		} else if(var1.get(2) + 1 == 6 && var1.get(5) == 15) {
+			this.splashString = "Happy birthday, Steve404_! You're the coolest guy ever!";
+		} else if(var1.get(2) + 1 == 5 && var1.get(5) == 15) {
+			this.splashString = "Happy 16.05 day!";
+		} else if(var1.get(2) + 1 == 10 && var1.get(5) == 28) {
+			Random random = new Random();
+			int n = random.nextInt();
+			if(n % 2 == 0) {
+				this.splashString = "Happy birthday, John Romero!";
+			} else {
+				this.splashString = "John Romero is about to make you his bitch!";
+			}
 		}
 
 		this.controlList.clear();
