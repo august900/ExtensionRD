@@ -105,7 +105,9 @@ public class Block {
 	public static final Block reed = (new BlockReed(83, 73)).setHardness(0.0F).setStepSound(soundGrassFootstep);
 	public static final Block jukebox = (new BlockJukeBox(84, 74)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep);
 	public static final Block fence = (new BlockFence(85, 4)).setHardness(2.0F).setResistance(5.0F).setStepSound(soundWoodFootstep);
-	public static final Block oreRuby = (new BlockOre(100, 84)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep);
+	public static final Block oreRuby = (new BlockOre(100, 107)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep);
+	public static final Block blockRuby = (new Block(101, 108, Material.iron)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
+	
 	
 	public int blockIndexInTexture;
 	public final int blockID;

@@ -10,7 +10,7 @@ public class ItemPickaxe extends ItemTool {
 	}
 
 	public boolean canHarvestBlock(Block var1) {
-		 if (var1 == Block.obsidian || var1 == Block.oreRuby) {
+		 if (var1 == Block.obsidian || var1 == Block.oreRuby || var1 == Block.blockRuby) {
 	         return this.harvestLevel == 3;
 	     }
 		

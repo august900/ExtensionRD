@@ -58,8 +58,13 @@ public class CraftingManager {
 		this.addRecipe(new ItemStack(Block.button, 1), new Object[]{"#", "#", Character.valueOf('#'), Block.stone});
 		this.addRecipe(new ItemStack(Block.pressurePlateStone, 1), new Object[]{"###", Character.valueOf('#'), Block.stone});
 		this.addRecipe(new ItemStack(Block.pressurePlateWood, 1), new Object[]{"###", Character.valueOf('#'), Block.planks});
+		this.addRecipe(new ItemStack(Block.blockRuby, 1), new Object[] {"###", "###", "###", Character.valueOf('#'), Item.ruby});
+		this.addRecipe(new ItemStack(Item.ruby, 9), new Object[] {"#", Character.valueOf('#'), Block.blockRuby});
+		
+		//DEBUG CRAFTING RECIPES
 		this.addRecipe(new ItemStack(Block.oreRuby, 64), new Object[] {"#", Character.valueOf('#'), Block.sand});
 		this.addRecipe(new ItemStack(Item.diamond, 64), new Object[] {"#", Character.valueOf('#'), Block.planks});
+	
 		Collections.sort(this.recipes, new RecipeSorter(this));
 		System.out.println(this.recipes.size() + " recipes");
 	}
