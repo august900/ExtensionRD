@@ -28,6 +28,7 @@ import net.minecraft.src.GuiIngameMenu;
 import net.minecraft.src.GuiInventory;
 import net.minecraft.src.GuiMainMenu;
 import net.minecraft.src.GuiScreen;
+import net.minecraft.src.GuiWelcome;
 import net.minecraft.src.ItemRenderer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.LoadingScreenRenderer;
@@ -64,6 +65,7 @@ import net.minecraft.src.Vec3D;
 import net.minecraft.src.World;
 import net.minecraft.src.WorldRenderer;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Controllers;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -106,6 +108,7 @@ public abstract class Minecraft implements Runnable {
 	public MovingObjectPosition objectMouseOver = null;
 	public GameSettings options;
 	protected MinecraftApplet mcApplet;
+	public String id = "6324-426-185-431-648-467-237-666";
 	public SoundManager sndManager = new SoundManager();
 	public MouseHelper mouseHelper;
 	public File mcDataDir;
@@ -152,7 +155,7 @@ public abstract class Minecraft implements Runnable {
 				var1.fillRect(0, 0, this.displayWidth, this.displayHeight);
 				var1.dispose();
 			}
-
+			
 			Display.setParent(this.mcCanvas);
 		} else if(this.fullscreen) {
 			Display.setFullscreen(true);
@@ -237,7 +240,7 @@ public abstract class Minecraft implements Runnable {
 		if(this.serverName != null) {
 			this.displayGuiScreen(new GuiConnecting(this, this.serverName, this.serverPort));
 		} else {
-			this.displayGuiScreen(new GuiMainMenu());
+			this.displayGuiScreen(new GuiWelcome(session, id));
 		}
 
 	}

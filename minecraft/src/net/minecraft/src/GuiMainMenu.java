@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 public class GuiMainMenu extends GuiScreen {
+	protected GuiScreen parentScreen;
 	private static final Random rand = new Random();
 	//EXTRD
 	String[] logoBlockLayers = new String[]{" *** * * *** **  ** ", 
@@ -22,6 +23,7 @@ public class GuiMainMenu extends GuiScreen {
 	private String splashString = "Bro thinks he is developer (skull emoji comes here):";
 
 	public GuiMainMenu() {
+		//this.parentScreen = pscreen;
 		try {
 			ArrayList var1 = new ArrayList();
 			BufferedReader var2 = new BufferedReader(new InputStreamReader(GuiMainMenu.class.getResourceAsStream("/title/splashes.txt")));

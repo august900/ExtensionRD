@@ -98,6 +98,7 @@ public class Item {
 	public static Item fishingRod = (new Item(90)).setIconIndex(69);
 	public static Item ruby = (new Item(101)).setIconIndex(70);
 	public static Item pickaxeRuby = (new ItemPickaxe(102, 4)).setIconIndex(86);
+	public static Item swordRuby = (new ItemSword(103, 5)).setIconIndex(102);
 	public static Item record13 = (new ItemRecord(2000, "13")).setIconIndex(240);
 	public static Item recordCat = (new ItemRecord(2001, "cat")).setIconIndex(241);
 	public final int shiftedIndex;
