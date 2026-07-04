@@ -77,7 +77,7 @@ net/minecraft/src/CompressedStreamTools e524ee667268ef03f8f50afb78db4615
 net/minecraft/src/CraftingInventoryCB 66d12c27a6a35e04ca0ab06103e35274
 net/minecraft/src/CraftingInventoryPlayerCB ae7c7df9019f3e00425deaa783de5f40
 net/minecraft/src/CraftingInventoryWorkbenchCB 357c09e926374d0b9a42e2bc148c283d
-net/minecraft/src/CraftingManager 045aa661461fdd1df9324d81cfdd17b3
+net/minecraft/src/CraftingManager a2f3f416783756e76112ac03eebb6644
 net/minecraft/src/CraftingRecipe abe7411a44adbe615dafc0d23f7d7824
 net/minecraft/src/EffectRenderer de26a212f56b01a8a698be5403b6c55b
 net/minecraft/src/Entity cbd07fe07e825e6f23c530aded4efdfa
@@ -174,9 +174,9 @@ net/minecraft/src/InventoryLargeChest 77be7b309b74282cd91d790afa5ecf15
 net/minecraft/src/InventoryPlayer 32e25c3da49a60c85bd4f71ac465107a
 net/minecraft/src/IProgressUpdate 2566eba0b9b3ecd85add8289a6f14f95
 net/minecraft/src/IsoImageBuffer 8ac6c38518183fff42436795108c1196
-net/minecraft/src/Item 8e04316019dcda1b23ec863a59aa92d8
+net/minecraft/src/Item 0a3f0e9d65e11893956f8b63320b8d9c
 net/minecraft/src/ItemArmor a385cfabe7d908d52a27171d7f045139
-net/minecraft/src/ItemAxe b96c9f3a1318d40033e1b68540854c47
+net/minecraft/src/ItemAxe adbaf2dbbe80efe67e2282ccee07c844
 net/minecraft/src/ItemBlock 35647837427cf3fd7abb4786dfd0ee17
 net/minecraft/src/ItemBoat b89449042544ca006c62e2cce214882f
 net/minecraft/src/ItemBow 1376b1cb793e769fdd41d80e90e25159
@@ -187,7 +187,7 @@ net/minecraft/src/ItemFood 1ae8345318e35c42a37c707d734a1ece
 net/minecraft/src/ItemHoe f5edcb3ed3f62f51d28479a7ea30edbb
 net/minecraft/src/ItemMinecart 352be71c65ff366c4e4f46e925fac055
 net/minecraft/src/ItemPainting ce498ef0ab3ebd48cb472544ef3969ea
-net/minecraft/src/ItemPickaxe d697b91cf24fb8169d09b6a5c41d1881
+net/minecraft/src/ItemPickaxe 74a76f4ffd3430e9d471ac2a282a5684
 net/minecraft/src/ItemRecord 0ebc89080ad9799665418250822dfe03
 net/minecraft/src/ItemRedstone cebee7d604310c7e1ad711c918c93ea2
 net/minecraft/src/ItemReed 3fcfd9ff64e7d72f268d8ccf4447e310
@@ -199,8 +199,8 @@ net/minecraft/src/ItemSnowball 4a5763854d778cd1bb87d7102205e438
 net/minecraft/src/ItemSoup 62cb8b3bcbdaafcca81e6ae9c81bafd0
 net/minecraft/src/ItemSpade 9dee99298e0722a3c6085433d6e06560
 net/minecraft/src/ItemStack df4023e69582036110930ebd28286095
-net/minecraft/src/ItemSword 196b859bac8b9e1c10306a0cf5bdaf98
-net/minecraft/src/ItemTool 66a0888623db6cfefde097a7d9930fd5
+net/minecraft/src/ItemSword df8bbeda5cbabe33b511debaaf797029
+net/minecraft/src/ItemTool d7765cff013218292f0583ef46e422e4
 net/minecraft/src/IWorldAccess b9c58a3fdaedb80c0cb3090df12b981f
 net/minecraft/src/KeyBinding ff47fe85c3484204cac8ff77e9db7c55
 net/minecraft/src/LoadingScreenRenderer 82fa4b37c3cf532d3047c3a50f624fa6

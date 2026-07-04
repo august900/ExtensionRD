@@ -62,6 +62,7 @@ public class CraftingManager {
 		this.addRecipe(new ItemStack(Item.ruby, 9), new Object[] {"#", Character.valueOf('#'), Block.blockRuby});
 		this.addRecipe(new ItemStack(Item.pickaxeRuby, 1), new Object[] {"###", " I ", " I ", Character.valueOf('#'), Item.ruby, Character.valueOf('I'), Item.stick});
 		this.addRecipe(new ItemStack(Item.swordRuby), new Object[] {"#", "#", "I", Character.valueOf('#'), Item.ruby, Character.valueOf('I'), Item.stick});
+		this.addRecipe(new ItemStack(Item.waraxeRuby, 1), new Object[] {"###", "#I#", " I ", Character.valueOf('#'), Item.ruby, Character.valueOf('I'), Item.stick});
 		
 		//DEBUG CRAFTING RECIPES
 		this.addRecipe(new ItemStack(Block.oreRuby, 64), new Object[] {"#", Character.valueOf('#'), Block.sand});

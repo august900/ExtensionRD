@@ -14,10 +14,15 @@ public class ItemTool extends Item {
 		this.maxDamage = 32 << var3;
 		if(var3 == 3) {
 			this.maxDamage *= 4;
+		} if(var3 == 4) {
+			this.maxDamage *= 5;
 		}
 
 		this.efficiencyOnProperMaterial = (float)((var3 + 1) * 2);
 		this.damageVsEntity = var2 + var3;
+		if(this.toolMaterial == 4) {
+			this.damageVsEntity = 10;
+		}
 	}
 
 	public float getStrVsBlock(ItemStack var1, Block var2) {
