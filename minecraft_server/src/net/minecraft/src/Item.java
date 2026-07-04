@@ -16,23 +16,23 @@ public class Item {
 	public static Item diamond = (new Item(8)).setIconIndex(55);
 	public static Item ingotIron = (new Item(9)).setIconIndex(23);
 	public static Item ingotGold = (new Item(10)).setIconIndex(39);
-	public static Item swordSteel = (new ItemSword(11, 2)).setIconIndex(66);
-	public static Item swordWood = (new ItemSword(12, 0)).setIconIndex(64);
+	public static Item swordSteel = (new ItemSword(11, 2, false)).setIconIndex(66);
+	public static Item swordWood = (new ItemSword(12, 0, false)).setIconIndex(64);
 	public static Item shovelWood = (new ItemSpade(13, 0)).setIconIndex(80);
 	public static Item pickaxeWood = (new ItemPickaxe(14, 0)).setIconIndex(96);
 	public static Item axeWood = (new ItemAxe(15, 0)).setIconIndex(112);
-	public static Item swordStone = (new ItemSword(16, 1)).setIconIndex(65);
+	public static Item swordStone = (new ItemSword(16, 1, false)).setIconIndex(65);
 	public static Item shovelStone = (new ItemSpade(17, 1)).setIconIndex(81);
 	public static Item pickaxeStone = (new ItemPickaxe(18, 1)).setIconIndex(97);
 	public static Item axeStone = (new ItemAxe(19, 1)).setIconIndex(113);
-	public static Item swordDiamond = (new ItemSword(20, 3)).setIconIndex(67);
+	public static Item swordDiamond = (new ItemSword(20, 3, false)).setIconIndex(67);
 	public static Item shovelDiamond = (new ItemSpade(21, 3)).setIconIndex(83);
 	public static Item pickaxeDiamond = (new ItemPickaxe(22, 3)).setIconIndex(99);
 	public static Item axeDiamond = (new ItemAxe(23, 3)).setIconIndex(115);
 	public static Item stick = (new Item(24)).setIconIndex(53).setFull3D();
 	public static Item bowlEmpty = (new Item(25)).setIconIndex(71);
 	public static Item bowlSoup = (new ItemSoup(26, 10)).setIconIndex(72);
-	public static Item swordGold = (new ItemSword(27, 0)).setIconIndex(68);
+	public static Item swordGold = (new ItemSword(27, 0, false)).setIconIndex(68);
 	public static Item shovelGold = (new ItemSpade(28, 0)).setIconIndex(84);
 	public static Item pickaxeGold = (new ItemPickaxe(29, 0)).setIconIndex(100);
 	public static Item axeGold = (new ItemAxe(30, 0)).setIconIndex(116);
@@ -97,6 +97,9 @@ public class Item {
 	public static Item compass = (new Item(89)).setIconIndex(54);
 	public static Item fishingRod = (new Item(90)).setIconIndex(69);
 	public static Item ruby = (new Item(101)).setIconIndex(70);
+	public static Item pickaxeRuby = (new ItemPickaxe(102, 4)).setIconIndex(86);
+	public static Item swordRuby = (new ItemSword(103, 6, false)).setIconIndex(102);
+	public static Item waraxeRuby = (new ItemSword(104, 4, true)).setIconIndex(118);
 	public static Item record13 = (new ItemRecord(2000, "13")).setIconIndex(240);
 	public static Item recordCat = (new ItemRecord(2001, "cat")).setIconIndex(241);
 	public final int shiftedIndex;
@@ -119,12 +122,20 @@ public class Item {
 		return this;
 	}
 
+	public int getIconIndex(ItemStack var1) {
+		return this.iconIndex;
+	}
+
 	public boolean onItemUse(ItemStack var1, EntityPlayer var2, World var3, int var4, int var5, int var6, int var7) {
 		return false;
 	}
 
 	public float getStrVsBlock(ItemStack var1, Block var2) {
 		return 1.0F;
+	}
+
+	public ItemStack onItemRightClick(ItemStack var1, World var2, EntityPlayer var3) {
+		return var1;
 	}
 
 	public int getItemStackLimit() {
@@ -135,15 +146,29 @@ public class Item {
 		return this.maxDamage;
 	}
 
+	public void hitEntity(ItemStack var1, EntityLiving var2) {
+	}
+
 	public void onBlockDestroyed(ItemStack var1, int var2, int var3, int var4, int var5) {
+	}
+
+	public int getDamageVsEntity(Entity var1) {
+		return 1;
 	}
 
 	public boolean canHarvestBlock(Block var1) {
 		return false;
 	}
 
+	public void saddleEntity(ItemStack var1, EntityLiving var2) {
+	}
+
 	public Item setFull3D() {
 		this.bFull3D = true;
 		return this;
+	}
+
+	public boolean isFull3D() {
+		return this.bFull3D;
 	}
 }
