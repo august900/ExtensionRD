@@ -75,6 +75,7 @@ public class BlockLeaves extends BlockLeavesBase {
 		}
 	}
 
+	
 	public void updateTick(World var1, int var2, int var3, int var4, Random var5) {
 		int var6 = var1.getBlockMetadata(var2, var3, var4);
 		if(var6 == 0) {
