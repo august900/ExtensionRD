@@ -16,15 +16,13 @@ Extension [RD] is not affiliated with Mojang, Microsoft, or the AlphaVer team.
 
 ### Current / Planned Features
 
-* 💎 Ruby Ore
-* 🛠️ Ruby Tools
-* 🛡️ Ruby Armor
-* 🖼️ Canvas Block
-* 🎙️ Multiplayer Voice Chat Compatibility
-* 🌍 New World Generation Features
-* 📜 AlphaVer-Inspired Lore
-* 🔧 Experimental Gameplay Systems
-* 🎮 Multiplayer Support
+* 💎 Ruby Ore [x]
+* 🛠️ Ruby Tools [x]
+* 🖼️ Canvas Block []
+* 🌍 New World Generation Features (does ruby ore count as one?) []
+* 📜 AlphaVer-Inspired Lore []
+* 🔧 Experimental Gameplay Systems [x]
+* 🎮 Multiplayer Support [x]
 
 More features are planned as development progresses.
 
