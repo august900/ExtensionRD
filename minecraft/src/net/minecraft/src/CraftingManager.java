@@ -65,8 +65,8 @@ public class CraftingManager {
 		this.addRecipe(new ItemStack(Item.waraxeRuby, 1), new Object[] {"###", "#I#", " I ", Character.valueOf('#'), Item.ruby, Character.valueOf('I'), Item.stick});
 		
 		//DEBUG CRAFTING RECIPES
-		this.addRecipe(new ItemStack(Block.oreRuby, 64), new Object[] {"#", Character.valueOf('#'), Block.sand});
-		this.addRecipe(new ItemStack(Item.diamond, 64), new Object[] {"#", Character.valueOf('#'), Block.planks});
+		//this.addRecipe(new ItemStack(Block.oreRuby, 64), new Object[] {"#", Character.valueOf('#'), Block.sand});
+		//this.addRecipe(new ItemStack(Item.diamond, 64), new Object[] {"#", Character.valueOf('#'), Block.planks});
 	
 		Collections.sort(this.recipes, new RecipeSorter(this));
 		System.out.println(this.recipes.size() + " recipes");
