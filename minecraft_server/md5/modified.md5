@@ -110,7 +110,7 @@ net/minecraft/src/IMobs a692d8cd60f1575e30cc1b27bdeb23ef
 net/minecraft/src/InventoryLargeChest 00cc20a4203a2958bc217095cbc9e6eb
 net/minecraft/src/InventoryPlayer fb7b8be3994986c572c01be2272ed10b
 net/minecraft/src/IProgressUpdate 2566eba0b9b3ecd85add8289a6f14f95
-net/minecraft/src/Item d7ed01381b8f91e1e483da3bbf719d99
+net/minecraft/src/Item 0a3f0e9d65e11893956f8b63320b8d9c
 net/minecraft/src/ItemArmor a385cfabe7d908d52a27171d7f045139
 net/minecraft/src/ItemAxe b96c9f3a1318d40033e1b68540854c47
 net/minecraft/src/ItemBlock 35647837427cf3fd7abb4786dfd0ee17
@@ -135,7 +135,7 @@ net/minecraft/src/ItemSnowball 83655217a593537102e4af1890f79c07
 net/minecraft/src/ItemSoup 88d8b2deec2dee4382b68b0d8005cd03
 net/minecraft/src/ItemSpade 9dee99298e0722a3c6085433d6e06560
 net/minecraft/src/ItemStack 69ba598952fe4cd78dcd913cdf0276e1
-net/minecraft/src/ItemSword eb2a32a939bf66316470df60e58d1dee
+net/minecraft/src/ItemSword e6f0d8b91ce870db6809d9efd79ccb4c
 net/minecraft/src/ItemTool 385dcc9502cc84365bf324cc5094ec46
 net/minecraft/src/IUpdatePlayerListBox f92f4b52507b6051e9ed2e7178162503
 net/minecraft/src/IWorldAccess b9c58a3fdaedb80c0cb3090df12b981f

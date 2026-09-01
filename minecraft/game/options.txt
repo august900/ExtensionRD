@@ -6,7 +6,7 @@ viewDistance:0
 bobView:true
 anaglyph3d:false
 limitFramerate:false
-difficulty:0
+difficulty:2
 fancyGraphics:true
 key_Forward:17
 key_Left:30

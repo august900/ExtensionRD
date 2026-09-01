@@ -1,4 +1,5 @@
 gui/items.png ce427baa894abbf4b7e8d92bcfce9a4f
+gui/mojang.png 32eda261fb3ef30b353e76a355810220
 net/minecraft/client/Minecraft d1a46fc0404b6d68a8693a3f25042e5a
 net/minecraft/client/MinecraftApplet 916819f29133488ea13b71c85ecb3f91
 net/minecraft/isom/IsomPreviewApplet a244b098f188a9ae223501f0cddbbf4a
@@ -77,7 +78,7 @@ net/minecraft/src/CompressedStreamTools e524ee667268ef03f8f50afb78db4615
 net/minecraft/src/CraftingInventoryCB 66d12c27a6a35e04ca0ab06103e35274
 net/minecraft/src/CraftingInventoryPlayerCB ae7c7df9019f3e00425deaa783de5f40
 net/minecraft/src/CraftingInventoryWorkbenchCB 357c09e926374d0b9a42e2bc148c283d
-net/minecraft/src/CraftingManager a2f3f416783756e76112ac03eebb6644
+net/minecraft/src/CraftingManager eabf6acbfdd6b81b8dd3bbb3f1e7bc71
 net/minecraft/src/CraftingRecipe abe7411a44adbe615dafc0d23f7d7824
 net/minecraft/src/EffectRenderer de26a212f56b01a8a698be5403b6c55b
 net/minecraft/src/Entity cbd07fe07e825e6f23c530aded4efdfa
@@ -129,6 +130,7 @@ net/minecraft/src/EnumOSIsom fc2901e049803377c52e699d1230bfa5
 net/minecraft/src/EnumSkyBlock c676fb04205d7d71403fcfcd10959b8d
 net/minecraft/src/Explosion 1e952cd85c88c2aac3e0ce587c7db32b
 net/minecraft/src/FontRenderer cfb6bab37aba32165af7d6fa7729c0a7
+net/minecraft/src/Frustum ab435d11dbc408d1c9b68e327f21de80
 net/minecraft/src/GameSettings 11bcddaf91b1dd4be53ad8f47e5a72b5
 net/minecraft/src/GameWindowListener 8f1c918f7944ee70f3199e014c996039
 net/minecraft/src/GLAllocation f5b13c8aa7e8c3bd3701b412bd080113
@@ -148,7 +150,7 @@ net/minecraft/src/GuiEditSign 1941512050c787fc83e483a6c5a619f4
 net/minecraft/src/GuiErrorScreen 61d9b44d73380001e51803aac75d8d41
 net/minecraft/src/GuiFurnace cfd97b5905cbe5fedcff8d199d3fca22
 net/minecraft/src/GuiGameOver 8c933553b5d80335024284d6cd759bb5
-net/minecraft/src/GuiIngame 99e3cc6773bf9eafe0c63d593b457265
+net/minecraft/src/GuiIngame bc2f38ca535bc1dec100cd81cbbe3c08
 net/minecraft/src/GuiIngameMenu 587224600129a298c14c5425ca29c677
 net/minecraft/src/GuiInventory 4e9b6fcf8879e82deab17cddbf4b5b39
 net/minecraft/src/GuiMainMenu 1643b878637c377f529a6b2d3f383b3b
@@ -158,7 +160,7 @@ net/minecraft/src/GuiScreen 27ca400a5f5ed77458d0210f6c742849
 net/minecraft/src/GuiSelectWorld 6107915e2de57d439569a7852f74ff44
 net/minecraft/src/GuiSlider 8df0db40eca5665e8872e2f9011fc706
 net/minecraft/src/GuiSmallButton 216cee9569506cac8153e5d84ab12059
-net/minecraft/src/GuiWelcome 5feeccb348578393d303a58e62214756
+net/minecraft/src/GuiWelcome b4dd78bf895e96d49dbd250b6c594d4d
 net/minecraft/src/GuiYesNo bca9e03b0b7c9d3c95f6b4472db3ed9d
 net/minecraft/src/IBlockAccess a6c96b7820aee4ccd96e1d40bb0d0641
 net/minecraft/src/ICamera dd46fb15c67a1595f7a5c04c78925cac
@@ -405,4 +407,5 @@ net/minecraft/src/WorldGenTrees 7abf8a25f10a51bc147c8e2c3b54d92d
 net/minecraft/src/WorldIso 2f4e00fecb95b4bd482e48a59a8fb2f5
 net/minecraft/src/WorldRenderer 14373ca39b12b6b2e56fb24dc3c49480
 terrain.png 7a96cfea2656105e372619b2b7e6fa5d
+title/mojang.png 32eda261fb3ef30b353e76a355810220
 title/splashes.txt 400dd725131000f2bb71945ecbe37360
