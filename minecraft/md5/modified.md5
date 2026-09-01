@@ -1,5 +1,8 @@
+.gitignore 4c68c62da7239a9517036dafe9a1391a
 gui/items.png ce427baa894abbf4b7e8d92bcfce9a4f
 gui/mojang.png 32eda261fb3ef30b353e76a355810220
+hub_prototype/gameplay.mkv 998d999e68fd28e7717e836a5795c263
+hub_prototype/hub.txt e93cfbd688b524e48c706b83b21eb908
 net/minecraft/client/Minecraft d1a46fc0404b6d68a8693a3f25042e5a
 net/minecraft/client/MinecraftApplet 916819f29133488ea13b71c85ecb3f91
 net/minecraft/isom/IsomPreviewApplet a244b098f188a9ae223501f0cddbbf4a

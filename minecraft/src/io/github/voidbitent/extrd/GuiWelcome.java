@@ -1,5 +1,5 @@
-package net.minecraft.src;
-
+package io.github.voidbitent.extrd;
+import net.minecraft.src.*;
 public class GuiWelcome extends GuiScreen{
 	
 	public Session session;

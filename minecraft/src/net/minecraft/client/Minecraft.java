@@ -1,5 +1,7 @@
 package net.minecraft.client;
 
+import io.github.voidbitent.extrd.*;
+
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -28,7 +30,6 @@ import net.minecraft.src.GuiIngameMenu;
 import net.minecraft.src.GuiInventory;
 import net.minecraft.src.GuiMainMenu;
 import net.minecraft.src.GuiScreen;
-import net.minecraft.src.GuiWelcome;
 import net.minecraft.src.ItemRenderer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.LoadingScreenRenderer;
@@ -880,7 +881,12 @@ public abstract class Minecraft implements Runnable {
 												if(Keyboard.getEventKey() == this.options.keyBindDrop.keyCode) {
 													this.thePlayer.dropPlayerItemWithRandomChoice(this.thePlayer.inventory.decrStackSize(this.thePlayer.inventory.currentItem, 1), false);
 												}
+												
+												if (Keyboard.getEventKey() == Keyboard.KEY_V && Keyboard.getEventKeyState()) {
+												    this.displayGuiScreen(new io.github.voidbitent.extrd.GuiGiver());
+												}
 
+												
 												if(this.isMultiplayerWorld() && Keyboard.getEventKey() == this.options.keyBindChat.keyCode) {
 													this.displayGuiScreen(new GuiChat());
 												}
