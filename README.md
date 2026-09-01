@@ -80,3 +80,9 @@ Minecraft is a trademark of Mojang Studios. All rights belong to their respectiv
 🚧 Early Development
 
 Many features are still being planned, implemented, or tested.
+
+## Building
+To build it, you need RetroMCP and Java 8.
+Run RetroMCP in the source folder. It should detect options.cfg.
+Click on "compile", then "build". The jars should be in build.
+Make sure that "Full build" option is enabled.
