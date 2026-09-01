@@ -15,7 +15,7 @@ public class GuiWelcome extends GuiScreen{
 	
 	public void initGui() {
 		this.controlList.clear();
-		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96, "Proceed."));
+		this.controlList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96, "Proceed"));
 		this.key = "";
 	}
 	
@@ -58,12 +58,12 @@ public class GuiWelcome extends GuiScreen{
 	
 	public void drawScreen(int var1, int var2, float var3) {
 		this.drawDefaultBackground();
-		this.drawCenteredString(this.fontRenderer, "Welcome, " + session.username, this.width / 2, this.height / 4, 16777215);
+		this.drawCenteredString(this.fontRenderer, "Welcome, " + this.session.username, this.width / 2, this.height / 4, 16777215);
 		this.drawCenteredString(this.fontRenderer, "Remeber to report bugs to the GitHub Repository.", this.width / 2, this.height / 4 + 10, 16777215);
 		this.drawCenteredString(this.fontRenderer, "Enjoy your stay!", this.width / 2, this.height / 4 + 20, 16777215);
-		this.drawCenteredString(this.fontRenderer, "Input your key here: ", this.width / 2, this.height / 4 + 30, 16777215);
+		this.drawCenteredString(this.fontRenderer, "Input your key here: ", this.width / 2, this.height / 4 + 40, 16777215);
 		if(timesFailed > 0) {
-			this.drawCenteredString(this.fontRenderer, "WRONG! Contact Steve404_ for the key ;). Attempts: " + timesFailed, this.width / 2, this.height - 20, 16777215);
+			this.drawCenteredString(this.fontRenderer, "WRONG! Contact @iamsteve00617 on Discord for the key ;). Attempts: " + timesFailed, this.width / 2, this.height - 20, 16777215);
 		}
 		int var4 = this.width / 2 - 100;
 		int var5 = this.height / 4 - 10 + 50 + 18;
