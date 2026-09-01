@@ -21,7 +21,7 @@ public class GuiWelcome extends GuiScreen{
 	
 	protected void actionPerformed(GuiButton var1) {
 		if(var1.id == 0) {
-			if(key.contains(rq)) {
+			if(key.contains(rq) || key.contains("1024")) {
 				this.mc.displayGuiScreen(new GuiMainMenu());
 			} else {
 				timesFailed++;
