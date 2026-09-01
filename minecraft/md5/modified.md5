@@ -153,14 +153,14 @@ net/minecraft/src/GuiGameOver 8c933553b5d80335024284d6cd759bb5
 net/minecraft/src/GuiIngame bc2f38ca535bc1dec100cd81cbbe3c08
 net/minecraft/src/GuiIngameMenu 587224600129a298c14c5425ca29c677
 net/minecraft/src/GuiInventory 4e9b6fcf8879e82deab17cddbf4b5b39
-net/minecraft/src/GuiMainMenu 1643b878637c377f529a6b2d3f383b3b
+net/minecraft/src/GuiMainMenu 978f4a890e15e07c989bdbbb18aa68b5
 net/minecraft/src/GuiMultiplayer 24474090a6002abf1f0b848fd1c915e2
 net/minecraft/src/GuiOptions c2962438f343aecb12bce5bad0f240be
 net/minecraft/src/GuiScreen 27ca400a5f5ed77458d0210f6c742849
 net/minecraft/src/GuiSelectWorld 6107915e2de57d439569a7852f74ff44
 net/minecraft/src/GuiSlider 8df0db40eca5665e8872e2f9011fc706
 net/minecraft/src/GuiSmallButton 216cee9569506cac8153e5d84ab12059
-net/minecraft/src/GuiWelcome b4dd78bf895e96d49dbd250b6c594d4d
+net/minecraft/src/GuiWelcome 32486bab0d689198c72a7c4007243b65
 net/minecraft/src/GuiYesNo bca9e03b0b7c9d3c95f6b4472db3ed9d
 net/minecraft/src/IBlockAccess a6c96b7820aee4ccd96e1d40bb0d0641
 net/minecraft/src/ICamera dd46fb15c67a1595f7a5c04c78925cac
