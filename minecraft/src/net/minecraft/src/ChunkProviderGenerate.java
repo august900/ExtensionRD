@@ -2,6 +2,8 @@ package net.minecraft.src;
 
 import java.util.Random;
 
+import io.github.voidbitent.extrd.WorldGenLilies;
+
 public class ChunkProviderGenerate implements IChunkProvider {
 	private Random rand;
 	private NoiseGeneratorOctaves noiseGen1;
@@ -425,6 +427,13 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			var15 = this.rand.nextInt(128);
 			var16 = var5 + this.rand.nextInt(16) + 8;
 			(new WorldGenFlowers(Block.mushroomRed.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
+		}
+		
+		if (this.rand.nextInt(4) == 0) {
+		    int x = var4 + this.rand.nextInt(16) + 8;
+		    int z = var5 + this.rand.nextInt(16) + 8;
+		    
+		    (new WorldGenLilies(Block.lily.blockID)).generate(this.worldObj, this.rand, x, 0, z);
 		}
 
 		for(var14 = 0; var14 < 10; ++var14) {

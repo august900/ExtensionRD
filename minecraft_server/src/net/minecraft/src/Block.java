@@ -107,6 +107,7 @@ public class Block {
 	public static final Block fence = (new BlockFence(85, 4)).setHardness(2.0F).setResistance(5.0F).setStepSound(soundWoodFootstep);
 	public static final Block oreRuby = (new BlockOre(100, 107)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep);
 	public static final Block blockRuby = (new Block(101, 108, Material.iron)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep);
+	public static final Block lily = (new BlockLily(102, 109).setHardness(0.0F).setResistance(0.0F).setStepSound(soundGrassFootstep).setLightValue(1.0F));
 	
 	
 	public int blockIndexInTexture;

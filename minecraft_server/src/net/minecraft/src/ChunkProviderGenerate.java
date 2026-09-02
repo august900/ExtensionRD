@@ -412,6 +412,15 @@ public class ChunkProviderGenerate implements IChunkProvider {
 			var16 = var5 + this.rand.nextInt(16) + 8;
 			(new WorldGenFlowers(Block.plantRed.blockID)).generate(this.worldObj, this.rand, var14, var15, var16);
 		}
+		
+		// 1 in 4 chance per chunk to generate a patch of lilies
+		if (this.rand.nextInt(4) == 0) {
+		    int x = var4 + this.rand.nextInt(16) + 8;
+		    int z = var5 + this.rand.nextInt(16) + 8;
+		    
+		    // Y is dynamically calculated per lily inside the WorldGen class
+		    (new WorldGenLilies(Block.lily.blockID)).generate(this.worldObj, this.rand, x, 0, z);
+		}
 
 		if(this.rand.nextInt(4) == 0) {
 			var14 = var4 + this.rand.nextInt(16) + 8;
