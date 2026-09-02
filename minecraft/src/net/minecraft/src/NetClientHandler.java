@@ -36,8 +36,16 @@ public class NetClientHandler extends NetHandler {
 		this.worldClient.multiplayerWorld = true;
 		this.mc.changeWorld1(this.worldClient);
 		this.mc.displayGuiScreen(new GuiDownloadTerrain(this));
+		
 	}
 
+	@Override
+	public void handleUpdateHealth(Packet8UpdateHealth packet) {
+	    if (this.mc.thePlayer != null) {
+	        this.mc.thePlayer.health = packet.healthMP;
+	    }
+	}
+	
 	public void handlePickupSpawn(Packet21PickupSpawn var1) {
 		double var2 = (double)var1.xPosition / 32.0D;
 		double var4 = (double)var1.yPosition / 32.0D;

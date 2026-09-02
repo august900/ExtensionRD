@@ -17,6 +17,13 @@ public class WorldServer extends World {
 		this.monsters = var3;
 	}
 
+	/**
+	 * Returns whether monsters are enabled in this world (read from server.properties 'monsters').
+	 */
+	public boolean getMonsters() {
+		return this.monsters;
+	}
+
 	public void tick() {
 		super.tick();
 		if(this.monsters) {

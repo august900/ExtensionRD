@@ -1,0 +1,15 @@
+2026-09-02 13:59:11 [INFO] Starting ExtRD server...
+2026-09-02 13:59:11 [WARNING] DISCLAIMER: ExtRD Multiplayer still in testing. Please expect bugs and crashes (server and client)
+2026-09-02 13:59:11 [INFO] Loading properties
+2026-09-02 13:59:11 [WARNING] server.properties does not exist
+2026-09-02 13:59:11 [INFO] Generating new properties file
+2026-09-02 13:59:11 [INFO] Starting Minecraft server on *:25565
+2026-09-02 13:59:11 [WARNING] Failed to load ban list: java.io.FileNotFoundException: banned-players.txt (The system cannot find the file specified)
+2026-09-02 13:59:11 [WARNING] Failed to load ip ban list: java.io.FileNotFoundException: banned-ips.txt (The system cannot find the file specified)
+2026-09-02 13:59:11 [WARNING] Failed to load ip ban list: java.io.FileNotFoundException: ops.txt (The system cannot find the file specified)
+2026-09-02 13:59:11 [INFO] Preparing level "world"
+2026-09-02 13:59:11 [INFO] Preparing start region
+2026-09-02 13:59:15 [INFO] Done! For help, type "help" or "?"
+2026-09-02 13:59:50 [INFO] CONSOLE: Stopping the server..
+2026-09-02 13:59:50 [INFO] Stopping server
+2026-09-02 13:59:50 [INFO] Saving chunks

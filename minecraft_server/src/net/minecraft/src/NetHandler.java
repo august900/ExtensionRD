@@ -109,4 +109,14 @@ public class NetHandler {
 	public void handleSpawnPosition(Packet6SpawnPosition var1) {
 		this.registerPacket(var1);
 	}
+
+	public void handleUpdateHealth(Packet8UpdateHealth packet8UpdateHealth) {
+		this.registerPacket(packet8UpdateHealth);
+		
+	}
+
+	public void handleUseEntity(Packet7UseEntity packet7UseEntity) {
+		this.registerPacket(packet7UseEntity);
+		
+	}
 }

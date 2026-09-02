@@ -261,8 +261,8 @@ net/minecraft/src/NBTTagList 108fb2e9dbef38698df3efc0b253d942
 net/minecraft/src/NBTTagLong 65c9a069e3859446686ba4e72e813186
 net/minecraft/src/NBTTagShort 1d999da6cbb4d297745b66daffabf7d7
 net/minecraft/src/NBTTagString 2a32bc701f8fa0425efb04818a793390
-net/minecraft/src/NetClientHandler 94b02f6397d3233bdc489f3a1a5adf47
-net/minecraft/src/NetHandler 286290fc034dbf64d5b8174ad99e538f
+net/minecraft/src/NetClientHandler 804701af12c37a31b40a147145ba54c8
+net/minecraft/src/NetHandler b7fecd7305b6e28c93d633181389a3c1
 net/minecraft/src/NetworkManager cce7df9de360e680ae94faa9d1ea1461
 net/minecraft/src/NetworkMasterThread c02d6ca8c378f96a6f3d5565cb6ee477
 net/minecraft/src/NetworkReaderThread 203f632c447ef1dd7698d055bfc0754a
@@ -275,7 +275,7 @@ net/minecraft/src/NoiseGeneratorPerlin 22bc62cdc5ac8275447e471eb4da5ca3
 net/minecraft/src/OpenGlCapsChecker 932713746b0e36d31044b848d228eb5b
 net/minecraft/src/OSMap 1f520820fd1e9066706c210cd72f6da2
 net/minecraft/src/OSMapIsom dd7dedb5cb7db4fb99fa7914ee5a6529
-net/minecraft/src/Packet f15ad1f8882d2dc285dd8fd38005289b
+net/minecraft/src/Packet ee7d4210b8d92d267434a2a83439260e
 net/minecraft/src/Packet0KeepAlive d1c2f68819aed96256ba4e05f0507f14
 net/minecraft/src/Packet10Flying 63ee1fdf46598be9d588cdf25d386d4e
 net/minecraft/src/Packet11PlayerPosition 5641396b9c4a40529f44143965555a88
@@ -309,6 +309,7 @@ net/minecraft/src/Packet53BlockChange b38cea34da110097b6c85105cbe7c82f
 net/minecraft/src/Packet59ComplexEntity a0def0baa864772541014ee8381781bb
 net/minecraft/src/Packet5PlayerInventory 7fe7a8d9c0577a82e555e49306118a05
 net/minecraft/src/Packet6SpawnPosition 9a3ad32f02fa7f6e2e196d16e12c83ec
+net/minecraft/src/Packet8UpdateHealth c6a7579096abb2e75962ca16d69bb984
 net/minecraft/src/PanelCrashReport 80e6c18d6a48701a25a32fb24ede18d8
 net/minecraft/src/Path 97780c14b14b1808cffcde1d23c3a29b
 net/minecraft/src/PathEntity cb9869299d55e990a31d21baa3869bc0

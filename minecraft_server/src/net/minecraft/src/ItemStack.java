@@ -44,8 +44,17 @@ public final class ItemStack {
 		this.readFromNBT(var1);
 	}
 
+	public ItemStack splitStack(int var1) {
+		this.stackSize -= var1;
+		return new ItemStack(this.itemID, var1, this.itemDmg);
+	}
+
 	public Item getItem() {
 		return Item.itemsList[this.itemID];
+	}
+
+	public int getIconIndex() {
+		return this.getItem().getIconIndex(this);
 	}
 
 	public boolean useItem(EntityPlayer var1, World var2, int var3, int var4, int var5, int var6) {
@@ -54,6 +63,10 @@ public final class ItemStack {
 
 	public float getStrVsBlock(Block var1) {
 		return this.getItem().getStrVsBlock(this, var1);
+	}
+
+	public ItemStack useItemRightClick(World var1, EntityPlayer var2) {
+		return this.getItem().onItemRightClick(this, var1, var2);
 	}
 
 	public NBTTagCompound writeToNBT(NBTTagCompound var1) {
@@ -90,8 +103,16 @@ public final class ItemStack {
 
 	}
 
+	public void hitEntity(EntityLiving var1) {
+		Item.itemsList[this.itemID].hitEntity(this, var1);
+	}
+
 	public void onDestroyBlock(int var1, int var2, int var3, int var4) {
 		Item.itemsList[this.itemID].onBlockDestroyed(this, var1, var2, var3, var4);
+	}
+
+	public int getDamageVsEntity(Entity var1) {
+		return Item.itemsList[this.itemID].getDamageVsEntity(var1);
 	}
 
 	public boolean canHarvestBlock(Block var1) {
@@ -99,6 +120,10 @@ public final class ItemStack {
 	}
 
 	public void onItemDestroyedByUse(EntityPlayer var1) {
+	}
+
+	public void useItemOnEntity(EntityLiving var1) {
+		Item.itemsList[this.itemID].saddleEntity(this, var1);
 	}
 
 	public ItemStack copy() {

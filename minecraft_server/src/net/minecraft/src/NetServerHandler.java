@@ -23,10 +23,24 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 		var2.setNetHandler(this);
 		this.playerEntity = var3;
 		var3.playerNetServerHandler = this;
+		this.sendPacket(new Packet8UpdateHealth(this.playerEntity.health));
 	}
 
 	public void handlePackets() throws IOException {
-		this.netManager.processReadPackets();
+		try {
+			this.netManager.processReadPackets();
+		} catch (Exception e) {
+			logger.warning("Exception while processing packets for " + (this.playerEntity != null ? this.playerEntity.username : "unknown") + ": " + e.toString());
+			e.printStackTrace();
+			// Close connection politely
+			try {
+				this.kickPlayer("Internal server error");
+			} catch (Exception ex) {
+				// ignore
+			}
+			return;
+		}
+
 		if(this.playerInAirTime++ % 20 == 0) {
 			this.netManager.addToSendQueue(new Packet0KeepAlive());
 		}
@@ -180,7 +194,15 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
 		this.mcServer.worldMngr.disableSpawnProtection = false;
 	}
-
+	
+	@Override
+	public void handleUpdateHealth(Packet8UpdateHealth packet) {
+		// The server should not usually receive Packet8UpdateHealth from clients.
+		// Log in case a malformed client tries to send one.
+		logger.info("Received unexpected Packet8UpdateHealth from client " + (this.playerEntity != null ? this.playerEntity.username : "unknown") + ", ignoring.");
+		// Do nothing else; server is authoritative for health.
+	}
+	/*
 	public void handlePlace(Packet15Place var1) {
 		boolean var2 = this.mcServer.worldMngr.disableSpawnProtection = this.mcServer.configManager.isOp(this.playerEntity.username);
 		int var3 = var1.xPosition;
@@ -201,7 +223,42 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 		this.playerEntity.playerNetServerHandler.sendPacket(new Packet53BlockChange(var3, var4, var5, this.mcServer.worldMngr));
 		this.mcServer.worldMngr.disableSpawnProtection = false;
 	}
+	*/
 
+	
+	public void handlePlace(Packet15Place var1) {
+	    boolean var2 = this.mcServer.worldMngr.disableSpawnProtection = this.mcServer.configManager.isOp(this.playerEntity.username);
+	    int var3 = var1.xPosition;
+	    int var4 = var1.yPosition;
+	    int var5 = var1.zPosition;
+	    int var6 = var1.direction;
+	    int var7 = (int)MathHelper.abs((float)(var3 - this.mcServer.worldMngr.spawnX));
+	    int var8 = (int)MathHelper.abs((float)(var5 - this.mcServer.worldMngr.spawnZ));
+	    if(var7 > var8) {
+	        var8 = var7;
+	    }
+
+	    if(var8 > 16 || var2) {
+	        ItemStack currentItem = this.playerEntity.inventory.getCurrentItem();
+	        if (currentItem != null && currentItem.getItem() instanceof ItemFood) {
+	            ItemFood food = (ItemFood) currentItem.getItem();
+	            this.playerEntity.heal(food.healAmount);
+	            
+	            currentItem.stackSize--;
+	            if (currentItem.stackSize <= 0) {
+	                this.playerEntity.inventory.setInventorySlotContents(
+	                    this.playerEntity.inventory.currentItem, null
+	                );
+	            }
+	        } else {
+	            ItemStack var9 = var1.id >= 0 ? new ItemStack(var1.id) : null;
+	            this.playerEntity.theItemInWorldManager.activeBlockOrUseItem(this.playerEntity, this.mcServer.worldMngr, var9, var3, var4, var5, var6);
+	        }
+	    }
+
+	    this.playerEntity.playerNetServerHandler.sendPacket(new Packet53BlockChange(var3, var4, var5, this.mcServer.worldMngr));
+	    this.mcServer.worldMngr.disableSpawnProtection = false;
+	}
 	public void handleErrorMessage(String var1) {
 		logger.info(this.playerEntity.username + " lost connection: " + var1);
 		this.mcServer.configManager.playerLoggedOut(this.playerEntity);
@@ -328,13 +385,12 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 
 	}
 
-	public void handleArmAnimation(Packet18ArmAnimation var1) {
-		if(var1.animate == 1) {
-			this.playerEntity.swingItem();
-		}
-
+	@Override
+	public void handleArmAnimation(Packet18ArmAnimation packet) {
+	    if (packet.animate == 1) {
+	        this.playerEntity.swingItem();
+	    }
 	}
-
 	public void handleKickDisconnect(Packet255KickDisconnect var1) {
 		this.netManager.networkShutdown("Quitting");
 	}
@@ -379,5 +435,19 @@ public class NetServerHandler extends NetHandler implements ICommandListener {
 			var2.onInventoryChanged();
 		}
 
+	}
+	
+	public void handleUseEntity(Packet7UseEntity var1) {
+	    WorldServer var2 = this.mcServer.worldMngr;
+	    
+	    Entity var3 = var2.getEntityByID(var1.targetEntity);
+
+	    if (var3 != null) {
+	        if (var1.isLeftClick == 1) { 
+	            this.playerEntity.attackEntity(var3);
+	        } else if (var1.isLeftClick == 0) { 
+	            this.playerEntity.usePlayerItemWithEntity(var3);
+	        }
+	    }
 	}
 }

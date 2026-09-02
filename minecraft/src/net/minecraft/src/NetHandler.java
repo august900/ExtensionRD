@@ -93,6 +93,10 @@ public class NetHandler {
 	public void handleMobSpawn(Packet24MobSpawn var1) {
 		this.registerPacket(var1);
 	}
+	
+	public void handleUpdateHealth(Packet8UpdateHealth packet) {
+	    this.registerPacket(packet);
+	}
 
 	public void handleUpdateTime(Packet4UpdateTime var1) {
 		this.registerPacket(var1);

@@ -63,7 +63,6 @@ public class NetLoginHandler extends NetHandler {
 			} else {
 				(new ThreadLoginVerifier(this, var1)).start();
 			}
-
 		}
 	}
 

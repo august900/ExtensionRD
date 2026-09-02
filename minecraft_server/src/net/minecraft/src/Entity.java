@@ -529,6 +529,14 @@ public abstract class Entity {
 	public void onCollideWithPlayer(EntityPlayer var1) {
 	}
 
+	/**
+	 * Called when a player interacts with this entity (right-click).
+	 * Default implementation does nothing and returns false.
+	 */
+	public boolean interact(EntityPlayer var1) {
+		return false;
+	}
+
 	public void applyEntityCollision(Entity var1) {
 		if(var1.riddenByEntity != this && var1.ridingEntity != this) {
 			double var2 = var1.posX - this.posX;

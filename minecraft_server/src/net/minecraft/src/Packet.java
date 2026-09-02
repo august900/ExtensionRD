@@ -73,6 +73,7 @@ public abstract class Packet {
 		addIdClassMapping(4, Packet4UpdateTime.class);
 		addIdClassMapping(5, Packet5PlayerInventory.class);
 		addIdClassMapping(6, Packet6SpawnPosition.class);
+		addIdClassMapping(8, Packet8UpdateHealth.class);
 		addIdClassMapping(10, Packet10Flying.class);
 		addIdClassMapping(11, Packet11PlayerPosition.class);
 		addIdClassMapping(12, Packet12PlayerLook.class);

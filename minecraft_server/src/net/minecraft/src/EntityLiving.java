@@ -281,7 +281,7 @@ public class EntityLiving extends Entity {
 
 	public boolean attackEntityFrom(Entity var1, int var2) {
 		if(this.worldObj.multiplayerWorld) {
-			var2 = 0;
+			return false;
 		}
 
 		this.entityAge = 0;

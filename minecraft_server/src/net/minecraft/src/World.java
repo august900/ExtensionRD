@@ -216,6 +216,16 @@ public class World implements IBlockAccess {
 			this.chunkProvider.saveChunks(var1, var2);
 		}
 	}
+	
+	public Entity getEntityByID(int var1) {
+	    for (int var2 = 0; var2 < this.loadedEntityList.size(); ++var2) {
+	        Entity var3 = (Entity)this.loadedEntityList.get(var2);
+	        if (var3.entityID == var1) {
+	            return var3;
+	        }
+	    }
+	    return null;
+	}
 
 	private void saveLevel() {
 		this.checkSessionLock();
