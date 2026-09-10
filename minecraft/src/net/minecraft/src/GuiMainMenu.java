@@ -13,14 +13,15 @@ public class GuiMainMenu extends GuiScreen {
 	protected GuiScreen parentScreen;
 	private static final Random rand = new Random();
 	//EXTRD
-	String[] logoBlockLayers = new String[]{" *** * * *** **  ** ", 
-											" *   * *  *  * * * *",
-											" **   *   *  **  * *",
-											" *   * *  *  * * * *", 
-											" *** * *  *  * * ** "};
+	String[] logoBlockLayers = new String[]{"**  * * **  * * **  * * *   *  ** ", 
+											"* * * * * * * * * * * * **  * *   ",
+											"**  * * **   *  * * * * * * * * *  ",
+											"* * * * * *  *  * * * * *  ** *  * ", 
+											"* * *** **   *  **  *** *   *  ** " };
 	private LogoEffectRandomizer[][] logoEffects;
 	private float updateCounter = 0.0F;
 	private String splashString = "Bro thinks he is developer (skull emoji comes here):";
+	//private String splashString = "";
 
 	public GuiMainMenu() {
 		//this.parentScreen = pscreen;
@@ -129,7 +130,7 @@ public class GuiMainMenu extends GuiScreen {
 		float var5 = 1.8F - MathHelper.abs(MathHelper.sin((float)(System.currentTimeMillis() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
 		var5 = var5 * 100.0F / (float)(this.fontRenderer.getStringWidth(this.splashString) + 32);
 		GL11.glScalef(var5, var5, var5);
-		this.drawCenteredString(this.fontRenderer, this.splashString, 0, -8, 16776960);
+		this.drawCenteredString(this.fontRenderer, this.splashString, 0, -4, 16776960);
 		GL11.glPopMatrix();
 		String var6 = "Copyright Mojang Specifications. Do not distribute.";
 		this.drawString(this.fontRenderer, var6, this.width - this.fontRenderer.getStringWidth(var6) - 2, this.height - 10, 16777215);
