@@ -86,3 +86,7 @@ To build it, you need RetroMCP and Java 8.
 Run RetroMCP in the source folder. It should detect options.cfg.
 Click on "compile", then "build". The jars should be in build.
 Make sure that "Full build" option is enabled.
+
+## Takedown Notice
+If this project violates any copyright and/or  Microsoft laws, we will take it down.
+Open a issue if it does.
