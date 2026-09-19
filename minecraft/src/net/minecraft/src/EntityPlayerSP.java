@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 public class EntityPlayerSP extends EntityPlayer {
 	public MovementInput movementInput;
 	private Minecraft mc;
+	private int shadowSpawnTimer = 0;
 
 	public EntityPlayerSP(Minecraft var1, World var2, Session var3) {
 		super(var2);
@@ -31,6 +32,57 @@ public class EntityPlayerSP extends EntityPlayer {
 		}
 
 		super.onLivingUpdate();
+		
+		if (!this.worldObj.multiplayerWorld) {
+	        shadowSpawnTimer  ++;
+	        if (shadowSpawnTimer >= 400) {
+	            shadowSpawnTimer = 0;
+	            if (this.rand.nextFloat() < 0.50F) {
+	                trySpawnShadowInSight();
+	            }
+	        }
+	    }
+	}
+	
+	private void trySpawnShadowInSight() {
+	    float offsetAngle = (this.rand.nextFloat() - 0.5F) * 90.0F;
+	    float spawnYaw = this.rotationYaw + offsetAngle;
+	    double distance = 21.0D + (this.rand.nextDouble() * 10.0D);
+
+	    double lookX = -Math.sin(spawnYaw * Math.PI / 180.0D);
+	    double lookZ = Math.cos(spawnYaw * Math.PI / 180.0D);
+
+	    double targetX = this.posX + (lookX * distance);
+	    double targetZ = this.posZ + (lookZ * distance);
+
+	    int xFloor = MathHelper.floor_double(targetX);
+	    int zFloor = MathHelper.floor_double(targetZ);
+	    int yGround = this.worldObj.getHeightValue(xFloor, zFloor);
+
+	    if (yGround <= 0) {
+	        //System.out.println("[ShadowSpawner] Failed: Invalid ground Y");
+	        return;
+	    }
+
+	    EntityShadowPlayer shadow = new EntityShadowPlayer(this.worldObj, targetX, (double)yGround, targetZ);
+	    
+	    Vec3D eyePos = Vec3D.createVector(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ);
+	    Vec3D targetEyePos = Vec3D.createVector(targetX, (double)yGround + 1.62D, targetZ);
+
+	    MovingObjectPosition hit = this.worldObj.rayTraceBlocks(eyePos, targetEyePos);
+
+	    if (hit != null) {
+	        //System.out.println("[ShadowSpawner] Sight ray hit block ID: " + this.worldObj.getBlockId(hit.blockX, hit.blockY, hit.blockZ));
+	    }
+
+	    boolean spawned = this.worldObj.spawnEntityInWorld(shadow);
+	    
+	    if (spawned) {
+	        //System.out.println("[ShadowSpawner] SUCCESS! Shadow Player spawned at X: " + (int)targetX + " Y: " + yGround + " Z: " + (int)targetZ);
+	    	System.out.println(" has connected.");
+	    } else {
+	        //System.out.println("[ShadowSpawner] Failed: world.spawnEntityInWorld returned false");
+	    }
 	}
 
 	public void resetPlayerKeyState() {

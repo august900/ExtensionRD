@@ -140,7 +140,7 @@ public class GuiIngame extends Gui {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		String var21;
 		if(Keyboard.isKeyDown(Keyboard.KEY_F3)) {
-			var8.drawStringWithShadow("Minecraft Alpha v1.14.06_02 (" + this.mc.debug + ")", 2, 2, 16777215);
+			var8.drawStringWithShadow("Minecraft Alpha v1.14.06_02 [EXTRD] (" + this.mc.debug + ")", 2, 2, 16777215);
 			var8.drawStringWithShadow(this.mc.debugInfoRenders(), 2, 12, 16777215);
 			var8.drawStringWithShadow(this.mc.getEntityDebug(), 2, 22, 16777215);
 			var8.drawStringWithShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);
@@ -154,7 +154,17 @@ public class GuiIngame extends Gui {
 			var21 = "Allocated memory: " + var27 * 100L / var22 + "% (" + var27 / 1024L / 1024L + "MB)";
 			this.drawString(var8, var21, var6 - var8.getStringWidth(var21) - 2, 12, 14737632);
 		} else {
-			var8.drawStringWithShadow("RubyDung v1.2", 2, 2, 16777215);
+			var8.drawStringWithShadow("RubyDung v1.3", 2, 2, 16777215);
+			if (this.mc.thePlayer != null) {
+			    int playerX = MathHelper.floor_double(this.mc.thePlayer.posX);
+			    int playerY = MathHelper.floor_double(this.mc.thePlayer.posY);
+			    int playerZ = MathHelper.floor_double(this.mc.thePlayer.posZ);
+
+			    String posStr = "X: " + playerX + " Y: " + playerY + " Z: " + playerZ;
+
+			    
+			    this.drawString(var8, posStr, 2, 12, 14737632); 
+			}
 		}
 
 		if(this.recordPlayingUpFor > 0) {
